@@ -1643,9 +1643,36 @@ function renderAll() {
 }
 
 function signInWithGoogle() {
-  auth.signInWithPopup(provider).then(result => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    auth.signInWithRedirect(provider).catch(err => {
+      console.error('Errore login redirect:', err);
+      alert('Errore durante il login con Google. Riprova.');
+    });
+  } else {
+    auth.signInWithPopup(provider).then(result => {
+      const user = result.user;
+      if (user && user.email) {
+        emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+          to_email: user.email,
+          to_name: user.displayName || user.email.split('@')[0]
+        }).then(() => {
+          console.log('Email di benvenuto inviata a', user.email);
+        }).catch(err => {
+          console.error('Errore invio email:', err);
+        });
+      }
+    }).catch(err => {
+      console.error('Errore login popup:', err);
+    });
+  }
+}
+
+auth.getRedirectResult().then(result => {
+  if (result && result.user) {
     const user = result.user;
-    if (user && user.email) {
+    if (user.email) {
       emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
         to_email: user.email,
         to_name: user.displayName || user.email.split('@')[0]
@@ -1655,11 +1682,10 @@ function signInWithGoogle() {
         console.error('Errore invio email:', err);
       });
     }
-  }).catch(err => {
-    console.error('Errore login:', err);
-  });
-}
-
+  }
+}).catch(err => {
+  console.error('Errore redirect result:', err);
+});
 function signOutUser() {
   auth.signOut();
 }
