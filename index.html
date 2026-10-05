@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DuckStudio - Siti Web</title>
 
-<link rel="icon" type="image/png" href="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
+<link rel="icon" type="image/png" href="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 
 <meta property="og:title" content="DuckStudio - Siti Web">
 <meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
-<meta property="og:image" content="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
+<meta property="og:image" content="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
+<meta name="twitter:image" content="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -502,15 +503,8 @@ section { padding: 90px 50px; background: transparent; }
   margin-bottom: 12px;
 }
 
-.staff-role.owner {
-  background: #111;
-  color: #fff;
-}
-
-.staff-role.designer {
-  background: #00b7ff;
-  color: #fff;
-}
+.staff-role.owner { background: #111; color: #fff; }
+.staff-role.designer { background: #00b7ff; color: #fff; }
 
 .staff-card h3 {
   font-family: 'Space Grotesk', sans-serif;
@@ -555,32 +549,18 @@ section { padding: 90px 50px; background: transparent; }
 .staff-disclaimer {
   max-width: 800px;
   margin: 40px auto 0;
-  padding: 22px 28px;
+  padding: 16px 22px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   border: 2px dashed #aaa;
   border-radius: 14px;
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
+  text-align: center;
   color: #555;
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
-.staff-disclaimer i {
-  color: #555;
-  font-size: 20px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.staff-disclaimer strong {
-  color: #111;
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
-}
+.staff-disclaimer strong { color: #111; }
 
 .pricing-grid {
   max-width: 750px;
@@ -1043,6 +1023,139 @@ footer .disclaimer {
   margin-top: 8px;
 }
 
+.admin-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.admin-panel.open { display: flex; }
+
+.admin-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 35px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+}
+
+.admin-box h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-box h2 i { color: #00b7ff; }
+
+.admin-input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: 0.2s;
+  margin-bottom: 12px;
+}
+
+.admin-input:focus {
+  border-color: #00b7ff;
+  box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.15);
+}
+
+.admin-btn {
+  padding: 12px 22px;
+  background: #00b7ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-btn:hover { background: #0095d4; transform: translateY(-2px); }
+
+.admin-btn.danger { background: #ff4444; }
+.admin-btn.danger:hover { background: #cc0000; }
+
+.admin-btn.success { background: #4caf50; }
+.admin-btn.success:hover { background: #388e3c; }
+
+.admin-section {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.admin-section h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.admin-item span { flex: 1; }
+.admin-item .actions { display: flex; gap: 6px; }
+
+.admin-item .mini-btn {
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.admin-item .mini-btn:hover { background: #00b7ff; color: #fff; border-color: #00b7ff; }
+.admin-item .mini-btn.danger:hover { background: #ff4444; border-color: #ff4444; }
+
+.admin-status {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  display: none;
+}
+
+.admin-status.show { display: block; }
+.admin-status.success { background: #e8f5e9; color: #2e7d32; }
+.admin-status.error { background: #ffebee; color: #c62828; }
+
 @media (max-width: 900px) {
   nav { padding: 15px 22px; }
   .nav-links { display: none; }
@@ -1142,23 +1255,7 @@ footer .disclaimer {
     <h2>Cosa Sappiamo Fare</h2>
     <p>Le tecnologie che usiamo per creare siti web moderni.</p>
   </div>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-icon"><i class="fa-brands fa-html5"></i></div>
-      <h3>HTML5</h3>
-      <p>Struttura semantica, accessibile e ottimizzata per ogni tipo di sito web.</p>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon"><i class="fa-brands fa-css3-alt"></i></div>
-      <h3>CSS3</h3>
-      <p>Stili moderni, animazioni fluide, layout responsive e design accattivante.</p>
-    </div>
-    <div class="skill-card">
-      <div class="skill-icon"><i class="fa-brands fa-js"></i></div>
-      <h3>JavaScript</h3>
-      <p>Interattività, effetti dinamici e funzionalità avanzate per il tuo sito.</p>
-    </div>
-  </div>
+  <div class="skills-grid" id="skillsGrid"></div>
 </section>
 
 <section id="portfolio">
@@ -1167,24 +1264,7 @@ footer .disclaimer {
     <h2>I Nostri Lavori</h2>
     <p>Un esempio del nostro stile e della qualità che offriamo.</p>
   </div>
-  <div class="portfolio-grid">
-    <a href="https://duckvanilla.store/" target="_blank" class="portfolio-card">
-      <div class="portfolio-image">🎃</div>
-      <div class="portfolio-content">
-        <div class="portfolio-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-        </div>
-        <h3>Duck Vanilla Store</h3>
-        <p>
-          Sito e-commerce per un server Minecraft, con carrello, sistema di pagamento
-          e design responsive. Un esempio completo delle nostre capacità.
-        </p>
-        <span class="portfolio-link">Visita duckvanilla.store <i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </a>
-  </div>
+  <div class="portfolio-grid" id="portfolioGrid"></div>
 </section>
 
 <section id="staff">
@@ -1220,13 +1300,7 @@ footer .disclaimer {
   </div>
 
   <div class="staff-disclaimer">
-    <i class="fa-solid fa-circle-info"></i>
-    <div>
-      <strong>Progetto amatoriale</strong>
-      DuckStudio è un progetto nato dalla passione per il web development.
-      Non siamo un'agenzia professionale, non abbiamo partita IVA e non emettiamo fatture.
-      Realizziamo siti web per hobby e per chi cerca un piccolo progetto a prezzi accessibili.
-    </div>
+    <strong>Progetto amatoriale</strong> — nato dalla passione per il web development. Non emettiamo fatture.
   </div>
 </section>
 
@@ -1236,38 +1310,7 @@ footer .disclaimer {
     <h2>Tariffe Indicative</h2>
     <p>Tariffe di partenza. Il costo finale dipende dalla complessità del progetto.</p>
   </div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <h3>Sito Base</h3>
-      <div class="amount">15<small>€</small></div>
-      <div class="sub">A partire da</div>
-      <ul class="price-features">
-        <li><i class="fa-solid fa-check"></i> Sito one-page</li>
-        <li><i class="fa-solid fa-check"></i> Design responsive</li>
-        <li><i class="fa-solid fa-check"></i> Sezioni base</li>
-        <li><i class="fa-solid fa-check"></i> Consegna rapida</li>
-      </ul>
-      <button class="price-btn" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> Contattaci
-      </button>
-    </div>
-
-    <div class="price-card featured">
-      <h3>Sito Completo</h3>
-      <div class="amount">20<small>€</small></div>
-      <div class="sub">Il più completo</div>
-      <ul class="price-features">
-        <li><i class="fa-solid fa-check"></i> Sito multi-pagina</li>
-        <li><i class="fa-solid fa-check"></i> Design personalizzato</li>
-        <li><i class="fa-solid fa-check"></i> Animazioni ed effetti</li>
-        <li><i class="fa-solid fa-check"></i> Ottimizzazione mobile</li>
-        <li><i class="fa-solid fa-check"></i> Supporto post-consegna</li>
-      </ul>
-      <button class="price-btn" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> Contattaci
-      </button>
-    </div>
-  </div>
+  <div class="pricing-grid" id="pricingGrid"></div>
 </section>
 
 <section id="payment">
@@ -1367,6 +1410,66 @@ footer .disclaimer {
   <p class="disclaimer">Siti web realizzati per passione, non per business.</p>
 </footer>
 
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box" id="adminLoginBox">
+    <h2><i class="fa-solid fa-lock"></i> Accesso Admin</h2>
+    <input type="password" class="admin-input" id="adminPasswordInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')adminLogin()">
+    <button class="admin-btn" onclick="adminLogin()">
+      <i class="fa-solid fa-unlock"></i> Entra
+    </button>
+    <button class="admin-btn danger" style="margin-left: 10px;" onclick="closeAdmin()">
+      <i class="fa-solid fa-times"></i> Chiudi
+    </button>
+    <div class="admin-status error" id="adminLoginError">Password errata</div>
+  </div>
+
+  <div class="admin-box" id="adminContentBox" style="display: none;">
+    <h2><i class="fa-solid fa-cog"></i> Pannello Admin</h2>
+
+    <div class="admin-status success show" id="adminSavedStatus">Modifiche salvate automaticamente</div>
+
+    <div class="admin-section">
+      <h3><i class="fa-solid fa-box"></i> Prodotti Portfolio</h3>
+      <div id="adminPortfolioList"></div>
+      <input type="text" class="admin-input" id="newPortfolioName" placeholder="Nome prodotto">
+      <input type="text" class="admin-input" id="newPortfolioDesc" placeholder="Descrizione">
+      <input type="text" class="admin-input" id="newPortfolioLink" placeholder="Link (es. https://...)">
+      <input type="text" class="admin-input" id="newPortfolioIcon" placeholder="Emoji (es. 🎃)" value="🎃">
+      <button class="admin-btn success" onclick="addPortfolioItem()">
+        <i class="fa-solid fa-plus"></i> Aggiungi Prodotto
+      </button>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fa-solid fa-tag"></i> Codici Sconto</h3>
+      <div id="adminDiscountList"></div>
+      <input type="text" class="admin-input" id="newDiscountCode" placeholder="Codice (es. DUCK20)">
+      <input type="number" class="admin-input" id="newDiscountPercent" placeholder="Sconto % (es. 20)">
+      <button class="admin-btn success" onclick="addDiscountCode()">
+        <i class="fa-solid fa-plus"></i> Aggiungi Codice
+      </button>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fa-solid fa-arrows-up-down"></i> Ordine Sezioni</h3>
+      <div id="adminSectionOrder"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3><i class="fa-solid fa-tools"></i> Azioni</h3>
+      <button class="admin-btn" onclick="exportConfig()">
+        <i class="fa-solid fa-download"></i> Esporta Config
+      </button>
+      <button class="admin-btn danger" onclick="resetConfig()">
+        <i class="fa-solid fa-trash"></i> Reset Tutto
+      </button>
+      <button class="admin-btn" style="margin-top: 10px; background: #666;" onclick="closeAdmin()">
+        <i class="fa-solid fa-times"></i> Chiudi Pannello
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
@@ -1374,16 +1477,141 @@ const firebaseConfig = {
   projectId: "duckstudio-official",
   storageBucket: "duckstudio-official.firebasestorage.app",
   messagingSenderId: "390003096580",
-  appId: "1:390003096580:web:2124a9fe24bd0733de8951"
+  appId: "1:390003096580:web:2124a9fe24bd0733de8951",
+  databaseURL: "https://duckstudio-official-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const db = firebase.database();
 const provider = new firebase.auth.GoogleAuthProvider();
 
 const DISCORD_LINK = 'https://discord.gg/ThYvNjgV6';
-const PAYPAL_LINK = 'https://www.paypal.com/paypalme/mrducky99/';
-const REVOLUT_LINK = 'https://revolut.me/mrducky';
+const ADMIN_PASSWORD = 'admin26';
+
+const defaultConfig = {
+  skills: [
+    { icon: 'fa-brands fa-html5', title: 'HTML5', desc: 'Struttura semantica, accessibile e ottimizzata per ogni tipo di sito web.' },
+    { icon: 'fa-brands fa-css3-alt', title: 'CSS3', desc: 'Stili moderni, animazioni fluide, layout responsive e design accattivante.' },
+    { icon: 'fa-brands fa-js', title: 'JavaScript', desc: 'Interattività, effetti dinamici e funzionalità avanzate per il tuo sito.' }
+  ],
+  portfolio: [
+    {
+      name: 'Duck Vanilla Store',
+      desc: 'Sito e-commerce per un server Minecraft, con carrello, sistema di pagamento e design responsive. Un esempio completo delle nostre capacità.',
+      link: 'https://duckvanilla.store/',
+      icon: '🎃',
+      tags: ['HTML', 'CSS', 'JavaScript']
+    }
+  ],
+  pricing: [
+    {
+      title: 'Sito Base',
+      price: 15,
+      sub: 'A partire da',
+      featured: false,
+      features: ['Sito one-page', 'Design responsive', 'Sezioni base', 'Consegna rapida']
+    },
+    {
+      title: 'Sito Completo',
+      price: 20,
+      sub: 'Il più completo',
+      featured: true,
+      features: ['Sito multi-pagina', 'Design personalizzato', 'Animazioni ed effetti', 'Ottimizzazione mobile', 'Supporto post-consegna']
+    }
+  ],
+  discounts: [
+    { code: 'HALLOWEEN26', percent: 35 }
+  ],
+  sectionOrder: ['home', 'skills', 'portfolio', 'staff', 'pricing', 'payment', 'faq', 'contact']
+};
+
+let config = JSON.parse(JSON.stringify(defaultConfig));
+let adminLoggedIn = false;
+
+function loadConfigFromFirebase() {
+  db.ref('duckstudio/config').on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      config = data;
+    } else {
+      db.ref('duckstudio/config').set(defaultConfig);
+    }
+    renderAll();
+  });
+}
+
+function saveConfigToFirebase() {
+  db.ref('duckstudio/config').set(config).then(() => {
+    const status = document.getElementById('adminSavedStatus');
+    status.textContent = 'Modifiche salvate';
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 1500);
+  }).catch(err => {
+    console.error('Errore salvataggio:', err);
+    const status = document.getElementById('adminSavedStatus');
+    status.textContent = 'Errore nel salvataggio';
+    status.style.background = '#ffebee';
+    status.style.color = '#c62828';
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2500);
+  });
+}
+
+function renderSkills() {
+  const grid = document.getElementById('skillsGrid');
+  if (!grid) return;
+  grid.innerHTML = config.skills.map(s => `
+    <div class="skill-card">
+      <div class="skill-icon"><i class="${s.icon}"></i></div>
+      <h3>${s.title}</h3>
+      <p>${s.desc}</p>
+    </div>
+  `).join('');
+}
+
+function renderPortfolio() {
+  const grid = document.getElementById('portfolioGrid');
+  if (!grid) return;
+  grid.innerHTML = config.portfolio.map(p => `
+    <a href="${p.link}" target="_blank" class="portfolio-card">
+      <div class="portfolio-image">${p.icon}</div>
+      <div class="portfolio-content">
+        <div class="portfolio-tags">
+          ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <span class="portfolio-link">Visita il sito <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+    </a>
+  `).join('');
+}
+
+function renderPricing() {
+  const grid = document.getElementById('pricingGrid');
+  if (!grid) return;
+  grid.innerHTML = config.pricing.map(p => `
+    <div class="price-card ${p.featured ? 'featured' : ''}">
+      <h3>${p.title}</h3>
+      <div class="amount">${p.price}<small>€</small></div>
+      <div class="sub">${p.sub}</div>
+      <ul class="price-features">
+        ${p.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}
+      </ul>
+      <button class="price-btn" onclick="openDiscord()">
+        <i class="fa-brands fa-discord"></i> Contattaci
+      </button>
+    </div>
+  `).join('');
+}
+
+function renderAll() {
+  renderSkills();
+  renderPortfolio();
+  renderPricing();
+  if (adminLoggedIn) renderAdminLists();
+}
 
 function signInWithGoogle() {
   auth.signInWithPopup(provider).catch(err => {
@@ -1450,6 +1678,158 @@ auth.onAuthStateChanged(user => {
     userInfo.style.display = 'none';
   }
 });
+
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D' || e.code === 'KeyD')) {
+    e.preventDefault();
+    openAdmin();
+  }
+});
+
+function openAdmin() {
+  document.getElementById('adminPanel').classList.add('open');
+  if (adminLoggedIn) {
+    document.getElementById('adminLoginBox').style.display = 'none';
+    document.getElementById('adminContentBox').style.display = 'block';
+    renderAdminLists();
+  } else {
+    document.getElementById('adminLoginBox').style.display = 'block';
+    document.getElementById('adminContentBox').style.display = 'none';
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function adminLogin() {
+  const input = document.getElementById('adminPasswordInput');
+  const error = document.getElementById('adminLoginError');
+  if (input.value === ADMIN_PASSWORD) {
+    adminLoggedIn = true;
+    error.classList.remove('show');
+    input.value = '';
+    document.getElementById('adminLoginBox').style.display = 'none';
+    document.getElementById('adminContentBox').style.display = 'block';
+    renderAdminLists();
+  } else {
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 2000);
+  }
+}
+
+function renderAdminLists() {
+  const portfolioList = document.getElementById('adminPortfolioList');
+  portfolioList.innerHTML = config.portfolio.map((p, i) => `
+    <div class="admin-item">
+      <span>${p.icon} ${p.name} — ${p.link}</span>
+      <div class="actions">
+        <button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button>
+      </div>
+    </div>
+  `).join('');
+
+  const discountList = document.getElementById('adminDiscountList');
+  discountList.innerHTML = config.discounts.map((d, i) => `
+    <div class="admin-item">
+      <span>${d.code} — ${d.percent}%</span>
+      <div class="actions">
+        <button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button>
+      </div>
+    </div>
+  `).join('');
+
+  const sectionOrder = document.getElementById('adminSectionOrder');
+  sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `
+    <div class="admin-item">
+      <span>${s}</span>
+      <div class="actions">
+        <button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button>
+        <button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addPortfolioItem() {
+  const name = document.getElementById('newPortfolioName').value.trim();
+  const desc = document.getElementById('newPortfolioDesc').value.trim();
+  const link = document.getElementById('newPortfolioLink').value.trim();
+  const icon = document.getElementById('newPortfolioIcon').value.trim() || '🎃';
+  if (!name || !link) return;
+
+  config.portfolio.push({
+    name: name,
+    desc: desc,
+    link: link,
+    icon: icon,
+    tags: ['HTML', 'CSS', 'JavaScript']
+  });
+
+  document.getElementById('newPortfolioName').value = '';
+  document.getElementById('newPortfolioDesc').value = '';
+  document.getElementById('newPortfolioLink').value = '';
+
+  saveConfigToFirebase();
+  renderPortfolio();
+  renderAdminLists();
+}
+
+function removePortfolioItem(index) {
+  config.portfolio.splice(index, 1);
+  saveConfigToFirebase();
+  renderPortfolio();
+  renderAdminLists();
+}
+
+function addDiscountCode() {
+  const code = document.getElementById('newDiscountCode').value.trim().toUpperCase();
+  const percent = parseInt(document.getElementById('newDiscountPercent').value);
+  if (!code || !percent) return;
+
+  config.discounts.push({ code: code, percent: percent });
+
+  document.getElementById('newDiscountCode').value = '';
+  document.getElementById('newDiscountPercent').value = '';
+
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function removeDiscountCode(index) {
+  config.discounts.splice(index, 1);
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function moveSection(index, direction) {
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= config.sectionOrder.length) return;
+  const arr = config.sectionOrder;
+  const temp = arr[index];
+  arr[index] = arr[newIndex];
+  arr[newIndex] = temp;
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function exportConfig() {
+  const dataStr = JSON.stringify(config, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'duckstudio-config.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetConfig() {
+  if (!confirm('Sei sicuro di voler resettare tutte le modifiche?')) return;
+  config = JSON.parse(JSON.stringify(defaultConfig));
+  saveConfigToFirebase();
+  renderAll();
+}
 
 const AI_PFP = 'https://i.pinimg.com/736x/9e/ea/ab/9eeaab9fe1deff8df678bbf5f60cc370.jpg';
 const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/00b7ff/ffffff?text=U';
@@ -1539,7 +1919,7 @@ const faqAnswers = [
   },
   {
     keywords: ['staff', 'team', 'chi siete', 'owner', 'designer', 'progetto amatoriale'],
-    answer: 'DuckStudio è un progetto amatoriale portato avanti da <strong>A. P.</strong> (Founder & Business) e <strong>M. B.</strong> (Designer). Non siamo un\'agenzia professionale, non abbiamo partita IVA e non emettiamo fatture.'
+    answer: 'DuckStudio è un progetto amatoriale portato avanti da <strong>A. P.</strong> (Founder & Business) e <strong>M. B.</strong> (Designer). Non emettiamo fatture.'
   }
 ];
 
@@ -1624,6 +2004,7 @@ function initFaq() {
   }, 700);
 }
 
+loadConfigFromFirebase();
 initFaq();
 </script>
 
