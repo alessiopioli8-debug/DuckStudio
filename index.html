@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DuckStudio - Creo Siti HTML</title>
+<title>DuckStudio - Siti Web</title>
 
 <link rel="icon" type="image/png" href="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
 
-<meta property="og:title" content="DuckStudio - Creo Siti HTML">
-<meta property="og:description" content="Realizzo siti web moderni con HTML, CSS e JavaScript. Prezzi dai 15€ ai 20€.">
+<meta property="og:title" content="DuckStudio - Siti Web">
+<meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
 <meta property="og:image" content="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -115,10 +115,7 @@ nav {
   background: #f8f9fa;
   border-color: #d2e3fc;
   box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
-  transform: none;
 }
-
-.login-btn:active { background: #f1f3f4; }
 
 .login-btn .google-logo {
   width: 18px;
@@ -506,12 +503,12 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .staff-role.owner {
-  background: linear-gradient(135deg, #ffd700, #ffb800);
-  color: #111;
+  background: #111;
+  color: #fff;
 }
 
 .staff-role.designer {
-  background: linear-gradient(135deg, #00b7ff, #0077cc);
+  background: #00b7ff;
   color: #fff;
 }
 
@@ -542,6 +539,8 @@ section { padding: 90px 50px; background: transparent; }
   font-weight: 600;
   font-size: 13px;
   transition: 0.2s;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
 }
 
 .staff-contact:hover {
@@ -552,6 +551,36 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .staff-contact i { font-size: 14px; }
+
+.staff-disclaimer {
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 22px 28px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px dashed #aaa;
+  border-radius: 14px;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.staff-disclaimer i {
+  color: #555;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.staff-disclaimer strong {
+  color: #111;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
 
 .pricing-grid {
   max-width: 750px;
@@ -695,6 +724,7 @@ section { padding: 90px 50px; background: transparent; }
   font-size: 13px;
   transition: 0.2s;
   word-break: break-all;
+  cursor: pointer;
 }
 
 .payment-link:hover {
@@ -710,7 +740,7 @@ section { padding: 90px 50px; background: transparent; }
   padding: 20px 25px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
-  border: 2px dashed #00b7ff;
+  border: 2px dashed #aaa;
   border-radius: 14px;
   text-align: center;
   color: #555;
@@ -718,8 +748,8 @@ section { padding: 90px 50px; background: transparent; }
   line-height: 1.7;
 }
 
-.payment-note strong { color: #00b7ff; }
-.payment-note i { color: #00b7ff; margin-right: 8px; font-size: 16px; }
+.payment-note strong { color: #111; }
+.payment-note i { color: #555; margin-right: 8px; font-size: 16px; }
 
 .faq-wrapper {
   max-width: 800px;
@@ -923,11 +953,14 @@ section { padding: 90px 50px; background: transparent; }
   padding: 16px 36px;
   background: #5865F2;
   color: #fff;
+  border: none;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
   font-size: 15px;
   transition: 0.2s;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
 }
 
 .discord-btn:hover {
@@ -937,6 +970,18 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .discord-btn i { font-size: 20px; }
+
+.discord-btn.locked {
+  background: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.discord-btn.locked:hover {
+  background: #888;
+  transform: none;
+  box-shadow: none;
+}
 
 .email-btn {
   display: inline-flex;
@@ -962,6 +1007,25 @@ section { padding: 90px 50px; background: transparent; }
 
 .contact-note { margin-top: 10px; color: #888; font-size: 13px; }
 
+.login-warning {
+  display: none;
+  margin-top: 15px;
+  padding: 12px 18px;
+  background: #fff8e1;
+  border: 1px solid #ffd54f;
+  border-radius: 10px;
+  color: #856404;
+  font-size: 13px;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.login-warning.show { display: inline-flex; }
+
+.login-warning i { font-size: 16px; }
+
 footer {
   padding: 35px 50px;
   text-align: center;
@@ -970,6 +1034,13 @@ footer {
   border-top: 1px solid #eee;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(8px);
+  line-height: 1.8;
+}
+
+footer .disclaimer {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
 }
 
 @media (max-width: 900px) {
@@ -1014,7 +1085,7 @@ footer {
     <li><a href="#skills">Competenze</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#staff">Staff</a></li>
-    <li><a href="#pricing">Prezzi</a></li>
+    <li><a href="#pricing">Tariffe</a></li>
     <li><a href="#payment">Pagamenti</a></li>
     <li><a href="#faq">Domande</a></li>
     <li><a href="#contact">Contatti</a></li>
@@ -1043,23 +1114,23 @@ footer {
   <div class="hero-content">
     <div class="hero-text">
       <span class="greeting">DuckStudio</span>
-      <h1>Creo <span class="accent">siti HTML</span> su misura</h1>
+      <h1>Creiamo <span class="accent">siti web</span> su misura</h1>
       <p class="description">
-        Realizzo siti web moderni, veloci e responsive usando HTML, CSS e JavaScript.
-        Dal design minimalista alle pagine interattive, trasformo le tue idee in realtà.
+        Siamo due appassionati di web development. Realizziamo siti moderni e responsive
+        usando HTML, CSS e JavaScript. Un progetto amatoriale, ma fatto con cura.
       </p>
       <div class="hero-buttons">
         <a href="#portfolio" class="btn btn-outline">
           <i class="fa-solid fa-eye"></i> Guarda il Portfolio
         </a>
-        <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="btn btn-primary">
-          <i class="fa-brands fa-discord"></i> Scrivimi su Discord
-        </a>
+        <button class="btn btn-primary" onclick="openDiscord()">
+          <i class="fa-brands fa-discord"></i> Scrivici su Discord
+        </button>
       </div>
     </div>
     <div class="hero-avatar">
       <div class="hero-image">
-        <img src="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg" alt="DuckStudio Developer">
+        <img src="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg" alt="DuckStudio">
       </div>
     </div>
   </div>
@@ -1068,8 +1139,8 @@ footer {
 <section id="skills">
   <div class="section-header">
     <span class="label">Competenze</span>
-    <h2>Cosa So Fare</h2>
-    <p>Le tecnologie che uso per creare siti web professionali.</p>
+    <h2>Cosa Sappiamo Fare</h2>
+    <p>Le tecnologie che usiamo per creare siti web moderni.</p>
   </div>
   <div class="skills-grid">
     <div class="skill-card">
@@ -1093,8 +1164,8 @@ footer {
 <section id="portfolio">
   <div class="section-header">
     <span class="label">Portfolio</span>
-    <h2>I Miei Lavori</h2>
-    <p>Un esempio del mio stile e della qualità che offro.</p>
+    <h2>I Nostri Lavori</h2>
+    <p>Un esempio del nostro stile e della qualità che offriamo.</p>
   </div>
   <div class="portfolio-grid">
     <a href="https://duckvanilla.store/" target="_blank" class="portfolio-card">
@@ -1108,7 +1179,7 @@ footer {
         <h3>Duck Vanilla Store</h3>
         <p>
           Sito e-commerce per un server Minecraft, con carrello, sistema di pagamento
-          e design responsive. Un esempio completo delle mie capacità.
+          e design responsive. Un esempio completo delle nostre capacità.
         </p>
         <span class="portfolio-link">Visita duckvanilla.store <i class="fa-solid fa-arrow-right"></i></span>
       </div>
@@ -1120,61 +1191,71 @@ footer {
   <div class="section-header">
     <span class="label">Il Team</span>
     <h2>Chi C'è Dietro</h2>
-    <p>Le persone che rendono possibile ogni progetto.</p>
+    <p>Due appassionati di web development.</p>
   </div>
   <div class="staff-grid">
     <div class="staff-card">
       <div class="staff-pfp">
-        <img src="https://i.pinimg.com/736x/e2/5b/78/e25b78d7064418a36b9c34f77139d618.jpg" alt="MrDucky">
+        <img src="https://i.pinimg.com/736x/e2/5b/78/e25b78d7064418a36b9c34f77139d618.jpg" alt="A. P.">
       </div>
-      <div class="staff-role owner">👑 Owner & Business</div>
-      <h3>MrDucky</h3>
-      <p class="staff-desc">Gestisce il business, i clienti e coordina ogni progetto dall'inizio alla fine.</p>
-      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="staff-contact">
+      <div class="staff-role owner">Founder & Business</div>
+      <h3>A. P.</h3>
+      <p class="staff-desc">Gestisce i clienti, coordina i progetti e si occupa della comunicazione.</p>
+      <button class="staff-contact" onclick="openDiscord()">
         <i class="fa-brands fa-discord"></i> Contattami
-      </a>
+      </button>
     </div>
 
     <div class="staff-card">
       <div class="staff-pfp">
-        <img src="https://i.pinimg.com/736x/a3/17/5e/a3175e2e49eb6d2acb3eef523d751c52.jpg" alt="Ark">
+        <img src="https://i.pinimg.com/736x/a3/17/5e/a3175e2e49eb6d2acb3eef523d751c52.jpg" alt="M. B.">
       </div>
-      <div class="staff-role designer">🎨 Designer</div>
-      <h3>Ark</h3>
-      <p class="staff-desc">Cura il design grafico, gli stili e le animazioni di ogni sito realizzato.</p>
-      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="staff-contact">
+      <div class="staff-role designer">Designer</div>
+      <h3>M. B.</h3>
+      <p class="staff-desc">Cura il design, gli stili e le animazioni di ogni sito realizzato.</p>
+      <button class="staff-contact" onclick="openDiscord()">
         <i class="fa-brands fa-discord"></i> Contattami
-      </a>
+      </button>
+    </div>
+  </div>
+
+  <div class="staff-disclaimer">
+    <i class="fa-solid fa-circle-info"></i>
+    <div>
+      <strong>Progetto amatoriale</strong>
+      DuckStudio è un progetto nato dalla passione per il web development.
+      Non siamo un'agenzia professionale, non abbiamo partita IVA e non emettiamo fatture.
+      Realizziamo siti web per hobby e per chi cerca un piccolo progetto a prezzi accessibili.
     </div>
   </div>
 </section>
 
 <section id="pricing">
   <div class="section-header">
-    <span class="label">Prezzi</span>
-    <h2>I Miei Prezzi</h2>
-    <p>Prezzi chiari e onesti. Il costo finale dipende dalla complessità del sito.</p>
+    <span class="label">Tariffe</span>
+    <h2>Tariffe Indicative</h2>
+    <p>Tariffe di partenza. Il costo finale dipende dalla complessità del progetto.</p>
   </div>
   <div class="pricing-grid">
     <div class="price-card">
       <h3>Sito Base</h3>
       <div class="amount">15<small>€</small></div>
-      <div class="sub">Prezzo di partenza</div>
+      <div class="sub">A partire da</div>
       <ul class="price-features">
         <li><i class="fa-solid fa-check"></i> Sito one-page</li>
         <li><i class="fa-solid fa-check"></i> Design responsive</li>
         <li><i class="fa-solid fa-check"></i> Sezioni base</li>
         <li><i class="fa-solid fa-check"></i> Consegna rapida</li>
       </ul>
-      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="price-btn">
-        <i class="fa-brands fa-discord"></i> Contattami
-      </a>
+      <button class="price-btn" onclick="openDiscord()">
+        <i class="fa-brands fa-discord"></i> Contattaci
+      </button>
     </div>
 
     <div class="price-card featured">
       <h3>Sito Completo</h3>
       <div class="amount">20<small>€</small></div>
-      <div class="sub">Il più richiesto</div>
+      <div class="sub">Il più completo</div>
       <ul class="price-features">
         <li><i class="fa-solid fa-check"></i> Sito multi-pagina</li>
         <li><i class="fa-solid fa-check"></i> Design personalizzato</li>
@@ -1182,9 +1263,9 @@ footer {
         <li><i class="fa-solid fa-check"></i> Ottimizzazione mobile</li>
         <li><i class="fa-solid fa-check"></i> Supporto post-consegna</li>
       </ul>
-      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="price-btn">
-        <i class="fa-brands fa-discord"></i> Contattami
-      </a>
+      <button class="price-btn" onclick="openDiscord()">
+        <i class="fa-brands fa-discord"></i> Contattaci
+      </button>
     </div>
   </div>
 </section>
@@ -1192,8 +1273,8 @@ footer {
 <section id="payment">
   <div class="section-header">
     <span class="label">Pagamenti</span>
-    <h2>Metodi di Acquisto</h2>
-    <p>Questi sono i metodi di pagamento che accetto. Contattami prima per concordare tutto.</p>
+    <h2>Metodi di Pagamento</h2>
+    <p>Questi sono i metodi accettati. Contattaci prima per concordare tutto.</p>
   </div>
   <div class="payment-grid">
     <div class="payment-card">
@@ -1202,9 +1283,9 @@ footer {
       </div>
       <h3>PayPal</h3>
       <p>Pagamento sicuro e veloce tramite PayPal.</p>
-      <a href="https://www.paypal.com/paypalme/mrducky99/" target="_blank" class="payment-link">
+      <button class="payment-link" onclick="openPayment('paypal')">
         <i class="fa-solid fa-link"></i> paypal.me/mrducky99
-      </a>
+      </button>
     </div>
 
     <div class="payment-card">
@@ -1213,16 +1294,16 @@ footer {
       </div>
       <h3>Revolut</h3>
       <p>Pagamento istantaneo tramite Revolut.</p>
-      <a href="https://revolut.me/mrducky" target="_blank" class="payment-link">
+      <button class="payment-link" onclick="openPayment('revolut')">
         <i class="fa-solid fa-link"></i> revolut.me/mrducky
-      </a>
+      </button>
     </div>
   </div>
 
   <div class="payment-note">
     <i class="fa-solid fa-circle-info"></i>
     <strong>Importante:</strong> Non effettuare pagamenti direttamente da questi link.
-    <strong>Contattami prima</strong> su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.
+    <strong>Contattaci prima</strong> su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.
     Il pagamento va effettuato solo dopo aver concordato tutto.
   </div>
 </section>
@@ -1240,9 +1321,9 @@ footer {
     <div class="faq-suggestions" id="faqSuggestions">
       <button class="suggestion-btn" onclick="askFaq('Quanto costa un sito?')">Quanto costa un sito?</button>
       <button class="suggestion-btn" onclick="askFaq('Quanto tempo ci vuole?')">Quanto tempo ci vuole?</button>
-      <button class="suggestion-btn" onclick="askFaq('Che tecnologie usi?')">Che tecnologie usi?</button>
+      <button class="suggestion-btn" onclick="askFaq('Che tecnologie usate?')">Che tecnologie usate?</button>
       <button class="suggestion-btn" onclick="askFaq('Posso avere un dominio mio?')">Posso avere un dominio mio?</button>
-      <button class="suggestion-btn" onclick="askFaq('Come ti contatto?')">Come ti contatto?</button>
+      <button class="suggestion-btn" onclick="askFaq('Come vi contatto?')">Come vi contatto?</button>
       <button class="suggestion-btn" onclick="askFaq('Cosa include il sito?')">Cosa include il sito?</button>
     </div>
 
@@ -1259,26 +1340,31 @@ footer {
   <div class="contact-content">
     <h2>Iniziamo il tuo progetto</h2>
     <p>
-      Scrivimi su Discord o via email per discutere del tuo sito,
-      dei dettagli e dei tempi di consegna.
+      Scrivici su Discord o via email per discutere del tuo sito.
+      Siamo un progetto amatoriale: nessuna fretta, nessuna pressione, solo passione per il codice.
     </p>
     <div class="contact-buttons">
-      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="discord-btn">
+      <button class="discord-btn" id="discordBtn" onclick="openDiscord()">
         <i class="fa-brands fa-discord"></i> Discord
-      </a>
+      </button>
       <a href="mailto:itu600396@gmail.com" class="email-btn">
         <i class="fa-solid fa-envelope"></i> Email
       </a>
     </div>
+    <div class="login-warning" id="loginWarning">
+      <i class="fa-solid fa-lock"></i>
+      Per aprire il Discord devi prima accedere con Google
+    </div>
     <div class="contact-note">
       Email: <strong>itu600396@gmail.com</strong><br>
-      Prezzi dai 15€ ai 20€ — il costo dipende dalla complessità del sito
+      Tariffe dai 15€ ai 20€ — il costo dipende dalla complessità del sito
     </div>
   </div>
 </section>
 
 <footer>
-  © 2026 DuckStudio. Fatto con passione per il codice.
+  <p>© 2026 DuckStudio — Progetto amatoriale senza partita IVA</p>
+  <p class="disclaimer">Siti web realizzati per passione, non per business.</p>
 </footer>
 
 <script>
@@ -1295,6 +1381,10 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
+const DISCORD_LINK = 'https://discord.gg/ThYvNjgV6';
+const PAYPAL_LINK = 'https://www.paypal.com/paypalme/mrducky99/';
+const REVOLUT_LINK = 'https://revolut.me/mrducky';
+
 function signInWithGoogle() {
   auth.signInWithPopup(provider).catch(err => {
     console.error('Errore login:', err);
@@ -1304,6 +1394,44 @@ function signInWithGoogle() {
 
 function signOutUser() {
   auth.signOut();
+}
+
+function openDiscord() {
+  const user = auth.currentUser;
+  if (!user) {
+    const warning = document.getElementById('loginWarning');
+    warning.classList.add('show');
+    setTimeout(() => warning.classList.remove('show'), 4000);
+
+    const discordBtn = document.getElementById('discordBtn');
+    discordBtn.classList.add('locked');
+    setTimeout(() => discordBtn.classList.remove('locked'), 1500);
+
+    signInWithGoogle();
+    return;
+  }
+  window.open(DISCORD_LINK, '_blank');
+}
+
+function openPayment(method) {
+  const user = auth.currentUser;
+  if (!user) {
+    const warning = document.getElementById('loginWarning');
+    warning.classList.add('show');
+    setTimeout(() => warning.classList.remove('show'), 4000);
+    signInWithGoogle();
+    return;
+  }
+
+  const msg = 'Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.';
+
+  if (method === 'paypal') {
+    alert(msg);
+    window.open(DISCORD_LINK, '_blank');
+  } else if (method === 'revolut') {
+    alert(msg);
+    window.open(DISCORD_LINK, '_blank');
+  }
 }
 
 auth.onAuthStateChanged(user => {
@@ -1371,26 +1499,26 @@ const faqChat = document.getElementById('faqChat');
 const faqAnswers = [
   {
     keywords: ['costo', 'costa', 'prezzo', 'prezzi', 'quanto'],
-    answer: 'I prezzi partono da <strong>15€</strong> per un sito base (one-page) fino a <strong>20€</strong> per un sito completo multi-pagina. Il costo finale dipende dalla complessità del progetto. Per un preventivo preciso scrivimi su Discord o via email a <strong>itu600396@gmail.com</strong>!'
+    answer: 'Le tariffe partono da <strong>15€</strong> per un sito base (one-page) fino a <strong>20€</strong> per un sito completo multi-pagina. Il costo finale dipende dalla complessità del progetto. Per un preventivo preciso scrivici su Discord o via email a <strong>itu600396@gmail.com</strong>!'
   },
   {
     keywords: ['tempo', 'quanto tempo', 'consegna', 'veloce', 'durata'],
-    answer: 'Un sito base richiede <strong>1-2 giorni</strong>. Un sito completo con più pagine e personalizzazioni può richiedere <strong>3-5 giorni</strong>. Tempi più stretti? Scrivimi su Discord e vediamo cosa si può fare.'
+    answer: 'Un sito base richiede <strong>1-2 giorni</strong>. Un sito completo con più pagine e personalizzazioni può richiedere <strong>3-5 giorni</strong>. Tempi più stretti? Scrivici su Discord e vediamo cosa si può fare.'
   },
   {
-    keywords: ['tecnologie', 'tecnologia', 'linguaggi', 'html', 'css', 'javascript', 'usa'],
-    answer: 'Uso <strong>HTML5</strong>, <strong>CSS3</strong> e <strong>JavaScript</strong> per creare siti moderni, veloci e responsive. Se serve, posso integrare anche framework come React o Tailwind CSS.'
+    keywords: ['tecnologie', 'tecnologia', 'linguaggi', 'html', 'css', 'javascript', 'usate'],
+    answer: 'Usiamo <strong>HTML5</strong>, <strong>CSS3</strong> e <strong>JavaScript</strong> per creare siti moderni, veloci e responsive. Se serve, possiamo integrare anche framework come React o Tailwind CSS.'
   },
   {
     keywords: ['dominio', 'hosting', 'online', 'mettere online'],
-    answer: 'Sì! Posso aiutarti a mettere il sito online <strong>gratis</strong> su GitHub Pages, Netlify o Vercel. Se vuoi un dominio personalizzato (es. tuonome.com), ti spiego come acquistarlo e collegarlo in pochi minuti.'
+    answer: 'Sì! Possiamo aiutarti a mettere il sito online <strong>gratis</strong> su GitHub Pages, Netlify o Vercel. Se vuoi un dominio personalizzato (es. tuonome.com), ti spieghiamo come acquistarlo e collegarlo in pochi minuti.'
   },
   {
-    keywords: ['contatto', 'contattarti', 'discord', 'email', 'scrivere', 'parlare'],
-    answer: 'Mi trovi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) oppure via email a <strong>itu600396@gmail.com</strong>. Ti rispondo il prima possibile!'
+    keywords: ['contatto', 'contattarvi', 'discord', 'email', 'scrivere', 'parlare'],
+    answer: 'Ci trovi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) oppure via email a <strong>itu600396@gmail.com</strong>. Ti rispondiamo il prima possibile!'
   },
   {
-    keywords: ['include', 'cosa include', 'cosa offri', 'cosa fai'],
+    keywords: ['include', 'cosa include', 'cosa offrite', 'cosa fate'],
     answer: 'Ogni sito include: <strong>design personalizzato</strong>, <strong>layout responsive</strong> (mobile + desktop), <strong>animazioni</strong>, <strong>ottimizzazione SEO base</strong> e <strong>supporto post-consegna</strong>. Tutto quello che serve per partire col piede giusto.'
   },
   {
@@ -1399,19 +1527,19 @@ const faqAnswers = [
   },
   {
     keywords: ['pagamento', 'pagare', 'paypal', 'revolut', 'metodi'],
-    answer: 'Accetto pagamenti tramite <strong>PayPal</strong> e <strong>Revolut</strong>. Contattami prima su Discord o via email per concordare tutto, poi procediamo col pagamento.'
+    answer: 'Accettiamo pagamenti tramite <strong>PayPal</strong> e <strong>Revolut</strong>. Contattaci prima su Discord o via email per concordare tutto, poi procediamo col pagamento.'
   },
   {
     keywords: ['gratis', 'free', 'prova', 'demo'],
-    answer: 'Posso mostrarti <strong>esempi</strong> dei miei lavori (come duckvanilla.store) prima che tu decida. Per un progetto nuovo non faccio demo gratuite complete, ma posso creare un piccolo mockup per farti vedere lo stile.'
+    answer: 'Possiamo mostrarti <strong>esempi</strong> dei nostri lavori (come duckvanilla.store) prima che tu decida. Per un progetto nuovo non facciamo demo gratuite complete, ma possiamo creare un piccolo mockup per farti vedere lo stile.'
   },
   {
     keywords: ['aiuto', 'aiutare', 'problema', 'non funziona'],
-    answer: 'Se hai un problema con il sito, scrivimi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>. Se rientra nel supporto post-consegna, lo sistemo gratis!'
+    answer: 'Se hai un problema con il sito, scrivici su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>. Se rientra nel supporto post-consegna, lo sistemiamo gratis!'
   },
   {
-    keywords: ['staff', 'team', 'chi siete', 'owner', 'designer'],
-    answer: 'Il team di DuckStudio è composto da <strong>MrDucky</strong> (Owner & Business) e <strong>Ark</strong> (Designer). Trovi le loro informazioni nella sezione Staff del sito!'
+    keywords: ['staff', 'team', 'chi siete', 'owner', 'designer', 'progetto amatoriale'],
+    answer: 'DuckStudio è un progetto amatoriale portato avanti da <strong>A. P.</strong> (Founder & Business) e <strong>M. B.</strong> (Designer). Non siamo un\'agenzia professionale, non abbiamo partita IVA e non emettiamo fatture.'
   }
 ];
 
@@ -1466,7 +1594,7 @@ function findAnswer(question) {
 
   if (best) return best.answer;
 
-  return 'Non ho una risposta pronta per questa domanda. Scrivi direttamente su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong> e ti risponderò personalmente il prima possibile!';
+  return 'Non ho una risposta pronta per questa domanda. Scrivici direttamente su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong> e ti risponderemo personalmente il prima possibile!';
 }
 
 function askFaq(question) {
@@ -1489,10 +1617,10 @@ function sendFaq() {
 }
 
 function initFaq() {
-  addMessage('Ciao! Sono l\'assistente di <strong>DuckStudio</strong>. Come posso aiutarti?', true);
+  addMessage('Ciao! Siamo l\'assistente di <strong>DuckStudio</strong>. Come possiamo aiutarti?', true);
 
   setTimeout(() => {
-    addMessage('Puoi cliccare su una delle domande qui sotto oppure scrivermi direttamente quello che vuoi sapere.', true);
+    addMessage('Puoi cliccare su una delle domande qui sotto oppure scriverci direttamente quello che vuoi sapere.', true);
   }, 700);
 }
 
