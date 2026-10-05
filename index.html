@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DuckStudio - Siti Web Professionali</title>
+<title>DuckStudio - Siti Web</title>
 
 <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 
-<meta property="og:title" content="DuckStudio - Siti Web Professionali">
+<meta property="og:title" content="DuckStudio - Siti Web">
 <meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
 <meta property="og:image" content="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 <meta property="og:type" content="website">
@@ -27,16 +27,15 @@
 html { scroll-behavior: smooth; }
 
 :root {
-  --halloween: #ff7518;
-  --halloween-dark: #cc5500;
-  --halloween-glow: rgba(255, 117, 24, 0.6);
+  --accent: #00b7ff;
+  --accent-dark: #0095d4;
+  --accent-glow: rgba(0, 183, 255, 0.6);
   --bg-white: #ffffff;
   --bg-light: #fafafa;
   --text-dark: #111;
   --text-grey: #666;
   --text-muted: #888;
   --border: #eee;
-  --purple: #8b00ff;
 }
 
 body {
@@ -63,42 +62,20 @@ body {
 }
 
 .cube:hover {
-  background: var(--halloween);
-  border-color: var(--halloween);
+  background: var(--accent);
+  border-color: var(--accent);
   box-shadow:
-    0 0 15px var(--halloween-glow),
-    0 0 35px rgba(255, 117, 24, 0.4),
+    0 0 15px var(--accent-glow),
+    0 0 35px rgba(0, 183, 255, 0.4),
     inset 0 0 10px rgba(255, 255, 255, 0.4);
   z-index: 1;
 }
 
 nav, section, footer { position: relative; z-index: 1; }
 
-.top-banner {
-  background: linear-gradient(90deg, var(--halloween), var(--purple), var(--halloween));
-  background-size: 200% 100%;
-  animation: bannerSlide 8s linear infinite;
-  color: #fff;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  position: fixed;
-  z-index: 102;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-@keyframes bannerSlide {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
 nav {
   position: fixed;
-  top: 40px;
+  top: 0;
   left: 0;
   right: 0;
   padding: 18px 50px;
@@ -119,7 +96,7 @@ nav {
   color: var(--text-dark);
 }
 
-.logo .accent { color: var(--halloween); }
+.logo .accent { color: var(--accent); }
 
 .nav-links { display: flex; gap: 22px; list-style: none; align-items: center; }
 
@@ -131,7 +108,7 @@ nav {
   transition: color 0.2s;
 }
 
-.nav-links a:hover { color: var(--halloween); }
+.nav-links a:hover { color: var(--accent); }
 
 .login-btn {
   display: inline-flex;
@@ -172,13 +149,13 @@ nav {
   transition: 0.2s;
 }
 
-.user-info:hover { border-color: var(--halloween); }
+.user-info:hover { border-color: var(--accent); }
 
 .user-info img {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 2px solid var(--halloween);
+  border: 2px solid var(--accent);
   object-fit: cover;
 }
 
@@ -213,7 +190,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 160px 50px 60px;
+  padding: 120px 50px 60px;
   background: transparent;
   position: relative;
 }
@@ -228,7 +205,7 @@ nav {
 }
 
 .hero-text .greeting {
-  color: var(--halloween);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -246,7 +223,7 @@ nav {
   letter-spacing: -2px;
 }
 
-.hero-text h1 .accent { color: var(--halloween); }
+.hero-text h1 .accent { color: var(--accent); }
 
 .hero-text .description {
   font-size: 17px;
@@ -274,14 +251,14 @@ nav {
 }
 
 .btn-primary {
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
-  border-color: var(--halloween);
+  border-color: var(--accent);
 }
 
 .btn-primary:hover {
-  background: var(--halloween-dark);
-  border-color: var(--halloween-dark);
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
   transform: translateY(-2px);
 }
 
@@ -303,16 +280,16 @@ nav {
   width: 100%;
   max-width: 380px;
   border-radius: 16px;
-  border: 3px solid var(--halloween);
+  border: 3px solid var(--accent);
   overflow: hidden;
   transition: 0.3s;
   background: #f5f5f5;
-  box-shadow: 0 15px 40px rgba(255, 117, 24, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.2);
 }
 
 .hero-image:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 60px rgba(255, 117, 24, 0.5);
+  box-shadow: 0 25px 60px rgba(0, 183, 255, 0.5);
 }
 
 .hero-image img {
@@ -337,7 +314,7 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .section-header .label {
-  color: var(--halloween);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 3px;
@@ -379,17 +356,17 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .skill-card:hover {
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(255, 117, 24, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.2);
 }
 
 .skill-icon {
   width: 50px;
   height: 50px;
   border-radius: 10px;
-  background: #fff0e6;
-  color: var(--halloween);
+  background: #e6f7ff;
+  color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -415,14 +392,14 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .portfolio-card:hover {
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(255, 117, 24, 0.25);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.25);
 }
 
 .portfolio-image {
   height: 160px;
-  background: linear-gradient(135deg, var(--halloween), var(--purple));
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -435,8 +412,8 @@ section { padding: 90px 50px; background: transparent; }
 
 .tag {
   padding: 4px 11px;
-  background: #fff0e6;
-  color: var(--halloween);
+  background: #e6f7ff;
+  color: var(--accent);
   border-radius: 15px;
   font-size: 11px;
   font-weight: 700;
@@ -454,7 +431,7 @@ section { padding: 90px 50px; background: transparent; }
 .portfolio-content p { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
 
 .portfolio-link {
-  color: var(--halloween);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 600;
   display: inline-flex;
@@ -492,15 +469,15 @@ section { padding: 90px 50px; background: transparent; }
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(90deg, var(--halloween), var(--purple));
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
   transform: scaleX(0);
   transition: 0.3s;
 }
 
 .staff-card:hover {
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(255, 117, 24, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 183, 255, 0.25);
 }
 
 .staff-card:hover::before { transform: scaleX(1); }
@@ -510,9 +487,9 @@ section { padding: 90px 50px; background: transparent; }
   height: 130px;
   border-radius: 50%;
   margin: 0 auto 22px;
-  border: 4px solid var(--halloween);
+  border: 4px solid var(--accent);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(255, 117, 24, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 183, 255, 0.3);
   transition: 0.3s;
   position: relative;
   background: #f5f5f5;
@@ -520,7 +497,7 @@ section { padding: 90px 50px; background: transparent; }
 
 .staff-card:hover .staff-pfp {
   transform: scale(1.05) rotate(-3deg);
-  box-shadow: 0 15px 40px rgba(255, 117, 24, 0.5);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.5);
 }
 
 .staff-pfp img {
@@ -533,8 +510,8 @@ section { padding: 90px 50px; background: transparent; }
 .staff-role {
   display: inline-block;
   padding: 5px 14px;
-  background: #fff0e6;
-  color: var(--halloween);
+  background: #e6f7ff;
+  color: var(--accent);
   border-radius: 15px;
   font-size: 11px;
   font-weight: 700;
@@ -544,7 +521,7 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .staff-role.owner { background: #111; color: #fff; }
-.staff-role.designer { background: var(--halloween); color: #fff; }
+.staff-role.designer { background: var(--accent); color: #fff; }
 
 .staff-card h3 {
   font-family: 'Space Grotesk', sans-serif;
@@ -565,10 +542,10 @@ section { padding: 90px 50px; background: transparent; }
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #fff7f0;
-  border: 1px solid #ffd9b8;
+  background: #f5f9ff;
+  border: 1px solid #cceeff;
   border-radius: 10px;
-  color: var(--halloween-dark);
+  color: var(--accent-dark);
   text-decoration: none;
   font-weight: 600;
   font-size: 13px;
@@ -578,9 +555,9 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .staff-contact:hover {
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -622,11 +599,11 @@ section { padding: 90px 50px; background: transparent; }
   overflow: hidden;
 }
 
-.price-card.featured { border-color: var(--halloween); }
+.price-card.featured { border-color: var(--accent); }
 
 .price-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(255, 117, 24, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 183, 255, 0.25);
 }
 
 .price-card h3 {
@@ -634,7 +611,7 @@ section { padding: 90px 50px; background: transparent; }
   font-size: 19px;
   font-weight: 700;
   margin-bottom: 12px;
-  color: var(--halloween);
+  color: var(--accent);
 }
 
 .price-card .amount {
@@ -659,12 +636,12 @@ section { padding: 90px 50px; background: transparent; }
   gap: 10px;
 }
 
-.price-features li i { color: var(--halloween); font-size: 12px; }
+.price-features li i { color: var(--accent); font-size: 12px; }
 
 .price-btn {
   width: 100%;
   padding: 13px;
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -680,7 +657,7 @@ section { padding: 90px 50px; background: transparent; }
   font-family: 'Inter', sans-serif;
 }
 
-.price-btn:hover { background: var(--halloween-dark); transform: scale(1.02); }
+.price-btn:hover { background: var(--accent-dark); transform: scale(1.02); }
 
 .payment-grid {
   max-width: 700px;
@@ -702,8 +679,8 @@ section { padding: 90px 50px; background: transparent; }
 
 .payment-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(255, 117, 24, 0.15);
-  border-color: var(--halloween);
+  box-shadow: 0 20px 50px rgba(0, 183, 255, 0.15);
+  border-color: var(--accent);
 }
 
 .payment-icon {
@@ -735,10 +712,10 @@ section { padding: 90px 50px; background: transparent; }
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #fff7f0;
-  border: 1px solid #ffd9b8;
+  background: #f5f9ff;
+  border: 1px solid #cceeff;
   border-radius: 10px;
-  color: var(--halloween-dark);
+  color: var(--accent-dark);
   text-decoration: none;
   font-weight: 700;
   font-size: 13px;
@@ -748,9 +725,9 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .payment-link:hover {
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -770,7 +747,8 @@ section { padding: 90px 50px; background: transparent; }
 
 .payment-note strong { color: var(--text-dark); }
 .payment-note i { color: var(--text-grey); margin-right: 8px; font-size: 16px; }
-  .faq-wrapper {
+
+.faq-wrapper {
   max-width: 800px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.95);
@@ -793,7 +771,7 @@ section { padding: 90px 50px; background: transparent; }
 
 .faq-chat::-webkit-scrollbar { width: 6px; }
 .faq-chat::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-.faq-chat::-webkit-scrollbar-thumb { background: var(--halloween); border-radius: 3px; }
+.faq-chat::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
 .msg {
   display: flex;
@@ -817,7 +795,7 @@ section { padding: 90px 50px; background: transparent; }
   font-size: 18px;
   flex-shrink: 0;
   overflow: hidden;
-  border: 2px solid var(--halloween);
+  border: 2px solid var(--accent);
 }
 
 .msg.bot .msg-avatar img,
@@ -838,27 +816,27 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .msg.bot .msg-bubble {
-  background: #fff7f0;
+  background: #f5f9ff;
   color: var(--text-dark);
   border-top-left-radius: 4px;
 }
 
 .msg.user .msg-bubble {
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
   border-top-right-radius: 4px;
 }
 
-.msg-bubble strong { color: var(--halloween); }
+.msg-bubble strong { color: var(--accent); }
 .msg.user .msg-bubble strong { color: #fff; }
 
 .faq-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 
 .suggestion-btn {
   padding: 9px 16px;
-  background: #fff7f0;
-  border: 1px solid #ffd9b8;
-  color: var(--halloween-dark);
+  background: #f0f8ff;
+  border: 1px solid #cceeff;
+  color: var(--accent-dark);
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
@@ -868,9 +846,9 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .suggestion-btn:hover {
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
-  border-color: var(--halloween);
+  border-color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -888,13 +866,13 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .faq-input:focus {
-  border-color: var(--halloween);
-  box-shadow: 0 0 0 3px rgba(255, 117, 24, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.1);
 }
 
 .faq-send {
   padding: 14px 22px;
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -908,13 +886,13 @@ section { padding: 90px 50px; background: transparent; }
   gap: 8px;
 }
 
-.faq-send:hover { background: var(--halloween-dark); transform: translateY(-2px); }
+.faq-send:hover { background: var(--accent-dark); transform: translateY(-2px); }
 
 .typing {
   display: inline-flex;
   gap: 4px;
   padding: 12px 16px;
-  background: #fff7f0;
+  background: #f5f9ff;
   border-radius: 14px;
   border-top-left-radius: 4px;
 }
@@ -922,7 +900,7 @@ section { padding: 90px 50px; background: transparent; }
 .typing span {
   width: 7px;
   height: 7px;
-  background: var(--halloween);
+  background: var(--accent);
   border-radius: 50%;
   animation: typing 1.4s infinite;
 }
@@ -990,18 +968,12 @@ section { padding: 90px 50px; background: transparent; }
 
 .discord-btn i { font-size: 20px; }
 
-.discord-btn.locked {
-  background: #888;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
 .email-btn {
   display: inline-flex;
   align-items: center;
   gap: 11px;
   padding: 16px 36px;
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
   border-radius: 10px;
   text-decoration: none;
@@ -1011,9 +983,9 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .email-btn:hover {
-  background: var(--halloween-dark);
+  background: var(--accent-dark);
   transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(255, 117, 24, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.4);
 }
 
 .email-btn i { font-size: 18px; }
@@ -1089,7 +1061,7 @@ footer .disclaimer {
   gap: 10px;
 }
 
-.admin-box h2 i { color: var(--halloween); }
+.admin-box h2 i { color: var(--accent); }
 
 .admin-input {
   width: 100%;
@@ -1104,13 +1076,13 @@ footer .disclaimer {
 }
 
 .admin-input:focus {
-  border-color: var(--halloween);
-  box-shadow: 0 0 0 3px rgba(255, 117, 24, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.15);
 }
 
 .admin-btn {
   padding: 12px 22px;
-  background: var(--halloween);
+  background: var(--accent);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -1124,7 +1096,7 @@ footer .disclaimer {
   gap: 8px;
 }
 
-.admin-btn:hover { background: var(--halloween-dark); transform: translateY(-2px); }
+.admin-btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
 .admin-btn.danger { background: #ff4444; }
 .admin-btn.danger:hover { background: #cc0000; }
 .admin-btn.success { background: #4caf50; }
@@ -1170,7 +1142,7 @@ footer .disclaimer {
   font-family: 'Inter', sans-serif;
 }
 
-.admin-item .mini-btn:hover { background: var(--halloween); color: #fff; border-color: var(--halloween); }
+.admin-item .mini-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 .admin-item .mini-btn.danger:hover { background: #ff4444; border-color: #ff4444; }
 
 .admin-status {
@@ -1190,7 +1162,7 @@ footer .disclaimer {
   nav { padding: 15px 22px; }
   .nav-links { display: none; }
   section { padding: 65px 22px; }
-  .hero { padding: 140px 22px 50px; }
+  .hero { padding: 100px 22px 50px; }
   .hero-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
   .hero-text h1 { font-size: 40px; letter-spacing: -1.5px; }
   .hero-text .description { margin: 0 auto 30px; }
@@ -1213,15 +1185,12 @@ footer .disclaimer {
   .msg-bubble { max-width: 90%; font-size: 13px; }
   .contact-buttons { flex-direction: column; align-items: center; }
   .discord-btn, .email-btn { width: 100%; justify-content: center; }
-  .payment-link { font-size: 11px; padding: 8px 14px; }
 }
 </style>
 </head>
 <body>
 
 <div id="cube-bg"></div>
-
-<div class="top-banner">🎃 Benvenuto su DuckStudio — Progetto amatoriale di web development 🎃</div>
 
 <nav>
   <div class="logo">Duck<span class="accent">Studio</span></div>
@@ -1438,7 +1407,7 @@ footer .disclaimer {
 </section>
 
 <footer>
-  <p>© <span id="currentYear">2026</span> DuckStudio — Progetto amatoriale senza partita IVA</p>
+  <p>© 2026 DuckStudio — Progetto amatoriale senza partita IVA</p>
   <p class="disclaimer">Siti web realizzati per passione, non per business.</p>
 </footer>
 
@@ -1501,6 +1470,7 @@ footer .disclaimer {
     </div>
   </div>
 </div>
+
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
@@ -1644,11 +1614,9 @@ function renderAll() {
 
 function signInWithGoogle() {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  
   if (isMobile) {
     auth.signInWithRedirect(provider).catch(err => {
       console.error('Errore login redirect:', err);
-      alert('Errore durante il login con Google. Riprova.');
     });
   } else {
     auth.signInWithPopup(provider).then(result => {
@@ -1657,35 +1625,12 @@ function signInWithGoogle() {
         emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
           to_email: user.email,
           to_name: user.displayName || user.email.split('@')[0]
-        }).then(() => {
-          console.log('Email di benvenuto inviata a', user.email);
-        }).catch(err => {
-          console.error('Errore invio email:', err);
-        });
+        }).catch(err => console.error('Errore email:', err));
       }
-    }).catch(err => {
-      console.error('Errore login popup:', err);
-    });
+    }).catch(err => console.error('Errore login popup:', err));
   }
 }
 
-auth.getRedirectResult().then(result => {
-  if (result && result.user) {
-    const user = result.user;
-    if (user.email) {
-      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-        to_email: user.email,
-        to_name: user.displayName || user.email.split('@')[0]
-      }).then(() => {
-        console.log('Email di benvenuto inviata a', user.email);
-      }).catch(err => {
-        console.error('Errore invio email:', err);
-      });
-    }
-  }
-}).catch(err => {
-  console.error('Errore redirect result:', err);
-});
 function signOutUser() {
   auth.signOut();
 }
@@ -1711,8 +1656,7 @@ function openPayment(method) {
     signInWithGoogle();
     return;
   }
-  const msg = 'Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.';
-  alert(msg);
+  alert('Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.');
   window.open(DISCORD_LINK, '_blank');
 }
 
@@ -1732,6 +1676,18 @@ auth.onAuthStateChanged(user => {
     userInfo.style.display = 'none';
   }
 });
+
+auth.getRedirectResult().then(result => {
+  if (result && result.user) {
+    const user = result.user;
+    if (user.email) {
+      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+        to_email: user.email,
+        to_name: user.displayName || user.email.split('@')[0]
+      }).catch(err => console.error('Errore email:', err));
+    }
+  }
+}).catch(err => console.error('Errore redirect:', err));
 
 document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) {
@@ -1886,7 +1842,7 @@ function resetConfig() {
 }
 
 const AI_PFP = 'https://i.pinimg.com/736x/9e/ea/ab/9eeaab9fe1deff8df678bbf5f60cc370.jpg';
-const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/ff7518/ffffff?text=U';
+const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/00b7ff/ffffff?text=U';
 
 const bg = document.getElementById('cube-bg');
 const size = 60;
@@ -2007,8 +1963,6 @@ function initFaq() {
     addMessage('Clicca su una delle domande qui sotto o scrivici direttamente.', true);
   }, 700);
 }
-
-document.getElementById('currentYear').textContent = new Date().getFullYear();
 
 loadConfigFromFirebase();
 initFaq();
