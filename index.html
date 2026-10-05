@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://img.magnific.com/premium-vector/worker-man-developer-web_24877-74622.jpg">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -82,7 +82,7 @@ nav {
 
 .logo .accent { color: #00b7ff; }
 
-.nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
+.nav-links { display: flex; gap: 25px; list-style: none; align-items: center; }
 
 .nav-links a {
   color: #555;
@@ -97,31 +97,34 @@ nav {
 .login-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   padding: 10px 20px;
-  background: #fff;
-  color: #111;
-  border: 2px solid #111;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 13px;
+  background: #ffffff;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
   transition: 0.2s;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', 'Inter', sans-serif;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.1);
 }
 
 .login-btn:hover {
-  background: #111;
-  color: #fff;
-  transform: translateY(-2px);
+  background: #f8f9fa;
+  border-color: #d2e3fc;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+  transform: none;
 }
 
-.login-btn i {
-  color: #4285F4;
-  font-size: 15px;
-}
+.login-btn:active { background: #f1f3f4; }
 
-.login-btn:hover i { color: #fff; }
+.login-btn .google-logo {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 
 .user-info {
   display: none;
@@ -134,9 +137,7 @@ nav {
   transition: 0.2s;
 }
 
-.user-info:hover {
-  border-color: #00b7ff;
-}
+.user-info:hover { border-color: #00b7ff; }
 
 .user-info img {
   width: 34px;
@@ -170,10 +171,7 @@ nav {
   transition: 0.2s;
 }
 
-.user-info .logout-btn:hover {
-  background: #ff4444;
-  color: #fff;
-}
+.user-info .logout-btn:hover { background: #ff4444; color: #fff; }
 
 .hero {
   min-height: 100vh;
@@ -263,11 +261,7 @@ nav {
   transform: translateY(-2px);
 }
 
-.hero-avatar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.hero-avatar { display: flex; justify-content: center; align-items: center; }
 
 .hero-image {
   width: 100%;
@@ -435,6 +429,130 @@ section { padding: 90px 50px; background: transparent; }
 
 .portfolio-card:hover .portfolio-link { gap: 12px; }
 
+.staff-grid {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.staff-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid #eee;
+  border-radius: 18px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.staff-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #00b7ff, #0077cc);
+  transform: scaleX(0);
+  transition: 0.3s;
+}
+
+.staff-card:hover {
+  border-color: #00b7ff;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 183, 255, 0.25);
+}
+
+.staff-card:hover::before { transform: scaleX(1); }
+
+.staff-pfp {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin: 0 auto 22px;
+  border: 4px solid #00b7ff;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 183, 255, 0.3);
+  transition: 0.3s;
+  position: relative;
+  background: #f5f5f5;
+}
+
+.staff-card:hover .staff-pfp {
+  transform: scale(1.05) rotate(-3deg);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.5);
+}
+
+.staff-pfp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.staff-role {
+  display: inline-block;
+  padding: 5px 14px;
+  background: #e6f7ff;
+  color: #00b7ff;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.staff-role.owner {
+  background: linear-gradient(135deg, #ffd700, #ffb800);
+  color: #111;
+}
+
+.staff-role.designer {
+  background: linear-gradient(135deg, #00b7ff, #0077cc);
+  color: #fff;
+}
+
+.staff-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.staff-card .staff-desc {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.staff-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #f5f9ff;
+  border: 1px solid #cceeff;
+  border-radius: 10px;
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.staff-contact:hover {
+  background: #00b7ff;
+  color: #fff;
+  border-color: #00b7ff;
+  transform: translateY(-2px);
+}
+
+.staff-contact i { font-size: 14px; }
+
 .pricing-grid {
   max-width: 750px;
   margin: 0 auto;
@@ -515,6 +633,94 @@ section { padding: 90px 50px; background: transparent; }
 
 .price-btn:hover { background: #0095d4; transform: scale(1.02); }
 
+.payment-grid {
+  max-width: 700px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.payment-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid #eee;
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: 0.25s;
+}
+
+.payment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 183, 255, 0.15);
+  border-color: #00b7ff;
+}
+
+.payment-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 20px;
+  color: #fff;
+}
+
+.payment-icon.paypal { background: linear-gradient(135deg, #003087, #009cde); }
+.payment-icon.revolut { background: linear-gradient(135deg, #0666EB, #0552BE); }
+
+.payment-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.payment-card p { color: #777; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+
+.payment-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #f5f9ff;
+  border: 1px solid #cceeff;
+  border-radius: 10px;
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  transition: 0.2s;
+  word-break: break-all;
+}
+
+.payment-link:hover {
+  background: #00b7ff;
+  color: #fff;
+  border-color: #00b7ff;
+  transform: translateY(-2px);
+}
+
+.payment-note {
+  max-width: 700px;
+  margin: 30px auto 0;
+  padding: 20px 25px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px dashed #00b7ff;
+  border-radius: 14px;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.payment-note strong { color: #00b7ff; }
+.payment-note i { color: #00b7ff; margin-right: 8px; font-size: 16px; }
+
 .faq-wrapper {
   max-width: 800px;
   margin: 0 auto;
@@ -565,12 +771,7 @@ section { padding: 90px 50px; background: transparent; }
   border: 2px solid #00b7ff;
 }
 
-.msg.bot .msg-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
+.msg.bot .msg-avatar img,
 .msg.user .msg-avatar img {
   width: 100%;
   height: 100%;
@@ -602,12 +803,7 @@ section { padding: 90px 50px; background: transparent; }
 .msg-bubble strong { color: #00b7ff; }
 .msg.user .msg-bubble strong { color: #fff; }
 
-.faq-suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
-}
+.faq-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 
 .suggestion-btn {
   padding: 9px 16px;
@@ -629,10 +825,7 @@ section { padding: 90px 50px; background: transparent; }
   transform: translateY(-2px);
 }
 
-.faq-input-row {
-  display: flex;
-  gap: 10px;
-}
+.faq-input-row { display: flex; gap: 10px; }
 
 .faq-input {
   flex: 1;
@@ -666,10 +859,7 @@ section { padding: 90px 50px; background: transparent; }
   gap: 8px;
 }
 
-.faq-send:hover {
-  background: #0095d4;
-  transform: translateY(-2px);
-}
+.faq-send:hover { background: #0095d4; transform: translateY(-2px); }
 
 .typing {
   display: inline-flex;
@@ -801,6 +991,7 @@ footer {
   .login-btn span { display: none; }
   .login-btn { padding: 10px 14px; }
   .user-info span { max-width: 80px; }
+  .staff-pfp { width: 110px; height: 110px; }
 }
 
 @media (max-width: 500px) {
@@ -808,6 +999,7 @@ footer {
   .msg-bubble { max-width: 90%; font-size: 13px; }
   .contact-buttons { flex-direction: column; align-items: center; }
   .discord-btn, .email-btn { width: 100%; justify-content: center; }
+  .payment-link { font-size: 11px; padding: 8px 14px; }
 }
 </style>
 </head>
@@ -821,12 +1013,20 @@ footer {
     <li><a href="#home">Home</a></li>
     <li><a href="#skills">Competenze</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#staff">Staff</a></li>
     <li><a href="#pricing">Prezzi</a></li>
+    <li><a href="#payment">Pagamenti</a></li>
     <li><a href="#faq">Domande</a></li>
     <li><a href="#contact">Contatti</a></li>
     <li>
       <button class="login-btn" id="loginBtn" onclick="signInWithGoogle()">
-        <i class="fa-brands fa-google"></i> <span>Accedi con Google</span>
+        <svg class="google-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        <span>Accedi con Google</span>
       </button>
       <div class="user-info" id="userInfo">
         <img id="userPfp" src="" alt="User">
@@ -916,6 +1116,39 @@ footer {
   </div>
 </section>
 
+<section id="staff">
+  <div class="section-header">
+    <span class="label">Il Team</span>
+    <h2>Chi C'è Dietro</h2>
+    <p>Le persone che rendono possibile ogni progetto.</p>
+  </div>
+  <div class="staff-grid">
+    <div class="staff-card">
+      <div class="staff-pfp">
+        <img src="https://i.pinimg.com/736x/e2/5b/78/e25b78d7064418a36b9c34f77139d618.jpg" alt="MrDucky">
+      </div>
+      <div class="staff-role owner">👑 Owner & Business</div>
+      <h3>MrDucky</h3>
+      <p class="staff-desc">Gestisce il business, i clienti e coordina ogni progetto dall'inizio alla fine.</p>
+      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="staff-contact">
+        <i class="fa-brands fa-discord"></i> Contattami
+      </a>
+    </div>
+
+    <div class="staff-card">
+      <div class="staff-pfp">
+        <img src="https://i.pinimg.com/736x/a3/17/5e/a3175e2e49eb6d2acb3eef523d751c52.jpg" alt="Ark">
+      </div>
+      <div class="staff-role designer">🎨 Designer</div>
+      <h3>Ark</h3>
+      <p class="staff-desc">Cura il design grafico, gli stili e le animazioni di ogni sito realizzato.</p>
+      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="staff-contact">
+        <i class="fa-brands fa-discord"></i> Contattami
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="pricing">
   <div class="section-header">
     <span class="label">Prezzi</span>
@@ -953,6 +1186,44 @@ footer {
         <i class="fa-brands fa-discord"></i> Contattami
       </a>
     </div>
+  </div>
+</section>
+
+<section id="payment">
+  <div class="section-header">
+    <span class="label">Pagamenti</span>
+    <h2>Metodi di Acquisto</h2>
+    <p>Questi sono i metodi di pagamento che accetto. Contattami prima per concordare tutto.</p>
+  </div>
+  <div class="payment-grid">
+    <div class="payment-card">
+      <div class="payment-icon paypal">
+        <i class="fa-brands fa-paypal"></i>
+      </div>
+      <h3>PayPal</h3>
+      <p>Pagamento sicuro e veloce tramite PayPal.</p>
+      <a href="https://www.paypal.com/paypalme/mrducky99/" target="_blank" class="payment-link">
+        <i class="fa-solid fa-link"></i> paypal.me/mrducky99
+      </a>
+    </div>
+
+    <div class="payment-card">
+      <div class="payment-icon revolut">
+        <i class="fa-solid fa-r"></i>
+      </div>
+      <h3>Revolut</h3>
+      <p>Pagamento istantaneo tramite Revolut.</p>
+      <a href="https://revolut.me/mrducky" target="_blank" class="payment-link">
+        <i class="fa-solid fa-link"></i> revolut.me/mrducky
+      </a>
+    </div>
+  </div>
+
+  <div class="payment-note">
+    <i class="fa-solid fa-circle-info"></i>
+    <strong>Importante:</strong> Non effettuare pagamenti direttamente da questi link.
+    <strong>Contattami prima</strong> su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.
+    Il pagamento va effettuato solo dopo aver concordato tutto.
   </div>
 </section>
 
@@ -1128,7 +1399,7 @@ const faqAnswers = [
   },
   {
     keywords: ['pagamento', 'pagare', 'paypal', 'revolut', 'metodi'],
-    answer: 'Accetto pagamenti tramite <strong>PayPal</strong>, <strong>Revolut</strong> e <strong>bonifico bancario</strong>. Il pagamento si effettua <strong>al momento della consegna</strong>, dopo che hai visto e approvato il sito.'
+    answer: 'Accetto pagamenti tramite <strong>PayPal</strong> e <strong>Revolut</strong>. Contattami prima su Discord o via email per concordare tutto, poi procediamo col pagamento.'
   },
   {
     keywords: ['gratis', 'free', 'prova', 'demo'],
@@ -1137,6 +1408,10 @@ const faqAnswers = [
   {
     keywords: ['aiuto', 'aiutare', 'problema', 'non funziona'],
     answer: 'Se hai un problema con il sito, scrivimi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>. Se rientra nel supporto post-consegna, lo sistemo gratis!'
+  },
+  {
+    keywords: ['staff', 'team', 'chi siete', 'owner', 'designer'],
+    answer: 'Il team di DuckStudio è composto da <strong>MrDucky</strong> (Owner & Business) e <strong>Ark</strong> (Designer). Trovi le loro informazioni nella sezione Staff del sito!'
   }
 ];
 
