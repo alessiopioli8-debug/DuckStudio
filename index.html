@@ -17,6 +17,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -79,7 +82,7 @@ nav {
 
 .logo .accent { color: #00b7ff; }
 
-.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
 
 .nav-links a {
   color: #555;
@@ -90,6 +93,87 @@ nav {
 }
 
 .nav-links a:hover { color: #00b7ff; }
+
+.login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #111;
+  border: 2px solid #111;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.login-btn:hover {
+  background: #111;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.login-btn i {
+  color: #4285F4;
+  font-size: 15px;
+}
+
+.login-btn:hover i { color: #fff; }
+
+.user-info {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 6px 14px;
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 50px;
+  transition: 0.2s;
+}
+
+.user-info:hover {
+  border-color: #00b7ff;
+}
+
+.user-info img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #00b7ff;
+  object-fit: cover;
+}
+
+.user-info span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-info .logout-btn {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: 0.2s;
+}
+
+.user-info .logout-btn:hover {
+  background: #ff4444;
+  color: #fff;
+}
 
 .hero {
   min-height: 100vh;
@@ -469,27 +553,31 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .msg-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
+  overflow: hidden;
+  border: 2px solid #00b7ff;
 }
 
-.msg.bot .msg-avatar {
-  background: linear-gradient(135deg, #00b7ff, #0077cc);
-  color: #fff;
+.msg.bot .msg-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.msg.user .msg-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .msg.user { flex-direction: row-reverse; }
-
-.msg.user .msg-avatar {
-  background: #e6f7ff;
-  color: #00b7ff;
-}
 
 .msg-bubble {
   padding: 12px 16px;
@@ -630,6 +718,14 @@ section { padding: 90px 50px; background: transparent; }
 
 .contact-content p { color: #777; margin-bottom: 30px; font-size: 15px; }
 
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
 .discord-btn {
   display: inline-flex;
   align-items: center;
@@ -652,7 +748,29 @@ section { padding: 90px 50px; background: transparent; }
 
 .discord-btn i { font-size: 20px; }
 
-.contact-note { margin-top: 22px; color: #888; font-size: 13px; }
+.email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 36px;
+  background: #00b7ff;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.email-btn:hover {
+  background: #0095d4;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 183, 255, 0.4);
+}
+
+.email-btn i { font-size: 18px; }
+
+.contact-note { margin-top: 10px; color: #888; font-size: 13px; }
 
 footer {
   padding: 35px 50px;
@@ -680,11 +798,16 @@ footer {
   .contact-content h2 { font-size: 26px; }
   .btn { padding: 12px 22px; font-size: 13px; }
   .faq-wrapper { padding: 25px; }
+  .login-btn span { display: none; }
+  .login-btn { padding: 10px 14px; }
+  .user-info span { max-width: 80px; }
 }
 
 @media (max-width: 500px) {
   .hero-text h1 { font-size: 32px; }
   .msg-bubble { max-width: 90%; font-size: 13px; }
+  .contact-buttons { flex-direction: column; align-items: center; }
+  .discord-btn, .email-btn { width: 100%; justify-content: center; }
 }
 </style>
 </head>
@@ -701,6 +824,18 @@ footer {
     <li><a href="#pricing">Prezzi</a></li>
     <li><a href="#faq">Domande</a></li>
     <li><a href="#contact">Contatti</a></li>
+    <li>
+      <button class="login-btn" id="loginBtn" onclick="signInWithGoogle()">
+        <i class="fa-brands fa-google"></i> <span>Accedi con Google</span>
+      </button>
+      <div class="user-info" id="userInfo">
+        <img id="userPfp" src="" alt="User">
+        <span id="userName">Utente</span>
+        <button class="logout-btn" onclick="signOutUser()" title="Esci">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </li>
   </ul>
 </nav>
 
@@ -853,14 +988,19 @@ footer {
   <div class="contact-content">
     <h2>Iniziamo il tuo progetto</h2>
     <p>
-      Tutto il resto si fa su Discord. Scrivimi lì per discutere del tuo sito,
+      Scrivimi su Discord o via email per discutere del tuo sito,
       dei dettagli e dei tempi di consegna.
     </p>
-    <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="discord-btn">
-      <i class="fa-brands fa-discord"></i>
-      Entra nel Discord
-    </a>
+    <div class="contact-buttons">
+      <a href="https://discord.gg/ThYvNjgV6" target="_blank" class="discord-btn">
+        <i class="fa-brands fa-discord"></i> Discord
+      </a>
+      <a href="mailto:itu600396@gmail.com" class="email-btn">
+        <i class="fa-solid fa-envelope"></i> Email
+      </a>
+    </div>
     <div class="contact-note">
+      Email: <strong>itu600396@gmail.com</strong><br>
       Prezzi dai 15€ ai 20€ — il costo dipende dalla complessità del sito
     </div>
   </div>
@@ -871,6 +1011,50 @@ footer {
 </footer>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
+  authDomain: "duckstudio-official.firebaseapp.com",
+  projectId: "duckstudio-official",
+  storageBucket: "duckstudio-official.firebasestorage.app",
+  messagingSenderId: "390003096580",
+  appId: "1:390003096580:web:2124a9fe24bd0733de8951"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+function signInWithGoogle() {
+  auth.signInWithPopup(provider).catch(err => {
+    console.error('Errore login:', err);
+    alert('Errore durante il login con Google. Riprova.');
+  });
+}
+
+function signOutUser() {
+  auth.signOut();
+}
+
+auth.onAuthStateChanged(user => {
+  const loginBtn = document.getElementById('loginBtn');
+  const userInfo = document.getElementById('userInfo');
+  const userPfp = document.getElementById('userPfp');
+  const userName = document.getElementById('userName');
+
+  if (user) {
+    loginBtn.style.display = 'none';
+    userInfo.style.display = 'inline-flex';
+    userPfp.src = user.photoURL || 'https://via.placeholder.com/34';
+    userName.textContent = user.displayName || user.email;
+  } else {
+    loginBtn.style.display = 'inline-flex';
+    userInfo.style.display = 'none';
+  }
+});
+
+const AI_PFP = 'https://i.pinimg.com/736x/9e/ea/ab/9eeaab9fe1deff8df678bbf5f60cc370.jpg';
+const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/00b7ff/ffffff?text=U';
+
 const bg = document.getElementById('cube-bg');
 const size = 60;
 const cols = Math.ceil(window.innerWidth / size);
@@ -916,7 +1100,7 @@ const faqChat = document.getElementById('faqChat');
 const faqAnswers = [
   {
     keywords: ['costo', 'costa', 'prezzo', 'prezzi', 'quanto'],
-    answer: 'I prezzi partono da <strong>15€</strong> per un sito base (one-page) fino a <strong>20€</strong> per un sito completo multi-pagina. Il costo finale dipende dalla complessità del progetto. Per un preventivo preciso scrivimi su Discord!'
+    answer: 'I prezzi partono da <strong>15€</strong> per un sito base (one-page) fino a <strong>20€</strong> per un sito completo multi-pagina. Il costo finale dipende dalla complessità del progetto. Per un preventivo preciso scrivimi su Discord o via email a <strong>itu600396@gmail.com</strong>!'
   },
   {
     keywords: ['tempo', 'quanto tempo', 'consegna', 'veloce', 'durata'],
@@ -931,8 +1115,8 @@ const faqAnswers = [
     answer: 'Sì! Posso aiutarti a mettere il sito online <strong>gratis</strong> su GitHub Pages, Netlify o Vercel. Se vuoi un dominio personalizzato (es. tuonome.com), ti spiego come acquistarlo e collegarlo in pochi minuti.'
   },
   {
-    keywords: ['contatto', 'contattarti', 'discord', 'scrivere', 'parlare'],
-    answer: 'Mi trovi su <strong>Discord</strong>! Entra nel server con questo link: <strong>discord.gg/ThYvNjgV6</strong> e apri un ticket. Ti rispondo il prima possibile.'
+    keywords: ['contatto', 'contattarti', 'discord', 'email', 'scrivere', 'parlare'],
+    answer: 'Mi trovi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) oppure via email a <strong>itu600396@gmail.com</strong>. Ti rispondo il prima possibile!'
   },
   {
     keywords: ['include', 'cosa include', 'cosa offri', 'cosa fai'],
@@ -952,19 +1136,25 @@ const faqAnswers = [
   },
   {
     keywords: ['aiuto', 'aiutare', 'problema', 'non funziona'],
-    answer: 'Se hai un problema con il sito, scrivimi su <strong>Discord</strong> (discord.gg/ThYvNjgV6). Se rientra nel supporto post-consegna, lo sistemo gratis!'
+    answer: 'Se hai un problema con il sito, scrivimi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>. Se rientra nel supporto post-consegna, lo sistemo gratis!'
   }
 ];
 
 function addMessage(text, isBot) {
   const msg = document.createElement('div');
   msg.className = 'msg ' + (isBot ? 'bot' : 'user');
-  const avatar = isBot ? '🤖' : '👤';
+  const avatarImg = isBot ? AI_PFP : getUserPfp();
   msg.innerHTML =
-    '<div class="msg-avatar">' + avatar + '</div>' +
+    '<div class="msg-avatar"><img src="' + avatarImg + '" alt="Avatar"></div>' +
     '<div class="msg-bubble">' + text + '</div>';
   faqChat.appendChild(msg);
   faqChat.scrollTop = faqChat.scrollHeight;
+}
+
+function getUserPfp() {
+  const user = auth.currentUser;
+  if (user && user.photoURL) return user.photoURL;
+  return DEFAULT_USER_PFP;
 }
 
 function showTyping() {
@@ -972,7 +1162,7 @@ function showTyping() {
   typing.className = 'msg bot';
   typing.id = 'typingIndicator';
   typing.innerHTML =
-    '<div class="msg-avatar">🤖</div>' +
+    '<div class="msg-avatar"><img src="' + AI_PFP + '" alt="AI"></div>' +
     '<div class="typing"><span></span><span></span><span></span></div>';
   faqChat.appendChild(typing);
   faqChat.scrollTop = faqChat.scrollHeight;
@@ -1001,7 +1191,7 @@ function findAnswer(question) {
 
   if (best) return best.answer;
 
-  return 'Non ho una risposta pronta per questa domanda. 🤔 Scrivi direttamente su <strong>Discord</strong> (discord.gg/ThYvNjgV6) e ti risponderò personalmente il prima possibile!';
+  return 'Non ho una risposta pronta per questa domanda. Scrivi direttamente su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong> e ti risponderò personalmente il prima possibile!';
 }
 
 function askFaq(question) {
