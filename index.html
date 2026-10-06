@@ -11,8 +11,6 @@
 <meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
 <meta property="og:image" content="https://i.pinimg.com/736x/57/e2/45/57e245570f6a78123b3c7a9379c4dff7.jpg">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -78,27 +76,29 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  padding: 18px 50px;
+  padding: 14px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+  gap: 15px;
 }
 
 .logo {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.5px;
   color: var(--text-dark);
+  flex-shrink: 0;
 }
 
 .logo .accent { color: var(--accent); }
 
-.nav-links { display: flex; gap: 22px; list-style: none; align-items: center; }
+.nav-links { display: flex; gap: 18px; list-style: none; align-items: center; }
 
 .nav-links a {
   color: #555;
@@ -110,21 +110,56 @@ nav {
 
 .nav-links a:hover { color: var(--accent); }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.lang-btn {
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  color: #666;
+}
+
+.lang-btn.active {
+  background: #fff;
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .login-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
+  gap: 8px;
+  padding: 8px 14px;
   background: #ffffff;
   color: #3c4043;
   border: 1px solid #dadce0;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
   transition: 0.2s;
   font-family: 'Roboto', 'Inter', sans-serif;
   box-shadow: 0 1px 2px rgba(60, 64, 67, 0.1);
+  white-space: nowrap;
 }
 
 .login-btn:hover {
@@ -133,16 +168,16 @@ nav {
 }
 
 .login-btn .google-logo {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
 }
 
 .user-info {
   display: none;
   align-items: center;
-  gap: 12px;
-  padding: 6px 6px 6px 14px;
+  gap: 8px;
+  padding: 4px 4px 4px 10px;
   background: #fff;
   border: 2px solid var(--border);
   border-radius: 50px;
@@ -152,18 +187,18 @@ nav {
 .user-info:hover { border-color: var(--accent); }
 
 .user-info img {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 2px solid var(--accent);
   object-fit: cover;
 }
 
 .user-info span {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-dark);
-  max-width: 120px;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -173,17 +208,28 @@ nav {
   background: #f0f0f0;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #666;
   transition: 0.2s;
+  font-size: 12px;
 }
 
 .user-info .logout-btn:hover { background: #ff4444; color: #fff; }
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 5px;
+}
 
 .hero {
   min-height: 100vh;
@@ -442,6 +488,141 @@ section { padding: 90px 50px; background: transparent; }
 
 .portfolio-card:hover .portfolio-link { gap: 12px; }
 
+.reviews-grid { max-width: 900px; margin: 0 auto; display: grid; gap: 20px; }
+
+.review-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  transition: 0.25s;
+}
+
+.review-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(0, 183, 255, 0.15);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.review-info { flex: 1; }
+
+.review-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-dark);
+  margin-bottom: 3px;
+}
+
+.review-stars {
+  color: #ffc107;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.review-text {
+  color: #444;
+  font-size: 14px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.review-date {
+  color: var(--text-muted);
+  font-size: 11px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+.review-form {
+  max-width: 700px;
+  margin: 40px auto 0;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--border);
+  border-radius: 18px;
+}
+
+.review-form h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+.review-form input,
+.review-form textarea,
+.review-form select {
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: 0.2s;
+  margin-bottom: 12px;
+  background: #fff;
+  color: #111;
+}
+
+.review-form input:focus,
+.review-form textarea:focus,
+.review-form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 183, 255, 0.15);
+}
+
+.review-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.review-form button {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.review-form button:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+}
+
+.review-form .login-required {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #ccc;
+}
+
 .staff-grid {
   max-width: 800px;
   margin: 0 auto;
@@ -465,9 +646,7 @@ section { padding: 90px 50px; background: transparent; }
 .staff-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   height: 5px;
   background: linear-gradient(90deg, var(--accent), var(--accent-dark));
   transform: scaleX(0);
@@ -1159,86 +1338,119 @@ footer .disclaimer {
 .admin-status.error { background: #ffebee; color: #c62828; }
 
 @media (max-width: 900px) {
-  nav { padding: 15px 22px; }
-  .nav-links { display: none; }
+  nav { padding: 12px 18px; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 15px; padding: 8px 0; }
+  .menu-toggle { display: block; }
+  .login-btn span { display: none; }
+  .login-btn { padding: 8px 12px; }
+  .user-info span { max-width: 70px; font-size: 11px; }
   section { padding: 65px 22px; }
   .hero { padding: 100px 22px 50px; }
   .hero-content { grid-template-columns: 1fr; gap: 40px; text-align: center; }
-  .hero-text h1 { font-size: 40px; letter-spacing: -1.5px; }
+  .hero-text h1 { font-size: 38px; letter-spacing: -1.5px; }
   .hero-text .description { margin: 0 auto 30px; }
   .hero-buttons { justify-content: center; }
-  .hero-image { max-width: 320px; }
+  .hero-image { max-width: 300px; }
   .section-header { padding: 25px 25px; }
-  .section-header h2 { font-size: 30px; }
+  .section-header h2 { font-size: 28px; }
   .contact-content { padding: 35px 22px; }
   .contact-content h2 { font-size: 26px; }
   .btn { padding: 12px 22px; font-size: 13px; }
   .faq-wrapper { padding: 25px; }
-  .login-btn span { display: none; }
-  .login-btn { padding: 10px 14px; }
-  .user-info span { max-width: 80px; }
   .staff-pfp { width: 110px; height: 110px; }
+  .review-form { padding: 25px 20px; }
 }
 
 @media (max-width: 500px) {
-  .hero-text h1 { font-size: 32px; }
+  nav { padding: 10px 15px; }
+  .logo { font-size: 16px; }
+  .hero { padding: 90px 18px 40px; }
+  .hero-text h1 { font-size: 30px; }
   .msg-bubble { max-width: 90%; font-size: 13px; }
   .contact-buttons { flex-direction: column; align-items: center; }
   .discord-btn, .email-btn { width: 100%; justify-content: center; }
+  .section-header { padding: 20px 18px; }
+  .section-header h2 { font-size: 24px; }
+  .price-card { padding: 28px 20px; }
+  .price-card .amount { font-size: 42px; }
+  .staff-card { padding: 30px 20px; }
+  .faq-wrapper { padding: 20px 15px; }
+  .msg-avatar { width: 32px; height: 32px; font-size: 14px; }
+  .suggestion-btn { font-size: 12px; padding: 8px 14px; }
+  .lang-switch { display: none; }
 }
 </style>
 </head>
 <body>
 
 <div id="cube-bg"></div>
-
 <nav>
   <div class="logo">Duck<span class="accent">Studio</span></div>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#skills">Competenze</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#staff">Staff</a></li>
-    <li><a href="#pricing">Tariffe</a></li>
-    <li><a href="#payment">Pagamenti</a></li>
-    <li><a href="#faq">Domande</a></li>
-    <li><a href="#contact">Contatti</a></li>
-    <li>
-      <button class="login-btn" id="loginBtn" onclick="signInWithGoogle()">
-        <svg class="google-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-        </svg>
-        <span>Accedi con Google</span>
-      </button>
-      <div class="user-info" id="userInfo">
-        <img id="userPfp" src="" alt="User">
-        <span id="userName">Utente</span>
-        <button class="logout-btn" onclick="signOutUser()" title="Esci">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-      </div>
-    </li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" data-i18n="navHome">Home</a></li>
+    <li><a href="#skills" data-i18n="navSkills">Competenze</a></li>
+    <li><a href="#portfolio" data-i18n="navPortfolio">Portfolio</a></li>
+    <li><a href="#reviews" data-i18n="navReviews">Recensioni</a></li>
+    <li><a href="#staff" data-i18n="navStaff">Staff</a></li>
+    <li><a href="#pricing" data-i18n="navPricing">Tariffe</a></li>
+    <li><a href="#payment" data-i18n="navPayment">Pagamenti</a></li>
+    <li><a href="#faq" data-i18n="navFaq">Domande</a></li>
+    <li><a href="#contact" data-i18n="navContact">Contatti</a></li>
   </ul>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('it', this)">IT</button>
+      <button class="lang-btn" onclick="setLang('en', this)">EN</button>
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="signInWithGoogle()">
+      <svg class="google-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      <span data-i18n="loginBtn">Accedi</span>
+    </button>
+    <div class="user-info" id="userInfo">
+      <img id="userPfp" src="" alt="User">
+      <span id="userName">Utente</span>
+      <button class="logout-btn" onclick="signOutUser()" title="Esci">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+  </div>
 </nav>
 
 <section class="hero" id="home">
   <div class="hero-content">
     <div class="hero-text">
-      <span class="greeting">DuckStudio</span>
-      <h1>Creiamo <span class="accent">siti web</span> su misura</h1>
-      <p class="description">
+      <span class="greeting" data-i18n="greeting">DuckStudio</span>
+      <h1><span data-i18n="heroTitle1">Creiamo</span> <span class="accent" data-i18n="heroTitle2">siti web</span> <span data-i18n="heroTitle3">su misura</span></h1>
+      <p class="description" data-i18n="heroDesc">
         Siamo due appassionati di web development. Realizziamo siti moderni e responsive
         usando HTML, CSS e JavaScript. Un progetto amatoriale, ma fatto con cura.
       </p>
       <div class="hero-buttons">
         <a href="#portfolio" class="btn btn-outline">
-          <i class="fa-solid fa-eye"></i> Guarda il Portfolio
+          <i class="fa-solid fa-eye"></i> <span data-i18n="heroBtn1">Guarda il Portfolio</span>
         </a>
         <button class="btn btn-primary" onclick="openDiscord()">
-          <i class="fa-brands fa-discord"></i> Scrivici su Discord
+          <i class="fa-brands fa-discord"></i> <span data-i18n="heroBtn2">Scrivici su Discord</span>
         </button>
       </div>
     </div>
@@ -1252,38 +1464,52 @@ footer .disclaimer {
 
 <section id="skills">
   <div class="section-header">
-    <span class="label">Competenze</span>
-    <h2>Cosa Sappiamo Fare</h2>
-    <p>Le tecnologie che usiamo per creare siti web moderni.</p>
+    <span class="label" data-i18n="skillsLabel">Competenze</span>
+    <h2 data-i18n="skillsTitle">Cosa Sappiamo Fare</h2>
+    <p data-i18n="skillsSub">Le tecnologie che usiamo per creare siti web moderni.</p>
   </div>
   <div class="skills-grid" id="skillsGrid"></div>
 </section>
 
 <section id="portfolio">
   <div class="section-header">
-    <span class="label">Portfolio</span>
-    <h2>I Nostri Lavori</h2>
-    <p>Un esempio del nostro stile e della qualità che offriamo.</p>
+    <span class="label" data-i18n="portfolioLabel">Portfolio</span>
+    <h2 data-i18n="portfolioTitle">I Nostri Lavori</h2>
+    <p data-i18n="portfolioSub">Un esempio del nostro stile e della qualità che offriamo.</p>
   </div>
   <div class="portfolio-grid" id="portfolioGrid"></div>
 </section>
 
+<section id="reviews">
+  <div class="section-header">
+    <span class="label" data-i18n="reviewsLabel">Recensioni</span>
+    <h2 data-i18n="reviewsTitle">Cosa Dicono di Noi</h2>
+    <p data-i18n="reviewsSub">Le recensioni dei nostri clienti. Se hai lavorato con noi, lascia la tua!</p>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+
+  <div class="review-form" id="reviewFormBox">
+    <h3 data-i18n="reviewFormTitle">Lascia una recensione</h3>
+    <div id="reviewFormContent"></div>
+  </div>
+</section>
+
 <section id="staff">
   <div class="section-header">
-    <span class="label">Il Team</span>
-    <h2>Chi C'è Dietro</h2>
-    <p>Due appassionati di web development.</p>
+    <span class="label" data-i18n="staffLabel">Il Team</span>
+    <h2 data-i18n="staffTitle">Chi C'è Dietro</h2>
+    <p data-i18n="staffSub">Due appassionati di web development.</p>
   </div>
   <div class="staff-grid">
     <div class="staff-card">
       <div class="staff-pfp">
         <img src="https://i.pinimg.com/736x/e2/5b/78/e25b78d7064418a36b9c34f77139d618.jpg" alt="A. P.">
       </div>
-      <div class="staff-role owner">Founder & Business</div>
+      <div class="staff-role owner" data-i18n="staffRole1">Founder & Business</div>
       <h3>A. P.</h3>
-      <p class="staff-desc">Gestisce i clienti, coordina i progetti e si occupa della comunicazione.</p>
+      <p class="staff-desc" data-i18n="staffDesc1">Gestisce i clienti, coordina i progetti e si occupa della comunicazione.</p>
       <button class="staff-contact" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> Contattami
+        <i class="fa-brands fa-discord"></i> <span data-i18n="staffContact">Contattami</span>
       </button>
     </div>
 
@@ -1291,34 +1517,34 @@ footer .disclaimer {
       <div class="staff-pfp">
         <img src="https://i.pinimg.com/736x/a3/17/5e/a3175e2e49eb6d2acb3eef523d751c52.jpg" alt="M. B.">
       </div>
-      <div class="staff-role designer">Designer</div>
+      <div class="staff-role designer" data-i18n="staffRole2">Designer</div>
       <h3>M. B.</h3>
-      <p class="staff-desc">Cura il design, gli stili e le animazioni di ogni sito realizzato.</p>
+      <p class="staff-desc" data-i18n="staffDesc2">Cura il design, gli stili e le animazioni di ogni sito realizzato.</p>
       <button class="staff-contact" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> Contattami
+        <i class="fa-brands fa-discord"></i> <span data-i18n="staffContact">Contattami</span>
       </button>
     </div>
   </div>
 
   <div class="staff-disclaimer">
-    <strong>Progetto amatoriale</strong> — nato dalla passione per il web development. Non emettiamo fatture.
+    <strong data-i18n="staffDisclaimerTitle">Progetto amatoriale</strong> — <span data-i18n="staffDisclaimerText">nato dalla passione per il web development. Non emettiamo fatture.</span>
   </div>
 </section>
 
 <section id="pricing">
   <div class="section-header">
-    <span class="label">Tariffe</span>
-    <h2>Tariffe Indicative</h2>
-    <p>Tariffe di partenza. Il costo finale dipende dalla complessità del progetto.</p>
+    <span class="label" data-i18n="pricingLabel">Tariffe</span>
+    <h2 data-i18n="pricingTitle">Tariffe Indicative</h2>
+    <p data-i18n="pricingSub">Tariffe di partenza. Il costo finale dipende dalla complessità del progetto.</p>
   </div>
   <div class="pricing-grid" id="pricingGrid"></div>
 </section>
 
 <section id="payment">
   <div class="section-header">
-    <span class="label">Pagamenti</span>
-    <h2>Metodi di Pagamento</h2>
-    <p>Questi sono i metodi accettati. Contattaci prima per concordare tutto.</p>
+    <span class="label" data-i18n="paymentLabel">Pagamenti</span>
+    <h2 data-i18n="paymentTitle">Metodi di Pagamento</h2>
+    <p data-i18n="paymentSub">Questi sono i metodi accettati. Contattaci prima per concordare tutto.</p>
   </div>
   <div class="payment-grid">
     <div class="payment-card">
@@ -1326,7 +1552,7 @@ footer .disclaimer {
         <i class="fa-brands fa-paypal"></i>
       </div>
       <h3>PayPal</h3>
-      <p>Pagamento sicuro e veloce tramite PayPal.</p>
+      <p data-i18n="paypalDesc">Pagamento sicuro e veloce tramite PayPal.</p>
       <button class="payment-link" onclick="openPayment('paypal')">
         <i class="fa-solid fa-link"></i> paypal.me/mrducky99
       </button>
@@ -1337,7 +1563,7 @@ footer .disclaimer {
         <i class="fa-solid fa-r"></i>
       </div>
       <h3>Revolut</h3>
-      <p>Pagamento istantaneo tramite Revolut.</p>
+      <p data-i18n="revolutDesc">Pagamento istantaneo tramite Revolut.</p>
       <button class="payment-link" onclick="openPayment('revolut')">
         <i class="fa-solid fa-link"></i> revolut.me/mrducky
       </button>
@@ -1346,35 +1572,33 @@ footer .disclaimer {
 
   <div class="payment-note">
     <i class="fa-solid fa-circle-info"></i>
-    <strong>Importante:</strong> Non effettuare pagamenti direttamente da questi link.
-    <strong>Contattaci prima</strong> su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.
-    Il pagamento va effettuato solo dopo aver concordato tutto.
+    <strong data-i18n="paymentNoteTitle">Importante:</strong> <span data-i18n="paymentNoteText">Non effettuare pagamenti direttamente da questi link. Contattaci prima su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna. Il pagamento va effettuato solo dopo aver concordato tutto.</span>
   </div>
 </section>
 
 <section id="faq">
   <div class="section-header">
-    <span class="label">Domande</span>
-    <h2>Hai delle domande?</h2>
-    <p>Il nostro assistente virtuale risponde subito alle domande più comuni.</p>
+    <span class="label" data-i18n="faqLabel">Domande</span>
+    <h2 data-i18n="faqTitle">Hai delle domande?</h2>
+    <p data-i18n="faqSub">Il nostro assistente virtuale risponde subito alle domande più comuni.</p>
   </div>
 
   <div class="faq-wrapper">
     <div class="faq-chat" id="faqChat"></div>
 
     <div class="faq-suggestions" id="faqSuggestions">
-      <button class="suggestion-btn" onclick="askFaq('Quanto costa un sito?')">Quanto costa un sito?</button>
-      <button class="suggestion-btn" onclick="askFaq('Quanto tempo ci vuole?')">Quanto tempo ci vuole?</button>
-      <button class="suggestion-btn" onclick="askFaq('Che tecnologie usate?')">Che tecnologie usate?</button>
-      <button class="suggestion-btn" onclick="askFaq('Posso avere un dominio mio?')">Posso avere un dominio mio?</button>
-      <button class="suggestion-btn" onclick="askFaq('Come vi contatto?')">Come vi contatto?</button>
-      <button class="suggestion-btn" onclick="askFaq('Cosa include il sito?')">Cosa include il sito?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q1'))" data-i18n="q1">Quanto costa un sito?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q2'))" data-i18n="q2">Quanto tempo ci vuole?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q3'))" data-i18n="q3">Che tecnologie usate?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q4'))" data-i18n="q4">Posso avere un dominio mio?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q5'))" data-i18n="q5">Come vi contatto?</button>
+      <button class="suggestion-btn" onclick="askFaq(t('q6'))" data-i18n="q6">Cosa include il sito?</button>
     </div>
 
     <div class="faq-input-row">
-      <input type="text" class="faq-input" id="faqInput" placeholder="Scrivi la tua domanda..." onkeydown="if(event.key==='Enter')sendFaq()">
+      <input type="text" class="faq-input" id="faqInput" placeholder="Scrivi la tua domanda..." data-i18n="faqPlaceholder" onkeydown="if(event.key==='Enter')sendFaq()">
       <button class="faq-send" onclick="sendFaq()">
-        <i class="fa-solid fa-paper-plane"></i> Invia
+        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="faqSend">Invia</span>
       </button>
     </div>
   </div>
@@ -1382,8 +1606,8 @@ footer .disclaimer {
 
 <section id="contact">
   <div class="contact-content">
-    <h2>Iniziamo il tuo progetto</h2>
-    <p>
+    <h2 data-i18n="contactTitle">Iniziamo il tuo progetto</h2>
+    <p data-i18n="contactDesc">
       Scrivici su Discord o via email per discutere del tuo sito.
       Siamo un progetto amatoriale: nessuna fretta, nessuna pressione, solo passione per il codice.
     </p>
@@ -1397,18 +1621,17 @@ footer .disclaimer {
     </div>
     <div class="login-warning" id="loginWarning">
       <i class="fa-solid fa-lock"></i>
-      Per aprire il Discord devi prima accedere con Google
+      <span data-i18n="loginWarning">Per aprire il Discord devi prima accedere con Google</span>
     </div>
-    <div class="contact-note">
-      Email: <strong>itu600396@gmail.com</strong><br>
-      Tariffe dai 15€ ai 20€ — il costo dipende dalla complessità del sito
+    <div class="contact-note" data-i18n="contactNote">
+      Email: itu600396@gmail.com — Tariffe dai 15€ ai 20€
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 DuckStudio — Progetto amatoriale senza partita IVA</p>
-  <p class="disclaimer">Siti web realizzati per passione, non per business.</p>
+  <p>© <span id="currentYear">2026</span> DuckStudio — <span data-i18n="footerNote">Progetto amatoriale senza partita IVA</span></p>
+  <p class="disclaimer" data-i18n="footerDisclaimer">Siti web realizzati per passione, non per business.</p>
 </footer>
 
 <div class="admin-panel" id="adminPanel">
@@ -1452,6 +1675,17 @@ footer .disclaimer {
     </div>
 
     <div class="admin-section">
+      <h3><i class="fa-solid fa-star"></i> Recensioni</h3>
+      <div id="adminReviewList"></div>
+      <input type="text" class="admin-input" id="newReviewName" placeholder="Nome cliente">
+      <input type="number" class="admin-input" id="newReviewStars" placeholder="Stelle (1-5)" min="1" max="5" value="5">
+      <textarea class="admin-input" id="newReviewText" placeholder="Testo recensione"></textarea>
+      <button class="admin-btn success" onclick="addReviewFromAdmin()">
+        <i class="fa-solid fa-plus"></i> Aggiungi Recensione
+      </button>
+    </div>
+
+    <div class="admin-section">
       <h3><i class="fa-solid fa-arrows-up-down"></i> Ordine Sezioni</h3>
       <div id="adminSectionOrder"></div>
     </div>
@@ -1470,7 +1704,6 @@ footer .disclaimer {
     </div>
   </div>
 </div>
-
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
@@ -1493,6 +1726,209 @@ const DISCORD_LINK = 'https://discord.gg/ThYvNjgV6';
 const ADMIN_PASSWORD = 'admin26';
 const EMAILJS_SERVICE = 'duckstudio.service';
 const EMAILJS_TEMPLATE = 'template_iocg9c4';
+
+const translations = {
+  it: {
+    navHome: 'Home',
+    navSkills: 'Competenze',
+    navPortfolio: 'Portfolio',
+    navReviews: 'Recensioni',
+    navStaff: 'Staff',
+    navPricing: 'Tariffe',
+    navPayment: 'Pagamenti',
+    navFaq: 'Domande',
+    navContact: 'Contatti',
+    loginBtn: 'Accedi',
+    greeting: 'DuckStudio',
+    heroTitle1: 'Creiamo',
+    heroTitle2: 'siti web',
+    heroTitle3: 'su misura',
+    heroDesc: 'Siamo due appassionati di web development. Realizziamo siti moderni e responsive usando HTML, CSS e JavaScript. Un progetto amatoriale, ma fatto con cura.',
+    heroBtn1: 'Guarda il Portfolio',
+    heroBtn2: 'Scrivici su Discord',
+    skillsLabel: 'Competenze',
+    skillsTitle: 'Cosa Sappiamo Fare',
+    skillsSub: 'Le tecnologie che usiamo per creare siti web moderni.',
+    portfolioLabel: 'Portfolio',
+    portfolioTitle: 'I Nostri Lavori',
+    portfolioSub: 'Un esempio del nostro stile e della qualità che offriamo.',
+    reviewsLabel: 'Recensioni',
+    reviewsTitle: 'Cosa Dicono di Noi',
+    reviewsSub: 'Le recensioni dei nostri clienti. Se hai lavorato con noi, lascia la tua!',
+    reviewFormTitle: 'Lascia una recensione',
+    reviewLoginRequired: 'Devi accedere con Google per lasciare una recensione',
+    reviewNamePlaceholder: 'Il tuo nome',
+    reviewTextPlaceholder: 'Scrivi la tua recensione...',
+    reviewStarsLabel: 'Voto:',
+    reviewSubmit: 'Pubblica recensione',
+    reviewEmpty: 'Ancora nessuna recensione. Sii il primo!',
+    staffLabel: 'Il Team',
+    staffTitle: 'Chi C\'è Dietro',
+    staffSub: 'Due appassionati di web development.',
+    staffRole1: 'Founder & Business',
+    staffRole2: 'Designer',
+    staffDesc1: 'Gestisce i clienti, coordina i progetti e si occupa della comunicazione.',
+    staffDesc2: 'Cura il design, gli stili e le animazioni di ogni sito realizzato.',
+    staffContact: 'Contattami',
+    staffDisclaimerTitle: 'Progetto amatoriale',
+    staffDisclaimerText: 'nato dalla passione per il web development. Non emettiamo fatture.',
+    pricingLabel: 'Tariffe',
+    pricingTitle: 'Tariffe Indicative',
+    pricingSub: 'Tariffe di partenza. Il costo finale dipende dalla complessità del progetto.',
+    paymentLabel: 'Pagamenti',
+    paymentTitle: 'Metodi di Pagamento',
+    paymentSub: 'Questi sono i metodi accettati. Contattaci prima per concordare tutto.',
+    paypalDesc: 'Pagamento sicuro e veloce tramite PayPal.',
+    revolutDesc: 'Pagamento istantaneo tramite Revolut.',
+    paymentNoteTitle: 'Importante:',
+    paymentNoteText: 'Non effettuare pagamenti direttamente da questi link. Contattaci prima su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.',
+    faqLabel: 'Domande',
+    faqTitle: 'Hai delle domande?',
+    faqSub: 'Il nostro assistente virtuale risponde subito alle domande più comuni.',
+    faqPlaceholder: 'Scrivi la tua domanda...',
+    faqSend: 'Invia',
+    contactTitle: 'Iniziamo il tuo progetto',
+    contactDesc: 'Scrivici su Discord o via email per discutere del tuo sito. Siamo un progetto amatoriale: nessuna fretta, nessuna pressione, solo passione per il codice.',
+    loginWarning: 'Per aprire il Discord devi prima accedere con Google',
+    contactNote: 'Email: itu600396@gmail.com — Tariffe dai 15€ ai 20€',
+    footerNote: 'Progetto amatoriale senza partita IVA',
+    footerDisclaimer: 'Siti web realizzati per passione, non per business.',
+    q1: 'Quanto costa un sito?',
+    q2: 'Quanto tempo ci vuole?',
+    q3: 'Che tecnologie usate?',
+    q4: 'Posso avere un dominio mio?',
+    q5: 'Come vi contatto?',
+    q6: 'Cosa include il sito?',
+    faqWelcome: 'Ciao! Siamo l\'assistente di DuckStudio. Come possiamo aiutarti?',
+    faqHint: 'Clicca su una delle domande qui sotto o scrivici direttamente.',
+    paymentAlert: 'Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.',
+    contactText: 'Ci trovi su Discord (discord.gg/ThYvNjgV6) o via email a itu600396@gmail.com.',
+    loginError: 'Errore durante il login con Google. Riprova.',
+    reviewAdded: 'Recensione pubblicata! Grazie!',
+    reviewError: 'Errore durante l\'invio. Riprova.',
+    reviewMissing: 'Compila tutti i campi!'
+  },
+  en: {
+    navHome: 'Home',
+    navSkills: 'Skills',
+    navPortfolio: 'Portfolio',
+    navReviews: 'Reviews',
+    navStaff: 'Staff',
+    navPricing: 'Pricing',
+    navPayment: 'Payments',
+    navFaq: 'FAQ',
+    navContact: 'Contact',
+    loginBtn: 'Login',
+    greeting: 'DuckStudio',
+    heroTitle1: 'We build',
+    heroTitle2: 'websites',
+    heroTitle3: 'that work',
+    heroDesc: 'We are two web development enthusiasts. We create modern and responsive websites using HTML, CSS and JavaScript. An amateur project, but done with care.',
+    heroBtn1: 'See Portfolio',
+    heroBtn2: 'Write us on Discord',
+    skillsLabel: 'Skills',
+    skillsTitle: 'What We Can Do',
+    skillsSub: 'The technologies we use to build modern websites.',
+    portfolioLabel: 'Portfolio',
+    portfolioTitle: 'Our Work',
+    portfolioSub: 'An example of our style and the quality we offer.',
+    reviewsLabel: 'Reviews',
+    reviewsTitle: 'What They Say About Us',
+    reviewsSub: 'Reviews from our clients. If you worked with us, leave yours!',
+    reviewFormTitle: 'Leave a review',
+    reviewLoginRequired: 'You must log in with Google to leave a review',
+    reviewNamePlaceholder: 'Your name',
+    reviewTextPlaceholder: 'Write your review...',
+    reviewStarsLabel: 'Rating:',
+    reviewSubmit: 'Publish review',
+    reviewEmpty: 'No reviews yet. Be the first!',
+    staffLabel: 'The Team',
+    staffTitle: 'Who\'s Behind',
+    staffSub: 'Two web development enthusiasts.',
+    staffRole1: 'Founder & Business',
+    staffRole2: 'Designer',
+    staffDesc1: 'Manages clients, coordinates projects and handles communication.',
+    staffDesc2: 'Takes care of the design, styles and animations of every website.',
+    staffContact: 'Contact me',
+    staffDisclaimerTitle: 'Amateur project',
+    staffDisclaimerText: 'born from a passion for web development. We don\'t issue invoices.',
+    pricingLabel: 'Pricing',
+    pricingTitle: 'Indicative Pricing',
+    pricingSub: 'Starting rates. The final cost depends on the project complexity.',
+    paymentLabel: 'Payments',
+    paymentTitle: 'Payment Methods',
+    paymentSub: 'These are the accepted methods. Contact us first to agree on everything.',
+    paypalDesc: 'Fast and secure payment via PayPal.',
+    revolutDesc: 'Instant payment via Revolut.',
+    paymentNoteTitle: 'Important:',
+    paymentNoteText: 'Do not make payments directly from these links. Contact us first on Discord or via email to agree on the project, price and delivery times.',
+    faqLabel: 'FAQ',
+    faqTitle: 'Got questions?',
+    faqSub: 'Our virtual assistant answers the most common questions right away.',
+    faqPlaceholder: 'Write your question...',
+    faqSend: 'Send',
+    contactTitle: 'Let\'s start your project',
+    contactDesc: 'Write to us on Discord or via email to discuss your website. We are an amateur project: no rush, no pressure, just passion for code.',
+    loginWarning: 'To open Discord you must first log in with Google',
+    contactNote: 'Email: itu600396@gmail.com — Rates from €15 to €20',
+    footerNote: 'Amateur project without VAT number',
+    footerDisclaimer: 'Websites made for passion, not for business.',
+    q1: 'How much does a website cost?',
+    q2: 'How long does it take?',
+    q3: 'What technologies do you use?',
+    q4: 'Can I have my own domain?',
+    q5: 'How do I contact you?',
+    q6: 'What\'s included in the website?',
+    faqWelcome: 'Hi! We are the DuckStudio assistant. How can we help you?',
+    faqHint: 'Click on one of the questions below or write to us directly.',
+    paymentAlert: 'Before proceeding with the payment, contact us on Discord to agree on the project.',
+    contactText: 'Find us on Discord (discord.gg/ThYvNjgV6) or via email at itu600396@gmail.com.',
+    loginError: 'Error during Google login. Try again.',
+    reviewAdded: 'Review published! Thanks!',
+    reviewError: 'Error sending. Try again.',
+    reviewMissing: 'Fill in all fields!'
+  }
+};
+
+let currentLang = localStorage.getItem('dv_lang') || 'it';
+
+function t(key) {
+  return translations[currentLang][key] || translations.it[key] || key;
+}
+
+function setLang(lang, btn) {
+  currentLang = lang;
+  localStorage.setItem('dv_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  applyTranslations();
+  renderReviews();
+  renderReviewForm();
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
+  });
+  renderSkills();
+  renderPortfolio();
+  renderPricing();
+}
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
 
 const defaultConfig = {
   skills: [
@@ -1528,11 +1964,37 @@ const defaultConfig = {
   discounts: [
     { code: 'HALLOWEEN26', percent: 35 }
   ],
-  sectionOrder: ['home', 'skills', 'portfolio', 'staff', 'pricing', 'payment', 'faq', 'contact']
+  sectionOrder: ['home', 'skills', 'portfolio', 'reviews', 'staff', 'pricing', 'payment', 'faq', 'contact']
+};
+
+const faqAnswers = {
+  it: [
+    { keywords: ['costo', 'costa', 'prezzo', 'quanto'], answer: 'Le tariffe partono da <strong>15€</strong> per un sito base fino a <strong>20€</strong> per un sito completo. Scrivici su Discord o via email per un preventivo preciso!' },
+    { keywords: ['tempo', 'consegna', 'veloce'], answer: 'Un sito base richiede <strong>1-2 giorni</strong>. Un sito completo <strong>3-5 giorni</strong>.' },
+    { keywords: ['tecnologie', 'html', 'css', 'javascript'], answer: 'Usiamo <strong>HTML5</strong>, <strong>CSS3</strong> e <strong>JavaScript</strong> per siti moderni e responsive.' },
+    { keywords: ['dominio', 'hosting', 'online'], answer: 'Sì! Possiamo aiutarti a mettere il sito online <strong>gratis</strong> su GitHub Pages, Netlify o Vercel.' },
+    { keywords: ['contatto', 'discord', 'email'], answer: 'Ci trovi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>.' },
+    { keywords: ['include', 'cosa offrite'], answer: 'Ogni sito include: <strong>design personalizzato</strong>, <strong>layout responsive</strong>, <strong>animazioni</strong> e <strong>supporto post-consegna</strong>.' },
+    { keywords: ['modifiche', 'aggiornamenti'], answer: 'Dopo la consegna hai <strong>7 giorni</strong> per piccole modifiche gratuite.' },
+    { keywords: ['pagamento', 'paypal', 'revolut'], answer: 'Accettiamo <strong>PayPal</strong> e <strong>Revolut</strong>. Contattaci prima per concordare tutto.' },
+    { keywords: ['staff', 'team', 'owner', 'designer'], answer: 'Siamo <strong>A. P.</strong> (Founder & Business) e <strong>M. B.</strong> (Designer). Progetto amatoriale, non emettiamo fatture.' }
+  ],
+  en: [
+    { keywords: ['cost', 'price', 'how much'], answer: 'Rates start from <strong>€15</strong> for a basic site up to <strong>€20</strong> for a complete site. Write to us on Discord or via email for an accurate quote!' },
+    { keywords: ['time', 'delivery', 'fast'], answer: 'A basic site takes <strong>1-2 days</strong>. A complete site takes <strong>3-5 days</strong>.' },
+    { keywords: ['technology', 'html', 'css', 'javascript'], answer: 'We use <strong>HTML5</strong>, <strong>CSS3</strong> and <strong>JavaScript</strong> for modern and responsive websites.' },
+    { keywords: ['domain', 'hosting', 'online'], answer: 'Yes! We can help you put the website online <strong>for free</strong> on GitHub Pages, Netlify or Vercel.' },
+    { keywords: ['contact', 'discord', 'email'], answer: 'Find us on <strong>Discord</strong> (discord.gg/ThYvNjgV6) or via email at <strong>itu600396@gmail.com</strong>.' },
+    { keywords: ['include', 'what do you offer'], answer: 'Every website includes: <strong>custom design</strong>, <strong>responsive layout</strong>, <strong>animations</strong> and <strong>post-delivery support</strong>.' },
+    { keywords: ['changes', 'updates'], answer: 'After delivery you have <strong>7 days</strong> for free minor changes.' },
+    { keywords: ['payment', 'paypal', 'revolut'], answer: 'We accept <strong>PayPal</strong> and <strong>Revolut</strong>. Contact us first to agree on everything.' },
+    { keywords: ['staff', 'team', 'owner', 'designer'], answer: 'We are <strong>A. P.</strong> (Founder & Business) and <strong>M. B.</strong> (Designer). Amateur project, we don\'t issue invoices.' }
+  ]
 };
 
 let config = JSON.parse(JSON.stringify(defaultConfig));
 let adminLoggedIn = false;
+let reviews = [];
 
 function loadConfigFromFirebase() {
   db.ref('duckstudio/config').on('value', snapshot => {
@@ -1543,6 +2005,20 @@ function loadConfigFromFirebase() {
       db.ref('duckstudio/config').set(defaultConfig);
     }
     renderAll();
+  });
+}
+
+function loadReviewsFromFirebase() {
+  db.ref('duckstudio/reviews').on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      reviews = Object.values(data);
+      reviews.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    } else {
+      reviews = [];
+    }
+    renderReviews();
+    renderReviewForm();
   });
 }
 
@@ -1572,16 +2048,17 @@ function renderSkills() {
 function renderPortfolio() {
   const grid = document.getElementById('portfolioGrid');
   if (!grid) return;
+  const linkText = currentLang === 'it' ? 'Visita il sito' : 'Visit the site';
   grid.innerHTML = config.portfolio.map(p => `
     <a href="${p.link}" target="_blank" class="portfolio-card">
       <div class="portfolio-image">${p.icon}</div>
       <div class="portfolio-content">
         <div class="portfolio-tags">
-          ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          ${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
         </div>
         <h3>${p.name}</h3>
         <p>${p.desc}</p>
-        <span class="portfolio-link">Visita il sito <i class="fa-solid fa-arrow-right"></i></span>
+        <span class="portfolio-link">${linkText} <i class="fa-solid fa-arrow-right"></i></span>
       </div>
     </a>
   `).join('');
@@ -1590,6 +2067,7 @@ function renderPortfolio() {
 function renderPricing() {
   const grid = document.getElementById('pricingGrid');
   if (!grid) return;
+  const btnText = currentLang === 'it' ? 'Contattaci' : 'Contact us';
   grid.innerHTML = config.pricing.map(p => `
     <div class="price-card ${p.featured ? 'featured' : ''}">
       <h3>${p.title}</h3>
@@ -1599,10 +2077,101 @@ function renderPricing() {
         ${p.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}
       </ul>
       <button class="price-btn" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> Contattaci
+        <i class="fa-brands fa-discord"></i> ${btnText}
       </button>
     </div>
   `).join('');
+}
+
+function renderReviews() {
+  const grid = document.getElementById('reviewsGrid');
+  if (!grid) return;
+
+  if (reviews.length === 0) {
+    grid.innerHTML = `<div class="review-card" style="text-align: center; color: #888; font-style: italic;">${t('reviewEmpty')}</div>`;
+    return;
+  }
+
+  grid.innerHTML = reviews.map(r => `
+    <div class="review-card">
+      <div class="review-header">
+        <img class="review-avatar" src="${r.photo || 'https://via.placeholder.com/48/00b7ff/ffffff?text=' + (r.name ? r.name.charAt(0).toUpperCase() : 'U')}" alt="${r.name}">
+        <div class="review-info">
+          <div class="review-name">${r.name}</div>
+          <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+        </div>
+      </div>
+      <div class="review-text">"${r.text}"</div>
+      <div class="review-date">${new Date(r.timestamp).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-US')}</div>
+    </div>
+  `).join('');
+}
+
+function renderReviewForm() {
+  const container = document.getElementById('reviewFormContent');
+  if (!container) return;
+
+  const user = auth.currentUser;
+
+  if (!user) {
+    container.innerHTML = `
+      <div class="login-required">
+        <i class="fa-solid fa-lock" style="font-size: 24px; margin-bottom: 10px; display: block; color: #00b7ff;"></i>
+        ${t('reviewLoginRequired')}
+        <br><br>
+        <button class="admin-btn" onclick="signInWithGoogle()">
+          <i class="fa-solid fa-right-to-bracket"></i> ${t('loginBtn')}
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <input type="text" id="reviewName" placeholder="${t('reviewNamePlaceholder')}" value="${user.displayName || ''}">
+    <select id="reviewStars">
+      <option value="5">★★★★★ - 5</option>
+      <option value="4">★★★★☆ - 4</option>
+      <option value="3">★★★☆☆ - 3</option>
+      <option value="2">★★☆☆☆ - 2</option>
+      <option value="1">★☆☆☆☆ - 1</option>
+    </select>
+    <textarea id="reviewText" placeholder="${t('reviewTextPlaceholder')}"></textarea>
+    <button onclick="submitReview()">
+      <i class="fa-solid fa-paper-plane"></i> ${t('reviewSubmit')}
+    </button>
+  `;
+}
+
+function submitReview() {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const name = document.getElementById('reviewName').value.trim();
+  const stars = parseInt(document.getElementById('reviewStars').value);
+  const text = document.getElementById('reviewText').value.trim();
+
+  if (!name || !stars || !text) {
+    alert(t('reviewMissing'));
+    return;
+  }
+
+  const review = {
+    name: name,
+    stars: stars,
+    text: text,
+    photo: user.photoURL || '',
+    uid: user.uid,
+    timestamp: Date.now()
+  };
+
+  db.ref('duckstudio/reviews').push(review).then(() => {
+    alert(t('reviewAdded'));
+    document.getElementById('reviewText').value = '';
+  }).catch(err => {
+    console.error('Errore recensione:', err);
+    alert(t('reviewError'));
+  });
 }
 
 function renderAll() {
@@ -1627,7 +2196,10 @@ function signInWithGoogle() {
           to_name: user.displayName || user.email.split('@')[0]
         }).catch(err => console.error('Errore email:', err));
       }
-    }).catch(err => console.error('Errore login popup:', err));
+    }).catch(err => {
+      console.error('Errore login popup:', err);
+      alert(t('loginError'));
+    });
   }
 }
 
@@ -1656,7 +2228,7 @@ function openPayment(method) {
     signInWithGoogle();
     return;
   }
-  alert('Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.');
+  alert(t('paymentAlert'));
   window.open(DISCORD_LINK, '_blank');
 }
 
@@ -1675,6 +2247,8 @@ auth.onAuthStateChanged(user => {
     loginBtn.style.display = 'inline-flex';
     userInfo.style.display = 'none';
   }
+
+  renderReviewForm();
 });
 
 auth.getRedirectResult().then(result => {
@@ -1688,7 +2262,8 @@ auth.getRedirectResult().then(result => {
     }
   }
 }).catch(err => console.error('Errore redirect:', err));
-
+</script>
+<script>
 document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) {
     e.preventDefault();
@@ -1730,35 +2305,53 @@ function adminLogin() {
 
 function renderAdminLists() {
   const portfolioList = document.getElementById('adminPortfolioList');
-  portfolioList.innerHTML = config.portfolio.map((p, i) => `
-    <div class="admin-item">
-      <span>${p.icon} ${p.name}</span>
-      <div class="actions">
-        <button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button>
+  if (portfolioList) {
+    portfolioList.innerHTML = config.portfolio.map((p, i) => `
+      <div class="admin-item">
+        <span>${p.icon} ${p.name}</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
   const discountList = document.getElementById('adminDiscountList');
-  discountList.innerHTML = config.discounts.map((d, i) => `
-    <div class="admin-item">
-      <span>${d.code} — ${d.percent}%</span>
-      <div class="actions">
-        <button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button>
+  if (discountList) {
+    discountList.innerHTML = config.discounts.map((d, i) => `
+      <div class="admin-item">
+        <span>${d.code} — ${d.percent}%</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
+
+  const reviewList = document.getElementById('adminReviewList');
+  if (reviewList) {
+    reviewList.innerHTML = reviews.map((r, i) => `
+      <div class="admin-item">
+        <span>${'★'.repeat(r.stars)} ${r.name} — ${r.text.substring(0, 40)}${r.text.length > 40 ? '...' : ''}</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removeReview('${r.uid}_${r.timestamp}')">Rimuovi</button>
+        </div>
+      </div>
+    `).join('');
+  }
 
   const sectionOrder = document.getElementById('adminSectionOrder');
-  sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `
-    <div class="admin-item">
-      <span>${s}</span>
-      <div class="actions">
-        <button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button>
-        <button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button>
+  if (sectionOrder) {
+    sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `
+      <div class="admin-item">
+        <span>${s}</span>
+        <div class="actions">
+          <button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button>
+          <button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 }
 
 function addPortfolioItem() {
@@ -1812,6 +2405,47 @@ function removeDiscountCode(index) {
   renderAdminLists();
 }
 
+function addReviewFromAdmin() {
+  const name = document.getElementById('newReviewName').value.trim();
+  const stars = parseInt(document.getElementById('newReviewStars').value);
+  const text = document.getElementById('newReviewText').value.trim();
+  if (!name || !stars || !text) return;
+
+  const review = {
+    name: name,
+    stars: stars,
+    text: text,
+    photo: '',
+    uid: 'admin_' + Date.now(),
+    timestamp: Date.now()
+  };
+
+  db.ref('duckstudio/reviews').push(review).then(() => {
+    document.getElementById('newReviewName').value = '';
+    document.getElementById('newReviewText').value = '';
+  });
+}
+
+function removeReview(key) {
+  const keys = Object.keys(reviews);
+  let foundKey = null;
+  db.ref('duckstudio/reviews').once('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      for (const k in data) {
+        const r = data[k];
+        if ((r.uid + '_' + r.timestamp) === key) {
+          foundKey = k;
+          break;
+        }
+      }
+      if (foundKey) {
+        db.ref('duckstudio/reviews/' + foundKey).remove();
+      }
+    }
+  });
+}
+
 function moveSection(index, direction) {
   const newIndex = index + direction;
   if (newIndex < 0 || newIndex >= config.sectionOrder.length) return;
@@ -1824,7 +2458,7 @@ function moveSection(index, direction) {
 }
 
 function exportConfig() {
-  const dataStr = JSON.stringify(config, null, 2);
+  const dataStr = JSON.stringify({ config: config, reviews: reviews }, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1877,24 +2511,12 @@ window.addEventListener('resize', () => {
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
-    const t = document.querySelector(link.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
   });
 });
 
 const faqChat = document.getElementById('faqChat');
-
-const faqAnswers = [
-  { keywords: ['costo', 'costa', 'prezzo', 'quanto'], answer: 'Le tariffe partono da <strong>15€</strong> per un sito base fino a <strong>20€</strong> per un sito completo. Scrivici su Discord o via email per un preventivo preciso!' },
-  { keywords: ['tempo', 'consegna', 'veloce'], answer: 'Un sito base richiede <strong>1-2 giorni</strong>. Un sito completo <strong>3-5 giorni</strong>.' },
-  { keywords: ['tecnologie', 'html', 'css', 'javascript'], answer: 'Usiamo <strong>HTML5</strong>, <strong>CSS3</strong> e <strong>JavaScript</strong> per siti moderni e responsive.' },
-  { keywords: ['dominio', 'hosting', 'online'], answer: 'Sì! Possiamo aiutarti a mettere il sito online <strong>gratis</strong> su GitHub Pages, Netlify o Vercel.' },
-  { keywords: ['contatto', 'discord', 'email'], answer: 'Ci trovi su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>.' },
-  { keywords: ['include', 'cosa offrite'], answer: 'Ogni sito include: <strong>design personalizzato</strong>, <strong>layout responsive</strong>, <strong>animazioni</strong> e <strong>supporto post-consegna</strong>.' },
-  { keywords: ['modifiche', 'aggiornamenti'], answer: 'Dopo la consegna hai <strong>7 giorni</strong> per piccole modifiche gratuite.' },
-  { keywords: ['pagamento', 'paypal', 'revolut'], answer: 'Accettiamo <strong>PayPal</strong> e <strong>Revolut</strong>. Contattaci prima per concordare tutto.' },
-  { keywords: ['staff', 'team', 'owner', 'designer'], answer: 'Siamo <strong>A. P.</strong> (Founder & Business) e <strong>M. B.</strong> (Designer). Progetto amatoriale, non emettiamo fatture.' }
-];
 
 function addMessage(text, isBot) {
   const msg = document.createElement('div');
@@ -1927,9 +2549,10 @@ function hideTyping() {
 
 function findAnswer(question) {
   const q = question.toLowerCase();
+  const answers = faqAnswers[currentLang] || faqAnswers.it;
   let best = null;
   let bestScore = 0;
-  for (const faq of faqAnswers) {
+  for (const faq of answers) {
     let score = 0;
     for (const kw of faq.keywords) {
       if (q.includes(kw)) score++;
@@ -1937,7 +2560,7 @@ function findAnswer(question) {
     if (score > bestScore) { bestScore = score; best = faq; }
   }
   if (best) return best.answer;
-  return 'Scrivici su <strong>Discord</strong> (discord.gg/ThYvNjgV6) o via email a <strong>itu600396@gmail.com</strong>!';
+  return t('contactText');
 }
 
 function askFaq(question) {
@@ -1958,13 +2581,25 @@ function sendFaq() {
 }
 
 function initFaq() {
-  addMessage('Ciao! Siamo l\'assistente di <strong>DuckStudio</strong>. Come possiamo aiutarti?', true);
+  addMessage(t('faqWelcome'), true);
   setTimeout(() => {
-    addMessage('Clicca su una delle domande qui sotto o scrivici direttamente.', true);
+    addMessage(t('faqHint'), true);
   }, 700);
 }
 
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('dv_lang') || 'it';
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent.trim().toLowerCase() === savedLang) btn.classList.add('active');
+  });
+});
+
 loadConfigFromFirebase();
+loadReviewsFromFirebase();
+applyTranslations();
 initFaq();
 </script>
 
