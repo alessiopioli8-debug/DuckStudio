@@ -1,1 +1,341 @@
+<script>
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) {
+    e.preventDefault();
+    openAdmin();
+  }
+});
 
+function openAdmin() {
+  document.getElementById('adminPanel').classList.add('open');
+  if (adminLoggedIn) {
+    document.getElementById('adminLoginBox').style.display = 'none';
+    document.getElementById('adminContentBox').style.display = 'block';
+    renderAdminLists();
+  } else {
+    document.getElementById('adminLoginBox').style.display = 'block';
+    document.getElementById('adminContentBox').style.display = 'none';
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function adminLogin() {
+  const input = document.getElementById('adminPasswordInput');
+  const error = document.getElementById('adminLoginError');
+  if (input.value === ADMIN_PASSWORD) {
+    adminLoggedIn = true;
+    error.classList.remove('show');
+    input.value = '';
+    document.getElementById('adminLoginBox').style.display = 'none';
+    document.getElementById('adminContentBox').style.display = 'block';
+    renderAdminLists();
+  } else {
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 2000);
+  }
+}
+
+function renderAdminLists() {
+  const portfolioList = document.getElementById('adminPortfolioList');
+  if (portfolioList) {
+    portfolioList.innerHTML = config.portfolio.map((p, i) => `
+      <div class="admin-item">
+        <span>${p.icon} ${p.name}</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const discountList = document.getElementById('adminDiscountList');
+  if (discountList) {
+    discountList.innerHTML = config.discounts.map((d, i) => `
+      <div class="admin-item">
+        <span>${d.code} — ${d.percent}%</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const reviewList = document.getElementById('adminReviewList');
+  if (reviewList) {
+    reviewList.innerHTML = reviews.map((r, i) => `
+      <div class="admin-item">
+        <span>${'★'.repeat(r.stars)} ${r.name} — ${r.text.substring(0, 40)}${r.text.length > 40 ? '...' : ''}</span>
+        <div class="actions">
+          <button class="mini-btn danger" onclick="removeReview('${r.uid}_${r.timestamp}')">Rimuovi</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const sectionOrder = document.getElementById('adminSectionOrder');
+  if (sectionOrder) {
+    sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `
+      <div class="admin-item">
+        <span>${s}</span>
+        <div class="actions">
+          <button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button>
+          <button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function addPortfolioItem() {
+  const name = document.getElementById('newPortfolioName').value.trim();
+  const desc = document.getElementById('newPortfolioDesc').value.trim();
+  const link = document.getElementById('newPortfolioLink').value.trim();
+  const icon = document.getElementById('newPortfolioIcon').value.trim() || '💎';
+  if (!name || !link) return;
+
+  config.portfolio.push({
+    name: name,
+    desc: desc,
+    link: link,
+    icon: icon,
+    tags: ['HTML', 'CSS', 'JavaScript']
+  });
+
+  document.getElementById('newPortfolioName').value = '';
+  document.getElementById('newPortfolioDesc').value = '';
+  document.getElementById('newPortfolioLink').value = '';
+
+  saveConfigToFirebase();
+  renderPortfolio();
+  renderAdminLists();
+}
+
+function removePortfolioItem(index) {
+  config.portfolio.splice(index, 1);
+  saveConfigToFirebase();
+  renderPortfolio();
+  renderAdminLists();
+}
+
+function addDiscountCode() {
+  const code = document.getElementById('newDiscountCode').value.trim().toUpperCase();
+  const percent = parseInt(document.getElementById('newDiscountPercent').value);
+  if (!code || !percent) return;
+
+  config.discounts.push({ code: code, percent: percent });
+
+  document.getElementById('newDiscountCode').value = '';
+  document.getElementById('newDiscountPercent').value = '';
+
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function removeDiscountCode(index) {
+  config.discounts.splice(index, 1);
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function addReviewFromAdmin() {
+  const name = document.getElementById('newReviewName').value.trim();
+  const stars = parseInt(document.getElementById('newReviewStars').value);
+  const text = document.getElementById('newReviewText').value.trim();
+  if (!name || !stars || !text) return;
+
+  const review = {
+    name: name,
+    stars: stars,
+    text: text,
+    photo: '',
+    uid: 'admin_' + Date.now(),
+    timestamp: Date.now()
+  };
+
+  db.ref('duckstudio/reviews').push(review).then(() => {
+    document.getElementById('newReviewName').value = '';
+    document.getElementById('newReviewText').value = '';
+  });
+}
+
+function removeReview(key) {
+  let foundKey = null;
+  db.ref('duckstudio/reviews').once('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      for (const k in data) {
+        const r = data[k];
+        if ((r.uid + '_' + r.timestamp) === key) {
+          foundKey = k;
+          break;
+        }
+      }
+      if (foundKey) {
+        db.ref('duckstudio/reviews/' + foundKey).remove();
+      }
+    }
+  });
+}
+
+function moveSection(index, direction) {
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= config.sectionOrder.length) return;
+  const arr = config.sectionOrder;
+  const temp = arr[index];
+  arr[index] = arr[newIndex];
+  arr[newIndex] = temp;
+  saveConfigToFirebase();
+  renderAdminLists();
+}
+
+function exportConfig() {
+  const dataStr = JSON.stringify({ config: config, reviews: reviews }, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'duckstudio-config.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetConfig() {
+  if (!confirm('Sei sicuro di voler resettare tutte le modifiche?')) return;
+  config = JSON.parse(JSON.stringify(defaultConfig));
+  saveConfigToFirebase();
+  renderAll();
+}
+
+const AI_PFP = 'https://i.pinimg.com/736x/9e/ea/ab/9eeaab9fe1deff8df678bbf5f60cc370.jpg';
+const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/00b7ff/ffffff?text=U';
+
+const bg = document.getElementById('cube-bg');
+const size = 60;
+const cols = Math.ceil(window.innerWidth / size);
+const rows = Math.ceil(window.innerHeight / size);
+
+bg.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+bg.style.gridTemplateRows = 'repeat(' + rows + ', 1fr)';
+
+for (let i = 0; i < cols * rows; i++) {
+  const cube = document.createElement('div');
+  cube.className = 'cube';
+  bg.appendChild(cube);
+}
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    bg.innerHTML = '';
+    const cols = Math.ceil(window.innerWidth / size);
+    const rows = Math.ceil(window.innerHeight / size);
+    bg.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+    bg.style.gridTemplateRows = 'repeat(' + rows + ', 1fr)';
+    for (let i = 0; i < cols * rows; i++) {
+      const cube = document.createElement('div');
+      cube.className = 'cube';
+      bg.appendChild(cube);
+    }
+  }, 200);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+const faqChat = document.getElementById('faqChat');
+
+function addMessage(text, isBot) {
+  const msg = document.createElement('div');
+  msg.className = 'msg ' + (isBot ? 'bot' : 'user');
+  const avatarImg = isBot ? AI_PFP : getUserPfp();
+  msg.innerHTML = '<div class="msg-avatar"><img src="' + avatarImg + '"></div><div class="msg-bubble">' + text + '</div>';
+  faqChat.appendChild(msg);
+  faqChat.scrollTop = faqChat.scrollHeight;
+}
+
+function getUserPfp() {
+  const user = auth.currentUser;
+  if (user && user.photoURL) return user.photoURL;
+  return DEFAULT_USER_PFP;
+}
+
+function showTyping() {
+  const typing = document.createElement('div');
+  typing.className = 'msg bot';
+  typing.id = 'typingIndicator';
+  typing.innerHTML = '<div class="msg-avatar"><img src="' + AI_PFP + '"></div><div class="typing"><span></span><span></span><span></span></div>';
+  faqChat.appendChild(typing);
+  faqChat.scrollTop = faqChat.scrollHeight;
+}
+
+function hideTyping() {
+  const typing = document.getElementById('typingIndicator');
+  if (typing) typing.remove();
+}
+
+function findAnswer(question) {
+  const q = question.toLowerCase();
+  const answers = faqAnswers[currentLang] || faqAnswers.it;
+  let best = null;
+  let bestScore = 0;
+  for (const faq of answers) {
+    let score = 0;
+    for (const kw of faq.keywords) {
+      if (q.includes(kw)) score++;
+    }
+    if (score > bestScore) { bestScore = score; best = faq; }
+  }
+  if (best) return best.answer;
+  return t('contactText');
+}
+
+function askFaq(question) {
+  addMessage(question, false);
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addMessage(findAnswer(question), true);
+  }, 900);
+}
+
+function sendFaq() {
+  const input = document.getElementById('faqInput');
+  const text = input.value.trim();
+  if (!text) return;
+  askFaq(text);
+  input.value = '';
+}
+
+function initFaq() {
+  addMessage(t('faqWelcome'), true);
+  setTimeout(() => {
+    addMessage(t('faqHint'), true);
+  }, 700);
+}
+
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('dv_lang') || 'it';
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent.trim().toLowerCase() === savedLang) btn.classList.add('active');
+  });
+});
+
+loadConfigFromFirebase();
+loadReviewsFromFirebase();
+applyTranslations();
+initFaq();
+</script>
+
+</body>
+</html>
