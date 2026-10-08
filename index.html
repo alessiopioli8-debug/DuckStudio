@@ -424,12 +424,20 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .portfolio-image {
-  height: 160px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  height: 200px;
+  background: linear-gradient(135deg, #0a0e1a, #1a2a4a);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
+  font-size: 80px;
+  overflow: hidden;
+}
+
+.portfolio-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 15px;
 }
 
 .portfolio-content { padding: 26px; }
@@ -1657,7 +1665,7 @@ footer .disclaimer {
       <input type="text" class="admin-input" id="newPortfolioName" placeholder="Nome prodotto">
       <input type="text" class="admin-input" id="newPortfolioDesc" placeholder="Descrizione">
       <input type="text" class="admin-input" id="newPortfolioLink" placeholder="Link (es. https://...)">
-      <input type="text" class="admin-input" id="newPortfolioIcon" placeholder="Emoji (es. 🎃)" value="🎃">
+      <input type="text" class="admin-input" id="newPortfolioIcon" placeholder="Emoji (es. 💎)" value="💎">
       <button class="admin-btn success" onclick="addPortfolioItem()">
         <i class="fa-solid fa-plus"></i> Aggiungi Prodotto
       </button>
@@ -1703,7 +1711,6 @@ footer .disclaimer {
     </div>
   </div>
 </div>
-
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
@@ -1950,10 +1957,10 @@ const defaultConfig = {
   ],
   portfolio: [
     {
-      name: 'Duck Vanilla Store',
-      desc: 'Sito e-commerce per un server Minecraft, con carrello, sistema di pagamento e design responsive. Un esempio completo delle nostre capacità.',
+      name: 'Orbys MC',
+      desc: 'Sito ufficiale del server Orbys MC. Design moderno, responsive e ottimizzato per il web.',
       link: 'https://alessiopioli8-debug.github.io/duckproject/',
-      icon: '🎃',
+      icon: '💎',
       tags: ['HTML', 'CSS', 'JavaScript']
     }
   ],
@@ -1995,13 +2002,7 @@ const faqAnswers = {
     { keywords: ['anno', 'età', 'minorenne', 'giovane'], answer: 'Lavoriamo con chiunque, a qualsiasi età. Per il pagamento serve un metodo valido (tuo o di un adulto).' },
     { keywords: ['garanzia', 'sicuro', 'fiducia', 'truffa'], answer: 'Non chiediamo mai pagamenti anticipati senza prima averti mostrato il progetto. Paghi solo se sei soddisfatto del lavoro.' },
     { keywords: ['codice', 'sorgente', 'files', 'consegna'], answer: 'Ricevi <strong>tutti i file</strong> del sito (HTML, CSS, JS, immagini). Puoi modificarli come vuoi, sono tuoi.' },
-    { keywords: ['logo', 'immagini', 'grafica', 'contenuti'], answer: 'Possiamo usare le <strong>tue immagini</strong>, oppure cercarne di gratuite. Non creiamo loghi professionali, ma possiamo consigliarti.' },
-    { keywords: ['wordpress', 'cms', 'pannello'], answer: 'Lavoriamo con <strong>codice puro</strong> (HTML/CSS/JS), non con WordPress. Per siti semplici è più veloce e leggero.' },
-    { keywords: ['manutenzione', 'aggiornare', 'anni'], answer: 'La manutenzione continuativa non è inclusa, ma possiamo concordare un piccolo costo mensile se ti serve.' },
-    { keywords: ['server', 'velocità', 'hosting consigliato'], answer: 'Consigliamo <strong>GitHub Pages</strong> o <strong>Netlify</strong>: gratis, veloci e affidabili. Per progetti più grandi, Vercel o un VPS.' },
-    { keywords: ['account', 'registrazione', 'login'], answer: 'Per lasciare una recensione devi accedere con <strong>Google</strong>. Per contattarci, invece, basta Discord o email: nessuna registrazione.' },
-    { keywords: ['supporto', 'aiuto', 'problema', 'bug'], answer: 'Se dopo la consegna trovi un problema, scrivici su Discord entro 7 giorni: sistemiamo tutto gratis.' },
-    { keywords: ['pagare', 'anticipo', 'prima', 'dopo'], answer: 'Il pagamento avviene <strong>dopo</strong> aver concordato il progetto su Discord. Non chiediamo mai soldi in anticipo senza garanzie.' }
+    { keywords: ['logo', 'immagini', 'grafica', 'contenuti'], answer: 'Possiamo usare le <strong>tue immagini</strong>, oppure cercarne di gratuite. Non creiamo loghi professionali, ma possiamo consigliarti.' }
   ],
   en: [
     { keywords: ['cost', 'price', 'how much', 'pay'], answer: 'Rates start from <strong>€5</strong> for a basic site up to <strong>€15</strong> for a complete site. For an accurate quote, write us on Discord!' },
@@ -2018,13 +2019,7 @@ const faqAnswers = {
     { keywords: ['age', 'minor', 'young'], answer: 'We work with anyone, at any age. A valid payment method is required (yours or an adult\'s).' },
     { keywords: ['guarantee', 'safe', 'trust', 'scam'], answer: 'We never ask for advance payment before showing you the project. You only pay if you\'re happy with the work.' },
     { keywords: ['code', 'source', 'files', 'delivery'], answer: 'You receive <strong>all the files</strong> of the website (HTML, CSS, JS, images). They are yours to modify.' },
-    { keywords: ['logo', 'images', 'graphics'], answer: 'We can use <strong>your images</strong>, or find free ones. We don\'t create professional logos, but we can advise you.' },
-    { keywords: ['wordpress', 'cms', 'panel'], answer: 'We work with <strong>pure code</strong> (HTML/CSS/JS), not WordPress. For simple sites it\'s faster and lighter.' },
-    { keywords: ['maintenance', 'update', 'years'], answer: 'Ongoing maintenance is not included, but we can agree on a small monthly fee if you need it.' },
-    { keywords: ['server', 'speed', 'hosting'], answer: 'We recommend <strong>GitHub Pages</strong> or <strong>Netlify</strong>: free, fast and reliable. For bigger projects, Vercel or a VPS.' },
-    { keywords: ['account', 'registration', 'login'], answer: 'To leave a review you must log in with <strong>Google</strong>. To contact us, just use Discord or email — no registration required.' },
-    { keywords: ['support', 'help', 'problem', 'bug'], answer: 'If you find an issue after delivery, write us on Discord within 7 days: we fix everything for free.' },
-    { keywords: ['pay', 'advance', 'before', 'after'], answer: 'Payment happens <strong>after</strong> agreeing on the project on Discord. We never ask for money in advance without guarantees.' }
+    { keywords: ['logo', 'images', 'graphics'], answer: 'We can use <strong>your images</strong>, or find free ones. We don\'t create professional logos, but we can advise you.' }
   ]
 };
 
@@ -2298,7 +2293,8 @@ auth.getRedirectResult().then(result => {
     }
   }
 }).catch(err => console.error('Errore redirect:', err));
-
+</script>
+<script>
 document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) {
     e.preventDefault();
@@ -2393,7 +2389,7 @@ function addPortfolioItem() {
   const name = document.getElementById('newPortfolioName').value.trim();
   const desc = document.getElementById('newPortfolioDesc').value.trim();
   const link = document.getElementById('newPortfolioLink').value.trim();
-  const icon = document.getElementById('newPortfolioIcon').value.trim() || '🎃';
+  const icon = document.getElementById('newPortfolioIcon').value.trim() || '💎';
   if (!name || !link) return;
 
   config.portfolio.push({
