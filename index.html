@@ -6,6 +6,7 @@
 <title>DuckStudio - Siti Web & Community</title>
 
 <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
+
 <meta property="og:title" content="DuckStudio - Siti Web & Community">
 <meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
 <meta property="og:image" content="https://i.pinimg.com/736x/57/e2/45/57e245570f6a78123b3c7a9379c4dff7.jpg">
@@ -14,6 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+<!-- ANTI-ISPEZIONE -->
 <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -32,15 +34,94 @@ html { scroll-behavior: smooth; }
   --text-grey: #666;
   --text-muted: #888;
   --border: #eee;
+  --bg-color: #ffffff;
 }
 
+/* TEMI */
+[data-theme="dark"] {
+  --text-dark: #f0f0f0; --text-grey: #cccccc; --text-muted: #999999; --border: #333333; --bg-color: #121212;
+}
+[data-theme="dark"] body { background: var(--bg-color); color: var(--text-dark); }
+[data-theme="dark"] nav { background: rgba(18, 18, 18, 0.85); border-bottom: 1px solid var(--border); }
+[data-theme="dark"] .section-header, [data-theme="dark"] .skill-card, [data-theme="dark"] .portfolio-card, [data-theme="dark"] .review-card, [data-theme="dark"] .price-card, [data-theme="dark"] .staff-card, [data-theme="dark"] .payment-card, [data-theme="dark"] .faq-wrapper, [data-theme="dark"] .contact-content, [data-theme="dark"] .profile-modal, [data-theme="dark"] .chat-container { background: rgba(30, 30, 30, 0.95); }
+[data-theme="dark"] .chat-messages { background: #1e1e1e; }
+[data-theme="dark"] .chat-msg.other { background: #2a2a2a; color: #fff; }
+[data-theme="dark"] .review-form input, [data-theme="dark"] .review-form textarea, [data-theme="dark"] .review-form select, [data-theme="dark"] .admin-input, [data-theme="dark"] .chat-input-area input { background: #2a2a2a; color: #fff; border-color: #444; }
+[data-theme="dark"] .staff-contact { background: #2a2a2a; border-color: #444; }
+[data-theme="dark"] .cube { border-color: #333; }
+[data-theme="dark"] footer { background: rgba(18,18,18,0.7); }
+[data-theme="dark"] .admin-box { background: #1e1e1e; }
+[data-theme="dark"] .admin-item { background: #2a2a2a; }
+[data-theme="dark"] .badge-option { background: #2a2a2a; border-color: #444; }
+[data-theme="dark"] .badge-option.selected { background: #003a52; border-color: var(--accent); }
+[data-theme="dark"] .profile-preview { background: #1e1e1e; }
+[data-theme="dark"] .preview-details h3 { color: #fff; }
+[data-theme="dark"] .preview-details p { color: #aaa; }
+[data-theme="dark"] .msg.bot .msg-bubble { background: #2a2a2a; color: #fff; }
+[data-theme="dark"] .lang-switch { background: #333; }
+[data-theme="dark"] .lang-btn.active { background: var(--accent); color: #fff; }
+[data-theme="dark"] .suggestion-btn { background: #003a52; border-color: #005577; color: #fff; }
+[data-theme="dark"] .skill-icon { background: #003a52; }
+[data-theme="dark"] .tag { background: #003a52; }
+[data-theme="dark"] .staff-role { background: #003a52; }
+
+[data-theme="cyberpunk"] {
+  --accent: #ff0055; --accent-dark: #cc0044; --text-dark: #00ffcc; --text-grey: #00ccaa; --text-muted: #009988; --border: #330011; --bg-color: #0d0221;
+}
+[data-theme="cyberpunk"] body { background: var(--bg-color); color: var(--text-dark); }
+[data-theme="cyberpunk"] nav { background: rgba(13, 2, 33, 0.85); border-bottom: 1px solid var(--accent); }
+[data-theme="cyberpunk"] .section-header, [data-theme="cyberpunk"] .skill-card, [data-theme="cyberpunk"] .portfolio-card, [data-theme="cyberpunk"] .review-card, [data-theme="cyberpunk"] .price-card, [data-theme="cyberpunk"] .staff-card, [data-theme="cyberpunk"] .payment-card, [data-theme="cyberpunk"] .faq-wrapper, [data-theme="cyberpunk"] .contact-content, [data-theme="cyberpunk"] .profile-modal, [data-theme="cyberpunk"] .chat-container { background: rgba(20, 5, 50, 0.95); border-color: var(--accent); }
+[data-theme="cyberpunk"] .chat-messages { background: #140532; }
+[data-theme="cyberpunk"] .chat-msg.other { background: #1a0a3d; color: var(--text-dark); border-color: var(--accent); }
+[data-theme="cyberpunk"] .review-form input, [data-theme="cyberpunk"] .review-form textarea, [data-theme="cyberpunk"] .review-form select, [data-theme="cyberpunk"] .admin-input, [data-theme="cyberpunk"] .chat-input-area input { background: #1a0a3d; color: #fff; border-color: var(--accent); }
+[data-theme="cyberpunk"] .staff-contact { background: #1a0a3d; border-color: var(--accent); }
+[data-theme="cyberpunk"] .cube { border-color: #330011; }
+[data-theme="cyberpunk"] footer { background: rgba(13,2,33,0.7); }
+[data-theme="cyberpunk"] .admin-box { background: #140532; }
+[data-theme="cyberpunk"] .admin-item { background: #1a0a3d; }
+[data-theme="cyberpunk"] .badge-option { background: #1a0a3d; border-color: var(--accent); }
+[data-theme="cyberpunk"] .badge-option.selected { background: #ff005533; }
+[data-theme="cyberpunk"] .profile-preview { background: #1a0a3d; }
+[data-theme="cyberpunk"] .preview-details h3 { color: #fff; }
+[data-theme="cyberpunk"] .preview-details p { color: #aaa; }
+[data-theme="cyberpunk"] .lang-switch { background: #1a0a3d; }
+[data-theme="cyberpunk"] .lang-btn.active { background: var(--accent); color: #fff; }
+[data-theme="cyberpunk"] .suggestion-btn { background: #003a52; border-color: #005577; color: #fff; }
+[data-theme="cyberpunk"] .skill-icon { background: #003a52; }
+[data-theme="cyberpunk"] .tag { background: #003a52; }
+[data-theme="cyberpunk"] .staff-role { background: #003a52; }
+
+[data-theme="nature"] {
+  --accent: #4caf50; --accent-dark: #388e3c; --text-dark: #2e4a2b; --text-grey: #4a6b47; --text-muted: #6b8e68; --border: #dcedc8; --bg-color: #f1f8e9;
+}
+[data-theme="nature"] body { background: var(--bg-color); color: var(--text-dark); }
+[data-theme="nature"] nav { background: rgba(241, 248, 233, 0.85); border-bottom: 1px solid var(--border); }
+[data-theme="nature"] .section-header, [data-theme="nature"] .skill-card, [data-theme="nature"] .portfolio-card, [data-theme="nature"] .review-card, [data-theme="nature"] .price-card, [data-theme="nature"] .staff-card, [data-theme="nature"] .payment-card, [data-theme="nature"] .faq-wrapper, [data-theme="nature"] .contact-content, [data-theme="nature"] .profile-modal, [data-theme="nature"] .chat-container { background: rgba(255, 255, 255, 0.95); }
+[data-theme="nature"] .chat-messages { background: #e8f5e9; }
+[data-theme="nature"] .chat-msg.other { background: #fff; color: #333; }
+[data-theme="nature"] .review-form input, [data-theme="nature"] .review-form textarea, [data-theme="nature"] .review-form select, [data-theme="nature"] .admin-input, [data-theme="nature"] .chat-input-area input { background: #fff; color: #111; border-color: #c8e6c9; }
+[data-theme="nature"] .staff-contact { background: #e8f5e9; border-color: #a5d6a7; }
+[data-theme="nature"] .cube { border-color: #dcedc8; }
+[data-theme="nature"] footer { background: rgba(241,248,233,0.7); }
+[data-theme="nature"] .admin-box { background: #fff; }
+[data-theme="nature"] .admin-item { background: #f1f8e9; }
+[data-theme="nature"] .badge-option { background: #f1f8e9; border-color: #c8e6c9; }
+[data-theme="nature"] .badge-option.selected { background: #c8e6c9; border-color: var(--accent); }
+[data-theme="nature"] .profile-preview { background: #fff; }
+[data-theme="nature"] .preview-details h3 { color: #111; }
+[data-theme="nature"] .preview-details p { color: #666; }
+[data-theme="nature"] .lang-switch { background: #e8f5e9; }
+[data-theme="nature"] .lang-btn.active { background: var(--accent); color: #fff; }
+
+/* STILI GENERALI */
 body {
   font-family: 'Inter', sans-serif;
-  background: #ffffff;
+  background: var(--bg-color);
   color: var(--text-dark);
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  transition: background 0.3s, color 0.3s;
 }
 
 #cube-bg {
@@ -79,6 +160,7 @@ nav {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   gap: 15px;
+  transition: background 0.3s, border-color 0.3s;
 }
 
 .logo {
@@ -95,7 +177,7 @@ nav {
 .nav-links { display: flex; gap: 18px; list-style: none; align-items: center; }
 
 .nav-links a {
-  color: #555;
+  color: var(--text-grey);
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
@@ -129,7 +211,7 @@ nav {
   cursor: pointer;
   transition: 0.2s;
   font-family: 'Inter', sans-serif;
-  color: #666;
+  color: var(--text-grey);
 }
 
 .lang-btn.active {
@@ -298,14 +380,14 @@ nav {
 }
 
 .btn-outline {
-  background: #fff;
+  background: transparent;
   color: var(--text-dark);
   border-color: var(--text-dark);
 }
 
 .btn-outline:hover {
-  background: #111;
-  color: #fff;
+  background: var(--text-dark);
+  color: var(--bg-color);
   transform: translateY(-2px);
 }
 
@@ -343,6 +425,7 @@ section { padding: 90px 50px; background: transparent; }
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  transition: background 0.3s;
 }
 
 .section-header .label {
@@ -361,6 +444,7 @@ section { padding: 90px 50px; background: transparent; }
   font-weight: 700;
   letter-spacing: -1.5px;
   margin-bottom: 12px;
+  color: var(--text-dark);
 }
 
 .section-header p {
@@ -404,7 +488,7 @@ section { padding: 90px 50px; background: transparent; }
   margin-bottom: 18px;
 }
 
-.skill-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.skill-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text-dark); }
 .skill-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 
 .portfolio-grid { max-width: 700px; margin: 0 auto; display: grid; gap: 25px; }
@@ -462,6 +546,7 @@ section { padding: 90px 50px; background: transparent; }
   font-weight: 700;
   margin-bottom: 10px;
   font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-dark);
 }
 
 .portfolio-content p { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
@@ -524,7 +609,7 @@ section { padding: 90px 50px; background: transparent; }
 }
 
 .review-text {
-  color: #444;
+  color: var(--text-grey);
   font-size: 14px;
   line-height: 1.6;
   font-style: italic;
@@ -691,6 +776,7 @@ section { padding: 90px 50px; background: transparent; }
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
+  color: var(--text-dark);
 }
 
 .staff-card .staff-desc {
@@ -780,6 +866,7 @@ section { padding: 90px 50px; background: transparent; }
   font-weight: 700;
   letter-spacing: -2px;
   margin-bottom: 4px;
+  color: var(--text-dark);
 }
 
 .price-card .amount small { font-size: 20px; color: #999; font-weight: 600; }
@@ -790,7 +877,7 @@ section { padding: 90px 50px; background: transparent; }
 .price-features li {
   padding: 7px 0;
   font-size: 14px;
-  color: #444;
+  color: var(--text-grey);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -877,6 +964,7 @@ section { padding: 90px 50px; background: transparent; }
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 12px;
+  color: var(--text-dark);
 }
 
 .payment-card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
@@ -1099,6 +1187,7 @@ section { padding: 90px 50px; background: transparent; }
   font-weight: 700;
   letter-spacing: -1.5px;
   margin-bottom: 16px;
+  color: var(--text-dark);
 }
 
 .contact-content p { color: var(--text-muted); margin-bottom: 30px; font-size: 15px; }
@@ -1222,6 +1311,7 @@ footer .disclaimer {
   display: flex;
   align-items: center;
   gap: 10px;
+  color: var(--text-dark);
 }
 
 .admin-box h2 i { color: var(--accent); }
@@ -1274,6 +1364,7 @@ footer .disclaimer {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--text-dark);
 }
 
 .admin-item {
@@ -1288,7 +1379,7 @@ footer .disclaimer {
   gap: 10px;
 }
 
-.admin-item span { flex: 1; }
+.admin-item span { flex: 1; color: var(--text-dark); }
 .admin-item .actions { display: flex; gap: 6px; }
 
 .admin-item .mini-btn {
@@ -1318,7 +1409,7 @@ footer .disclaimer {
 .admin-status.success { background: #e8f5e9; color: #2e7d32; }
 .admin-status.error { background: #ffebee; color: #c62828; }
 
-/* Stili per Profilo, Chat e Badge */
+/* PROFILO & CHAT & BADGE */
 .profile-modal, .chat-container {
   max-width: 800px;
   margin: 40px auto;
@@ -1366,6 +1457,7 @@ footer .disclaimer {
   border: 1px solid var(--border);
   align-self: flex-start;
   border-bottom-left-radius: 2px;
+  color: #111;
 }
 
 .chat-msg .msg-author { font-size: 11px; font-weight: 700; opacity: 0.8; margin-bottom: 2px; display: block; }
@@ -1423,16 +1515,93 @@ footer .disclaimer {
   cursor: pointer;
   font-size: 12px;
   border: 2px solid transparent;
+  color: var(--text-dark);
 }
 .badge-option.selected {
   border-color: var(--accent);
   background: #e6f7ff;
+  color: #111;
 }
 .badge-option img {
   width: 16px;
   height: 16px;
   border-radius: 50%;
 }
+
+/* ANTEPRIMA PROFILO */
+.profile-preview {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.preview-banner {
+  height: 120px;
+  background: linear-gradient(135deg, #0a0e1a, #1a2a4a);
+  background-size: cover;
+  background-position: center;
+}
+.preview-info {
+  padding: 15px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  margin-top: -40px;
+}
+.preview-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: #eee;
+  object-fit: cover;
+}
+.preview-details h3 { margin: 0; color: #111; font-size: 18px; }
+.preview-details p { margin: 5px 0 0 0; color: #666; font-size: 13px; }
+
+/* PULSANTI INTEGRAZIONE */
+.integration-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 10px;
+}
+.integration-btn:hover { background: #f0f0f0; transform: translateY(-2px); }
+.integration-btn i { font-size: 18px; }
+
+/* TEMI */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.theme-card {
+  border: 3px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #fff;
+}
+.theme-card:hover { transform: translateY(-5px); }
+.theme-card.active { border-color: var(--accent); }
+.theme-card img { width: 100%; height: 120px; object-fit: cover; display: block; }
+.theme-card p { text-align: center; padding: 10px; font-weight: 700; color: #111; margin: 0; }
 
 @media (max-width: 900px) {
   nav { padding: 12px 18px; }
@@ -1442,7 +1611,7 @@ footer .disclaimer {
     top: 100%;
     left: 0;
     right: 0;
-    background: #fff;
+    background: var(--bg-color);
     flex-direction: column;
     padding: 15px 20px;
     gap: 12px;
@@ -1505,8 +1674,8 @@ footer .disclaimer {
     <li><a href="#pricing" data-i18n="navPricing">Tariffe</a></li>
     <li><a href="#payment" data-i18n="navPayment">Pagamenti</a></li>
     <li><a href="#faq" data-i18n="navFaq">Domande</a></li>
+    <li><a href="#themes">Temi</a></li>
     <li><a href="#contact" data-i18n="navContact">Contatti</a></li>
-    <!-- NUOVE SEZIONI -->
     <li><a href="#profile" onclick="openProfile()">Profilo</a></li>
     <li><a href="#chat">Chat</a></li>
   </ul>
@@ -1732,6 +1901,32 @@ footer .disclaimer {
   </div>
 </section>
 
+<section id="themes">
+  <div class="section-header">
+    <span class="label">Aspetto</span>
+    <h2>Scegli il tuo Tema</h2>
+    <p>Cambia i colori del sito. La scelta verrà salvata sul tuo browser.</p>
+  </div>
+  <div class="themes-grid">
+    <div class="theme-card" onclick="setTheme('light')" id="theme-light">
+      <img src="https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=400&auto=format&fit=crop" alt="Tema Chiaro">
+      <p>Chiaro (Default)</p>
+    </div>
+    <div class="theme-card" onclick="setTheme('dark')" id="theme-dark">
+      <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=400&auto=format&fit=crop" alt="Tema Scuro">
+      <p>Scuro</p>
+    </div>
+    <div class="theme-card" onclick="setTheme('cyberpunk')" id="theme-cyberpunk">
+      <img src="https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=400&auto=format&fit=crop" alt="Tema Cyberpunk">
+      <p>Cyberpunk</p>
+    </div>
+    <div class="theme-card" onclick="setTheme('nature')" id="theme-nature">
+      <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=400&auto=format&fit=crop" alt="Tema Natura">
+      <p>Natura</p>
+    </div>
+  </div>
+</section>
+
 <section id="profile" style="display: none;">
   <div class="section-header">
     <span class="label">Profilo</span>
@@ -1794,8 +1989,23 @@ footer .disclaimer {
 <div class="admin-panel" id="profileModal">
   <div class="admin-box">
     <h2><i class="fa-solid fa-user"></i> Modifica Profilo</h2>
-    <input type="text" id="editName" class="admin-input" placeholder="Nome visualizzato">
-    <textarea id="editBio" class="admin-input" placeholder="Bio" style="height: 80px;"></textarea>
+    
+    <!-- ANTEPRIMA -->
+    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Anteprima del tuo profilo:</label>
+    <div class="profile-preview">
+      <div class="preview-banner" id="previewBanner"></div>
+      <div class="preview-info">
+        <img class="preview-avatar" id="previewAvatar" src="https://via.placeholder.com/80" alt="Avatar">
+        <div class="preview-details">
+          <h3 id="previewName">Il Tuo Nome</h3>
+          <div class="user-badges" id="previewBadges"></div>
+          <p id="previewBio">La tua bio apparirà qui.</p>
+        </div>
+      </div>
+    </div>
+
+    <input type="text" id="editName" class="admin-input" placeholder="Nome visualizzato" oninput="updatePreview()">
+    <textarea id="editBio" class="admin-input" placeholder="Bio" style="height: 80px;" oninput="updatePreview()"></textarea>
     
     <label style="display: block; margin-bottom: 10px; font-weight: 600;">Seleziona i tuoi Badge:</label>
     <div class="badge-selector" id="badgeSelector">
@@ -1814,14 +2024,14 @@ footer .disclaimer {
     </div>
 
     <label style="display: block; margin-bottom: 10px; font-weight: 600;">Avatar:</label>
-    <input type="file" id="avatarInput" accept="image/*" class="admin-input">
+    <input type="file" id="avatarInput" accept="image/*" class="admin-input" onchange="previewImage(this, 'previewAvatar')">
     
     <label style="display: block; margin-bottom: 10px; font-weight: 600;">Banner:</label>
-    <input type="file" id="bannerInput" accept="image/*" class="admin-input">
+    <input type="file" id="bannerInput" accept="image/*" class="admin-input" onchange="previewImage(this, 'previewBanner')">
     
-    <h3 style="margin-top: 20px;">Integrazioni</h3>
-    <button class="admin-btn" style="background: #5865F2; margin-bottom: 10px;" onclick="connectDiscord()">Collega Discord</button>
-    <button class="admin-btn" style="background: #1DB954;" onclick="connectSpotify()">Collega Spotify</button>
+    <h3 style="margin-top: 20px; margin-bottom: 10px;">Integrazioni</h3>
+    <button class="integration-btn" onclick="connectDiscord()"><i class="fa-brands fa-discord"></i> Collega</button>
+    <button class="integration-btn" onclick="connectSpotify()"><i class="fa-brands fa-spotify"></i> Collega</button>
 
     <div style="margin-top: 20px;">
       <button class="admin-btn" onclick="saveProfile()">Salva</button>
@@ -1834,7 +2044,7 @@ footer .disclaimer {
 <div class="admin-panel" id="adminPanel">
   <div class="admin-box" id="adminLoginBox">
     <h2><i class="fa-solid fa-lock"></i> Accesso Admin</h2>
-    <input type="email" class="admin-input" id="adminEmailInput" placeholder="Email admin (admin@duckvanilla.store)">
+    <input type="email" class="admin-input" id="adminEmailInput" placeholder="Email admin">
     <input type="password" class="admin-input" id="adminPasswordInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')adminLogin()">
     <button class="admin-btn" onclick="adminLogin()"><i class="fa-solid fa-unlock"></i> Entra</button>
     <button class="admin-btn danger" style="margin-left: 10px;" onclick="closeAdmin()"><i class="fa-solid fa-times"></i> Chiudi</button>
@@ -1949,6 +2159,15 @@ const BADGE_IMAGES = {
 };
 let selectedBadges = [];
 
+// --- GESTIONE TEMI ---
+function setTheme(themeName) {
+  document.documentElement.setAttribute('data-theme', themeName);
+  localStorage.setItem('duckstudio_theme', themeName);
+  document.querySelectorAll('.theme-card').forEach(el => el.classList.remove('active'));
+  const activeCard = document.getElementById(`theme-${themeName}`);
+  if (activeCard) activeCard.classList.add('active');
+}
+
 // --- TRADUZIONI ---
 const translations = {
   it: {
@@ -2021,7 +2240,7 @@ const defaultConfig = {
   portfolio: [ { name: 'Orbys MC', desc: 'Sito ufficiale del server Orbys MC. Design moderno, responsive e ottimizzato per il web.', link: 'https://alessiopioli8-debug.github.io/duckproject/', icon: '<img src="https://i.imgur.com/cclMcy5.png" style="width: 100%; height: 100%; object-fit: contain; padding: 15px;">', tags: ['HTML', 'CSS', 'JavaScript'] } ],
   pricing: [ { title: 'Sito Base', price: 5, sub: 'A partire da', featured: false, features: ['Sito one-page', 'Design responsive', 'Sezioni base', 'Consegna rapida'] }, { title: 'Sito Completo', price: 15, sub: 'Il più completo', featured: true, features: ['Sito multi-pagina', 'Design personalizzato', 'Animazioni ed effetti', 'Ottimizzazione mobile', 'Supporto post-consegna'] } ],
   discounts: [ { code: 'HALLOWEEN26', percent: 35 } ],
-  sectionOrder: ['home', 'skills', 'portfolio', 'reviews', 'staff', 'pricing', 'payment', 'faq', 'contact']
+  sectionOrder: ['home', 'skills', 'portfolio', 'reviews', 'staff', 'pricing', 'payment', 'faq', 'themes', 'contact']
 };
 
 const faqAnswers = {
@@ -2116,9 +2335,35 @@ function submitReview() {
   const stars = parseInt(document.getElementById('reviewStars').value);
   const text = document.getElementById('reviewText').value.trim();
   if (!name || !stars || !text) { alert(t('reviewMissing')); return; }
-  db.ref('duckstudio/reviews').push({ name, stars, text, photo: user.photoURL || '', uid: user.uid, timestamp: Date.now() }).then(() => { alert(t('reviewAdded')); document.getElementById('reviewText').value = ''; }).catch(err => { console.error(err); alert(t('reviewError')); });
+  
+  db.ref('duckstudio/reviews').push({ name, stars, text, photo: user.photoURL || '', uid: user.uid, timestamp: Date.now() }).then(() => {
+    alert(t('reviewAdded'));
+    document.getElementById('reviewText').value = '';
+    
+    // INVIO EMAIL RECENSIONE
+    emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+      to_email: 'itu600396@gmail.com',
+      to_name: 'Admin DuckStudio',
+      message: `Nuova recensione da ${name} (${user.email}).\nVoto: ${stars} stelle.\nTesto: ${text}`
+    }).catch(err => console.error('Errore invio email recensione:', err));
+
+  }).catch(err => { console.error(err); alert(t('reviewError')); });
 }
-function signInWithGoogle() { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) auth.signInWithRedirect(provider).catch(err => console.error(err)); else auth.signInWithPopup(provider).then(result => { const user = result.user; if (user && user.email) emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: user.email, to_name: user.displayName || user.email.split('@')[0] }).catch(err => console.error(err)); }).catch(err => { console.error(err); alert(t('loginError')); }); }
+function signInWithGoogle() { 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); 
+  if (isMobile) auth.signInWithRedirect(provider).catch(err => console.error(err)); 
+  else auth.signInWithPopup(provider).then(result => { 
+    const user = result.user; 
+    if (user && user.email) {
+      // INVIO EMAIL LOGIN
+      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { 
+        to_email: 'itu600396@gmail.com', 
+        to_name: 'Admin DuckStudio',
+        message: `L'utente ${user.displayName || 'Sconosciuto'} (${user.email}) ha effettuato l'accesso al sito.`
+      }).catch(err => console.error('Errore invio email login:', err));
+    } 
+  }).catch(err => { console.error(err); alert(t('loginError')); }); 
+}
 function signOutUser() { auth.signOut(); closeProfileModal(); }
 function openDiscord() { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } window.open(DISCORD_LINK, '_blank'); }
 function openPayment(method) { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } alert(t('paymentAlert')); window.open(DISCORD_LINK, '_blank'); }
@@ -2142,6 +2387,8 @@ function openProfile() {
     if (selectedBadges.includes(el.dataset.badge)) el.classList.add('selected');
     else el.classList.remove('selected');
   });
+
+  updatePreview();
 }
 
 function closeProfileModal() {
@@ -2155,6 +2402,43 @@ function toggleBadge(badgeId, element) {
   } else {
     selectedBadges.push(badgeId);
     element.classList.add('selected');
+  }
+  updatePreview();
+}
+
+function previewImage(input, previewId) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const el = document.getElementById(previewId);
+      if (previewId === 'previewBanner') el.style.backgroundImage = `url(${e.target.result})`;
+      else el.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function updatePreview() {
+  document.getElementById('previewName').textContent = document.getElementById('editName').value || 'Il Tuo Nome';
+  document.getElementById('previewBio').textContent = document.getElementById('editBio').value || 'La tua bio apparirà qui.';
+  
+  const badgesContainer = document.getElementById('previewBadges');
+  badgesContainer.innerHTML = '';
+  selectedBadges.forEach(b => {
+    if (BADGE_IMAGES[b]) badgesContainer.innerHTML += `<img src="${BADGE_IMAGES[b]}" class="user-badge">`;
+  });
+
+  if (!currentUserProfile.avatarUrl && !document.getElementById('avatarInput').files[0]) {
+    document.getElementById('previewAvatar').src = auth.currentUser.photoURL || 'https://via.placeholder.com/80';
+  }
+  if (!currentUserProfile.bannerUrl && !document.getElementById('bannerInput').files[0]) {
+    document.getElementById('previewBanner').style.backgroundImage = 'linear-gradient(135deg, #0a0e1a, #1a2a4a)';
+  }
+  if (currentUserProfile.avatarUrl && !document.getElementById('avatarInput').files[0]) {
+    document.getElementById('previewAvatar').src = currentUserProfile.avatarUrl;
+  }
+  if (currentUserProfile.bannerUrl && !document.getElementById('bannerInput').files[0]) {
+    document.getElementById('previewBanner').style.backgroundImage = `url(${currentUserProfile.bannerUrl})`;
   }
 }
 
@@ -2277,7 +2561,7 @@ auth.onAuthStateChanged(user => {
 auth.getRedirectResult().then(result => {
   if (result && result.user) {
     const user = result.user;
-    if (user.email) emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: user.email, to_name: user.displayName || user.email.split('@')[0] }).catch(err => console.error(err));
+    if (user.email) emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: 'itu600396@gmail.com', to_name: 'Admin DuckStudio', message: `L'utente ${user.displayName || 'Sconosciuto'} (${user.email}) ha effettuato l'accesso (redirect).` }).catch(err => console.error(err));
   }
 }).catch(err => console.error('Errore redirect:', err));
 
@@ -2341,10 +2625,13 @@ function renderAdminLists() {
 
   const portfolioList = document.getElementById('adminPortfolioList');
   if (portfolioList) portfolioList.innerHTML = config.portfolio.map((p, i) => `<div class="admin-item"><span>${p.icon} ${p.name}</span><div class="actions"><button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button></div></div>`).join('');
+  
   const discountList = document.getElementById('adminDiscountList');
   if (discountList) discountList.innerHTML = config.discounts.map((d, i) => `<div class="admin-item"><span>${d.code} — ${d.percent}%</span><div class="actions"><button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button></div></div>`).join('');
+  
   const reviewList = document.getElementById('adminReviewList');
   if (reviewList) reviewList.innerHTML = reviews.map((r, i) => `<div class="admin-item"><span>${'★'.repeat(r.stars)} ${r.name} — ${r.text.substring(0, 40)}${r.text.length > 40 ? '...' : ''}</span><div class="actions"><button class="mini-btn danger" onclick="removeReview('${r.uid}_${r.timestamp}')">Rimuovi</button></div></div>`).join('');
+  
   const sectionOrder = document.getElementById('adminSectionOrder');
   if (sectionOrder) sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `<div class="admin-item"><span>${s}</span><div class="actions"><button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button><button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button></div></div>`).join('');
 }
@@ -2498,6 +2785,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
 // Avvio
+const savedTheme = localStorage.getItem('duckstudio_theme') || 'light';
+setTheme(savedTheme);
+
 loadConfigFromFirebase(); 
 loadReviewsFromFirebase(); 
 loadAllUsers();
