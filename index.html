@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DuckStudio - Siti Web</title>
+<title>DuckStudio - Siti Web & Community</title>
 
 <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/97/b5/4d/97b54d5809262083c34d2f6abdee0028.jpg">
-
-<meta property="og:title" content="DuckStudio - Siti Web">
+<meta property="og:title" content="DuckStudio - Siti Web & Community">
 <meta property="og:description" content="Progetto amatoriale di web development. Siti moderni con HTML, CSS e JavaScript.">
 <meta property="og:image" content="https://i.pinimg.com/736x/57/e2/45/57e245570f6a78123b3c7a9379c4dff7.jpg">
 <meta property="og:type" content="website">
@@ -15,7 +14,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- ANTI-ISPEZIONE -->
 <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -1320,7 +1318,7 @@ footer .disclaimer {
 .admin-status.success { background: #e8f5e9; color: #2e7d32; }
 .admin-status.error { background: #ffebee; color: #c62828; }
 
-/* Stili per Profilo e Chat */
+/* Stili per Profilo, Chat e Badge */
 .profile-modal, .chat-container {
   max-width: 800px;
   margin: 40px auto;
@@ -1390,6 +1388,50 @@ footer .disclaimer {
   border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.user-badges {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.user-badge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  cursor: help;
+}
+
+.badge-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+.badge-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  border: 2px solid transparent;
+}
+.badge-option.selected {
+  border-color: var(--accent);
+  background: #e6f7ff;
+}
+.badge-option img {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
 }
 
 @media (max-width: 900px) {
@@ -1690,7 +1732,6 @@ footer .disclaimer {
   </div>
 </section>
 
-<!-- NUOVA SEZIONE PROFILO -->
 <section id="profile" style="display: none;">
   <div class="section-header">
     <span class="label">Profilo</span>
@@ -1704,7 +1745,6 @@ footer .disclaimer {
   </div>
 </section>
 
-<!-- NUOVA SEZIONE CHAT -->
 <section id="chat">
   <div class="section-header">
     <span class="label">Community</span>
@@ -1757,6 +1797,22 @@ footer .disclaimer {
     <input type="text" id="editName" class="admin-input" placeholder="Nome visualizzato">
     <textarea id="editBio" class="admin-input" placeholder="Bio" style="height: 80px;"></textarea>
     
+    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Seleziona i tuoi Badge:</label>
+    <div class="badge-selector" id="badgeSelector">
+      <div class="badge-option" onclick="toggleBadge('dev', this)" data-badge="dev">
+        <img src="https://cdn-icons-png.flaticon.com/512/1005/1005141.png" alt="Dev"> Dev
+      </div>
+      <div class="badge-option" onclick="toggleBadge('staff', this)" data-badge="staff">
+        <img src="https://cdn-icons-png.flaticon.com/512/921/921517.png" alt="Staff"> Staff
+      </div>
+      <div class="badge-option" onclick="toggleBadge('vip', this)" data-badge="vip">
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616494.png" alt="VIP"> VIP
+      </div>
+      <div class="badge-option" onclick="toggleBadge('verified', this)" data-badge="verified">
+        <img src="https://cdn-icons-png.flaticon.com/512/929/929493.png" alt="Verified"> Verified
+      </div>
+    </div>
+
     <label style="display: block; margin-bottom: 10px; font-weight: 600;">Avatar:</label>
     <input type="file" id="avatarInput" accept="image/*" class="admin-input">
     
@@ -1774,7 +1830,7 @@ footer .disclaimer {
   </div>
 </div>
 
-<!-- PANNELLO ADMIN (Mantenuto) -->
+<!-- PANNELLO ADMIN -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-box" id="adminLoginBox">
     <h2><i class="fa-solid fa-lock"></i> Accesso Admin</h2>
@@ -1788,6 +1844,12 @@ footer .disclaimer {
   <div class="admin-box" id="adminContentBox" style="display: none;">
     <h2><i class="fa-solid fa-cog"></i> Pannello Admin</h2>
     <div class="admin-status success show" id="adminSavedStatus">Modifiche salvate automaticamente</div>
+    
+    <div class="admin-section">
+      <h3><i class="fa-solid fa-users"></i> Gestione Utenti e Badge</h3>
+      <div id="adminUsersList"></div>
+    </div>
+
     <div class="admin-section">
       <h3><i class="fa-solid fa-box"></i> Prodotti Portfolio</h3>
       <div id="adminPortfolioList"></div>
@@ -1825,6 +1887,32 @@ footer .disclaimer {
   </div>
 </div>
 
+<!-- MODALE BADGE ADMIN -->
+<div class="admin-panel" id="adminBadgeModal">
+  <div class="admin-box">
+    <h2><i class="fa-solid fa-medal"></i> Gestisci Badge Utente</h2>
+    <p style="margin-bottom: 15px; font-size: 14px;">Stai modificando: <strong id="adminBadgeUserName"></strong></p>
+    <div class="badge-selector" id="adminBadgeSelector">
+      <div class="badge-option" onclick="toggleAdminBadge('dev', this)" data-badge="dev">
+        <img src="https://cdn-icons-png.flaticon.com/512/1005/1005141.png" alt="Dev"> Dev
+      </div>
+      <div class="badge-option" onclick="toggleAdminBadge('staff', this)" data-badge="staff">
+        <img src="https://cdn-icons-png.flaticon.com/512/921/921517.png" alt="Staff"> Staff
+      </div>
+      <div class="badge-option" onclick="toggleAdminBadge('vip', this)" data-badge="vip">
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616494.png" alt="VIP"> VIP
+      </div>
+      <div class="badge-option" onclick="toggleAdminBadge('verified', this)" data-badge="verified">
+        <img src="https://cdn-icons-png.flaticon.com/512/929/929493.png" alt="Verified"> Verified
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <button class="admin-btn success" onclick="saveAdminBadges()">Salva Badge</button>
+      <button class="admin-btn danger" onclick="closeAdminBadgeModal()">Annulla</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // --- CONFIGURAZIONE FIREBASE ---
 const firebaseConfig = {
@@ -1851,6 +1939,15 @@ const EMAILJS_TEMPLATE = 'template_iocg9c4';
 // --- CLOUDINARY ---
 const CLOUDINARY_CLOUD_NAME = 'j75j55wr';
 const CLOUDINARY_PRESET = 'duckstudio';
+
+// --- BADGES CONFIG ---
+const BADGE_IMAGES = {
+  'dev': 'https://cdn-icons-png.flaticon.com/512/1005/1005141.png',
+  'staff': 'https://cdn-icons-png.flaticon.com/512/921/921517.png',
+  'vip': 'https://cdn-icons-png.flaticon.com/512/616/616494.png',
+  'verified': 'https://cdn-icons-png.flaticon.com/512/929/929493.png'
+};
+let selectedBadges = [];
 
 // --- TRADUZIONI ---
 const translations = {
@@ -1968,6 +2065,7 @@ let config = JSON.parse(JSON.stringify(defaultConfig));
 let adminLoggedIn = false;
 let reviews = [];
 let currentUserProfile = {};
+let allUsers = [];
 
 // --- DATABASE E CONFIG ---
 function loadConfigFromFirebase() {
@@ -1984,6 +2082,15 @@ function loadReviewsFromFirebase() {
     if (data) { reviews = Object.values(data); reviews.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); }
     else reviews = [];
     renderReviews(); renderReviewForm();
+  });
+}
+function loadAllUsers() {
+  db.ref('users').on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      allUsers = Object.keys(data).map(uid => ({ uid, ...data[uid] }));
+      if (adminLoggedIn) renderAdminLists();
+    }
   });
 }
 function saveConfigToFirebase() {
@@ -2016,7 +2123,7 @@ function signOutUser() { auth.signOut(); closeProfileModal(); }
 function openDiscord() { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } window.open(DISCORD_LINK, '_blank'); }
 function openPayment(method) { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } alert(t('paymentAlert')); window.open(DISCORD_LINK, '_blank'); }
 
-// --- GESTIONE PROFILO ---
+// --- GESTIONE PROFILO UTENTE ---
 function loadUserProfile(uid) {
   db.ref(`users/${uid}`).on('value', snapshot => {
     const data = snapshot.val();
@@ -2029,10 +2136,26 @@ function openProfile() {
   document.getElementById('profileModal').classList.add('open');
   document.getElementById('editName').value = currentUserProfile.displayName || auth.currentUser.displayName || '';
   document.getElementById('editBio').value = currentUserProfile.bio || '';
+  
+  selectedBadges = currentUserProfile.badges || [];
+  document.querySelectorAll('#badgeSelector .badge-option').forEach(el => {
+    if (selectedBadges.includes(el.dataset.badge)) el.classList.add('selected');
+    else el.classList.remove('selected');
+  });
 }
 
 function closeProfileModal() {
   document.getElementById('profileModal').classList.remove('open');
+}
+
+function toggleBadge(badgeId, element) {
+  if (selectedBadges.includes(badgeId)) {
+    selectedBadges = selectedBadges.filter(id => id !== badgeId);
+    element.classList.remove('selected');
+  } else {
+    selectedBadges.push(badgeId);
+    element.classList.add('selected');
+  }
 }
 
 async function uploadImageToCloudinary(file, folder) {
@@ -2041,10 +2164,7 @@ async function uploadImageToCloudinary(file, folder) {
   formData.append('upload_preset', CLOUDINARY_PRESET);
   formData.append('folder', folder);
 
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-    method: 'POST',
-    body: formData
-  });
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
   const data = await res.json();
   return data.secure_url;
 }
@@ -2069,7 +2189,8 @@ async function saveProfile() {
       displayName: name,
       bio: bio,
       avatarUrl: avatarUrl,
-      bannerUrl: bannerUrl
+      bannerUrl: bannerUrl,
+      badges: selectedBadges
     });
 
     if (avatarFile) document.getElementById('userPfp').src = avatarUrl;
@@ -2095,9 +2216,21 @@ function initChat() {
     const isMine = auth.currentUser && msg.uid === auth.currentUser.uid;
     div.className = `chat-msg ${isMine ? 'mine' : 'other'}`;
     
-    db.ref(`users/${msg.uid}/displayName`).once('value').then(nameSnap => {
-      const authorName = nameSnap.val() || msg.nome || 'Anonimo';
-      div.innerHTML = `<span class="msg-author">${authorName}</span>${msg.testo}`;
+    db.ref(`users/${msg.uid}`).once('value').then(userSnap => {
+      const userData = userSnap.val() || {};
+      const authorName = userData.displayName || msg.nome || 'Anonimo';
+      const userBadges = userData.badges || [];
+      
+      let badgesHtml = '';
+      if (userBadges.length > 0) {
+        badgesHtml = '<div class="user-badges" style="margin-top: 2px; margin-bottom: 4px;">';
+        userBadges.forEach(b => {
+          if (BADGE_IMAGES[b]) badgesHtml += `<img src="${BADGE_IMAGES[b]}" class="user-badge" title="${b}">`;
+        });
+        badgesHtml += '</div>';
+      }
+
+      div.innerHTML = `<span class="msg-author">${authorName}</span>${badgesHtml}<span>${msg.testo}</span>`;
       chatMessages.appendChild(div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     });
@@ -2190,6 +2323,22 @@ function adminLogin() {
 }
 
 function renderAdminLists() {
+  const userList = document.getElementById('adminUsersList');
+  if (userList) {
+    if(allUsers.length === 0) {
+      userList.innerHTML = '<p style="font-size:13px; color:#888;">Nessun utente registrato al momento.</p>';
+    } else {
+      userList.innerHTML = allUsers.map(u => `
+        <div class="admin-item">
+          <span><strong>${u.displayName || 'Utente'}</strong> <br><small style="color:#666;">${u.uid.substring(0,10)}...</small></span>
+          <div class="actions">
+            <button class="mini-btn" onclick="openAdminBadgeModal('${u.uid}')">Gestisci Badge</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
   const portfolioList = document.getElementById('adminPortfolioList');
   if (portfolioList) portfolioList.innerHTML = config.portfolio.map((p, i) => `<div class="admin-item"><span>${p.icon} ${p.name}</span><div class="actions"><button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button></div></div>`).join('');
   const discountList = document.getElementById('adminDiscountList');
@@ -2200,6 +2349,52 @@ function renderAdminLists() {
   if (sectionOrder) sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `<div class="admin-item"><span>${s}</span><div class="actions"><button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button><button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button></div></div>`).join('');
 }
 
+// --- ADMIN: BADGE UTENTE ---
+let adminBadgeTargetUid = null;
+let adminSelectedBadges = [];
+
+function openAdminBadgeModal(uid) {
+  adminBadgeTargetUid = uid;
+  const user = allUsers.find(u => u.uid === uid);
+  document.getElementById('adminBadgeUserName').textContent = user.displayName || uid;
+  
+  adminSelectedBadges = user.badges || [];
+  document.querySelectorAll('#adminBadgeSelector .badge-option').forEach(el => {
+    if (adminSelectedBadges.includes(el.dataset.badge)) el.classList.add('selected');
+    else el.classList.remove('selected');
+  });
+  
+  document.getElementById('adminBadgeModal').classList.add('open');
+}
+
+function closeAdminBadgeModal() {
+  document.getElementById('adminBadgeModal').classList.remove('open');
+}
+
+function toggleAdminBadge(badgeId, element) {
+  if (adminSelectedBadges.includes(badgeId)) {
+    adminSelectedBadges = adminSelectedBadges.filter(id => id !== badgeId);
+    element.classList.remove('selected');
+  } else {
+    adminSelectedBadges.push(badgeId);
+    element.classList.add('selected');
+  }
+}
+
+function saveAdminBadges() {
+  if (!adminBadgeTargetUid) return;
+  db.ref(`users/${adminBadgeTargetUid}/badges`).set(adminSelectedBadges)
+    .then(() => {
+      alert("Badge aggiornati con successo!");
+      closeAdminBadgeModal();
+    })
+    .catch(err => {
+      console.error("Errore aggiornamento badge:", err);
+      alert("Errore durante il salvataggio dei badge.");
+    });
+}
+
+// --- ALTRE AZIONI ADMIN ---
 function addPortfolioItem() {
   const name = document.getElementById('newPortfolioName').value.trim();
   const desc = document.getElementById('newPortfolioDesc').value.trim();
@@ -2212,9 +2407,7 @@ function addPortfolioItem() {
   document.getElementById('newPortfolioLink').value = '';
   saveConfigToFirebase(); renderPortfolio(); renderAdminLists();
 }
-
 function removePortfolioItem(index) { config.portfolio.splice(index, 1); saveConfigToFirebase(); renderPortfolio(); renderAdminLists(); }
-
 function addDiscountCode() {
   const code = document.getElementById('newDiscountCode').value.trim().toUpperCase();
   const percent = parseInt(document.getElementById('newDiscountPercent').value);
@@ -2224,18 +2417,14 @@ function addDiscountCode() {
   document.getElementById('newDiscountPercent').value = '';
   saveConfigToFirebase(); renderAdminLists();
 }
-
 function removeDiscountCode(index) { config.discounts.splice(index, 1); saveConfigToFirebase(); renderAdminLists(); }
-
 function addReviewFromAdmin() {
   const name = document.getElementById('newReviewName').value.trim();
   const stars = parseInt(document.getElementById('newReviewStars').value);
   const text = document.getElementById('newReviewText').value.trim();
   if (!name || !stars || !text) return;
-  const review = { name, stars, text, photo: '', uid: 'admin_' + Date.now(), timestamp: Date.now() };
-  db.ref('duckstudio/reviews').push(review).then(() => { document.getElementById('newReviewName').value = ''; document.getElementById('newReviewText').value = ''; });
+  db.ref('duckstudio/reviews').push({ name, stars, text, photo: '', uid: 'admin_' + Date.now(), timestamp: Date.now() }).then(() => { document.getElementById('newReviewName').value = ''; document.getElementById('newReviewText').value = ''; });
 }
-
 function removeReview(key) {
   let foundKey = null;
   db.ref('duckstudio/reviews').once('value', snapshot => {
@@ -2243,21 +2432,18 @@ function removeReview(key) {
     if (data) { for (const k in data) { const r = data[k]; if ((r.uid + '_' + r.timestamp) === key) { foundKey = k; break; } } if (foundKey) db.ref('duckstudio/reviews/' + foundKey).remove(); }
   });
 }
-
 function moveSection(index, direction) {
   const newIndex = index + direction;
   if (newIndex < 0 || newIndex >= config.sectionOrder.length) return;
   const arr = config.sectionOrder; const temp = arr[index]; arr[index] = arr[newIndex]; arr[newIndex] = temp;
   saveConfigToFirebase(); renderAdminLists();
 }
-
 function exportConfig() {
   const dataStr = JSON.stringify({ config, reviews }, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = 'duckstudio-config.json'; a.click(); URL.revokeObjectURL(url);
 }
-
 function resetConfig() { if (!confirm('Sei sicuro di voler resettare tutte le modifiche?')) return; config = JSON.parse(JSON.stringify(defaultConfig)); saveConfigToFirebase(); renderAll(); }
 
 // --- FAQ ---
@@ -2310,7 +2496,14 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 document.getElementById('currentYear').textContent = new Date().getFullYear();
-loadConfigFromFirebase(); loadReviewsFromFirebase(); applyTranslations(); initFaq(); initChat();
+
+// Avvio
+loadConfigFromFirebase(); 
+loadReviewsFromFirebase(); 
+loadAllUsers();
+applyTranslations(); 
+initFaq(); 
+initChat();
 </script>
 </body>
 </html>
