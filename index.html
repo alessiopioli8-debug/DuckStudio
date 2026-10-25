@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Grotesk:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- ANTI-ISPEZIONE (solo deterrente) -->
+<!-- ANTI-ISPEZIONE -->
 <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -172,6 +172,7 @@ nav {
   border: 2px solid var(--border);
   border-radius: 50px;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .user-info:hover { border-color: var(--accent); }
@@ -1319,6 +1320,78 @@ footer .disclaimer {
 .admin-status.success { background: #e8f5e9; color: #2e7d32; }
 .admin-status.error { background: #ffebee; color: #c62828; }
 
+/* Stili per Profilo e Chat */
+.profile-modal, .chat-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: rgba(255,255,255,0.95);
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-msg {
+  padding: 10px 15px;
+  border-radius: 12px;
+  max-width: 80%;
+  font-size: 14px;
+}
+
+.chat-msg.mine {
+  background: var(--accent);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.chat-msg.other {
+  background: #fff;
+  border: 1px solid var(--border);
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+.chat-msg .msg-author { font-size: 11px; font-weight: 700; opacity: 0.8; margin-bottom: 2px; display: block; }
+
+.chat-input-area { display: flex; gap: 10px; }
+.chat-input-area input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+.chat-input-area input:focus { border-color: var(--accent); }
+.chat-input-area button {
+  padding: 12px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   nav { padding: 12px 18px; }
   .nav-links {
@@ -1391,6 +1464,9 @@ footer .disclaimer {
     <li><a href="#payment" data-i18n="navPayment">Pagamenti</a></li>
     <li><a href="#faq" data-i18n="navFaq">Domande</a></li>
     <li><a href="#contact" data-i18n="navContact">Contatti</a></li>
+    <!-- NUOVE SEZIONI -->
+    <li><a href="#profile" onclick="openProfile()">Profilo</a></li>
+    <li><a href="#chat">Chat</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-switch">
@@ -1406,10 +1482,10 @@ footer .disclaimer {
       </svg>
       <span data-i18n="loginBtn">Accedi</span>
     </button>
-    <div class="user-info" id="userInfo">
+    <div class="user-info" id="userInfo" onclick="openProfile()">
       <img id="userPfp" src="" alt="User">
       <span id="userName">Utente</span>
-      <button class="logout-btn" onclick="signOutUser()" title="Esci">
+      <button class="logout-btn" onclick="event.stopPropagation(); signOutUser()" title="Esci">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </div>
@@ -1614,6 +1690,36 @@ footer .disclaimer {
   </div>
 </section>
 
+<!-- NUOVA SEZIONE PROFILO -->
+<section id="profile" style="display: none;">
+  <div class="section-header">
+    <span class="label">Profilo</span>
+    <h2>Il Tuo Profilo</h2>
+    <p>Personalizza il tuo profilo e connettiti con la community.</p>
+  </div>
+  <div class="profile-modal">
+    <div id="profileContent">
+      <p>Effettua l'accesso per vedere il tuo profilo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NUOVA SEZIONE CHAT -->
+<section id="chat">
+  <div class="section-header">
+    <span class="label">Community</span>
+    <h2>Chat in Tempo Reale</h2>
+    <p>Parla con altri utenti del server. Devi essere loggato per inviare messaggi.</p>
+  </div>
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Scrivi un messaggio..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+      <button onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="contact-content">
     <h2 data-i18n="contactTitle">Iniziamo il tuo progetto</h2>
@@ -1644,25 +1750,44 @@ footer .disclaimer {
   <p class="disclaimer" data-i18n="footerDisclaimer">Siti web realizzati per passione, non per business.</p>
 </footer>
 
+<!-- MODALE PROFILO -->
+<div class="admin-panel" id="profileModal">
+  <div class="admin-box">
+    <h2><i class="fa-solid fa-user"></i> Modifica Profilo</h2>
+    <input type="text" id="editName" class="admin-input" placeholder="Nome visualizzato">
+    <textarea id="editBio" class="admin-input" placeholder="Bio" style="height: 80px;"></textarea>
+    
+    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Avatar:</label>
+    <input type="file" id="avatarInput" accept="image/*" class="admin-input">
+    
+    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Banner:</label>
+    <input type="file" id="bannerInput" accept="image/*" class="admin-input">
+    
+    <h3 style="margin-top: 20px;">Integrazioni</h3>
+    <button class="admin-btn" style="background: #5865F2; margin-bottom: 10px;" onclick="connectDiscord()">Collega Discord</button>
+    <button class="admin-btn" style="background: #1DB954;" onclick="connectSpotify()">Collega Spotify</button>
+
+    <div style="margin-top: 20px;">
+      <button class="admin-btn" onclick="saveProfile()">Salva</button>
+      <button class="admin-btn danger" onclick="closeProfileModal()">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANNELLO ADMIN (Mantenuto) -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-box" id="adminLoginBox">
     <h2><i class="fa-solid fa-lock"></i> Accesso Admin</h2>
-    <input type="email" class="admin-input" id="adminEmailInput" placeholder="Email admin (es. admin@duckvanilla.store)">
+    <input type="email" class="admin-input" id="adminEmailInput" placeholder="Email admin (admin@duckvanilla.store)">
     <input type="password" class="admin-input" id="adminPasswordInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')adminLogin()">
-    <button class="admin-btn" onclick="adminLogin()">
-      <i class="fa-solid fa-unlock"></i> Entra
-    </button>
-    <button class="admin-btn danger" style="margin-left: 10px;" onclick="closeAdmin()">
-      <i class="fa-solid fa-times"></i> Chiudi
-    </button>
+    <button class="admin-btn" onclick="adminLogin()"><i class="fa-solid fa-unlock"></i> Entra</button>
+    <button class="admin-btn danger" style="margin-left: 10px;" onclick="closeAdmin()"><i class="fa-solid fa-times"></i> Chiudi</button>
     <div class="admin-status error" id="adminLoginError">Email o password errata</div>
   </div>
 
   <div class="admin-box" id="adminContentBox" style="display: none;">
     <h2><i class="fa-solid fa-cog"></i> Pannello Admin</h2>
-
     <div class="admin-status success show" id="adminSavedStatus">Modifiche salvate automaticamente</div>
-
     <div class="admin-section">
       <h3><i class="fa-solid fa-box"></i> Prodotti Portfolio</h3>
       <div id="adminPortfolioList"></div>
@@ -1670,52 +1795,38 @@ footer .disclaimer {
       <input type="text" class="admin-input" id="newPortfolioDesc" placeholder="Descrizione">
       <input type="text" class="admin-input" id="newPortfolioLink" placeholder="Link (es. https://...)">
       <input type="text" class="admin-input" id="newPortfolioIcon" placeholder="Emoji (es. 💎)" value="💎">
-      <button class="admin-btn success" onclick="addPortfolioItem()">
-        <i class="fa-solid fa-plus"></i> Aggiungi Prodotto
-      </button>
+      <button class="admin-btn success" onclick="addPortfolioItem()"><i class="fa-solid fa-plus"></i> Aggiungi Prodotto</button>
     </div>
-
     <div class="admin-section">
       <h3><i class="fa-solid fa-tag"></i> Codici Sconto</h3>
       <div id="adminDiscountList"></div>
       <input type="text" class="admin-input" id="newDiscountCode" placeholder="Codice (es. DUCK20)">
       <input type="number" class="admin-input" id="newDiscountPercent" placeholder="Sconto % (es. 20)">
-      <button class="admin-btn success" onclick="addDiscountCode()">
-        <i class="fa-solid fa-plus"></i> Aggiungi Codice
-      </button>
+      <button class="admin-btn success" onclick="addDiscountCode()"><i class="fa-solid fa-plus"></i> Aggiungi Codice</button>
     </div>
-
     <div class="admin-section">
       <h3><i class="fa-solid fa-star"></i> Recensioni</h3>
       <div id="adminReviewList"></div>
       <input type="text" class="admin-input" id="newReviewName" placeholder="Nome cliente">
       <input type="number" class="admin-input" id="newReviewStars" placeholder="Stelle (1-5)" min="1" max="5" value="5">
       <textarea class="admin-input" id="newReviewText" placeholder="Testo recensione"></textarea>
-      <button class="admin-btn success" onclick="addReviewFromAdmin()">
-        <i class="fa-solid fa-plus"></i> Aggiungi Recensione
-      </button>
+      <button class="admin-btn success" onclick="addReviewFromAdmin()"><i class="fa-solid fa-plus"></i> Aggiungi Recensione</button>
     </div>
-
     <div class="admin-section">
       <h3><i class="fa-solid fa-arrows-up-down"></i> Ordine Sezioni</h3>
       <div id="adminSectionOrder"></div>
     </div>
-
     <div class="admin-section">
       <h3><i class="fa-solid fa-tools"></i> Azioni</h3>
-      <button class="admin-btn" onclick="exportConfig()">
-        <i class="fa-solid fa-download"></i> Esporta Config
-      </button>
-      <button class="admin-btn danger" onclick="resetConfig()">
-        <i class="fa-solid fa-trash"></i> Reset Tutto
-      </button>
-      <button class="admin-btn" style="margin-top: 10px; background: #666;" onclick="closeAdmin()">
-        <i class="fa-solid fa-times"></i> Chiudi Pannello
-      </button>
+      <button class="admin-btn" onclick="exportConfig()"><i class="fa-solid fa-download"></i> Esporta Config</button>
+      <button class="admin-btn danger" onclick="resetConfig()"><i class="fa-solid fa-trash"></i> Reset Tutto</button>
+      <button class="admin-btn" style="margin-top: 10px; background: #666;" onclick="closeAdmin()"><i class="fa-solid fa-times"></i> Chiudi Pannello</button>
     </div>
   </div>
 </div>
+
 <script>
+// --- CONFIGURAZIONE FIREBASE ---
 const firebaseConfig = {
   apiKey: "AIzaSyDQO9tfSvBprL5CX_4rqxEEibatCNTbePU",
   authDomain: "duckstudio-official.firebaseapp.com",
@@ -1737,255 +1848,82 @@ const DISCORD_LINK = 'https://discord.gg/ThYvNjgV6';
 const EMAILJS_SERVICE = 'duckstudio.service';
 const EMAILJS_TEMPLATE = 'template_iocg9c4';
 
+// --- CLOUDINARY ---
+const CLOUDINARY_CLOUD_NAME = 'j75j55wr';
+const CLOUDINARY_PRESET = 'duckstudio';
+
+// --- TRADUZIONI ---
 const translations = {
   it: {
-    navHome: 'Home',
-    navSkills: 'Competenze',
-    navPortfolio: 'Portfolio',
-    navReviews: 'Recensioni',
-    navStaff: 'Staff',
-    navPricing: 'Tariffe',
-    navPayment: 'Pagamenti',
-    navFaq: 'Domande',
-    navContact: 'Contatti',
-    loginBtn: 'Accedi',
-    greeting: 'DuckStudio',
-    heroTitle1: 'Creiamo',
-    heroTitle2: 'siti web',
-    heroTitle3: 'su misura',
+    navHome: 'Home', navSkills: 'Competenze', navPortfolio: 'Portfolio', navReviews: 'Recensioni', navStaff: 'Staff', navPricing: 'Tariffe', navPayment: 'Pagamenti', navFaq: 'Domande', navContact: 'Contatti',
+    loginBtn: 'Accedi', greeting: 'DuckStudio', heroTitle1: 'Creiamo', heroTitle2: 'siti web', heroTitle3: 'su misura',
     heroDesc: 'Siamo un piccolo team di appassionati di web development. Realizziamo siti moderni e responsive usando HTML, CSS e JavaScript. Un progetto amatoriale, ma fatto con cura.',
-    heroBtn1: 'Guarda il Portfolio',
-    heroBtn2: 'Scrivici su Discord',
-    skillsLabel: 'Competenze',
-    skillsTitle: 'Cosa Sappiamo Fare',
-    skillsSub: 'Le tecnologie che usiamo per creare siti web moderni.',
-    portfolioLabel: 'Portfolio',
-    portfolioTitle: 'I Nostri Lavori',
-    portfolioSub: 'Un esempio del nostro stile e della qualità che offriamo.',
-    reviewsLabel: 'Recensioni',
-    reviewsTitle: 'Cosa Dicono di Noi',
-    reviewsSub: 'Le recensioni dei nostri clienti. Se hai lavorato con noi, lascia la tua!',
-    reviewFormTitle: 'Lascia una recensione',
-    reviewLoginRequired: 'Devi accedere con Google per lasciare una recensione',
-    reviewNamePlaceholder: 'Il tuo nome',
-    reviewTextPlaceholder: 'Scrivi la tua recensione...',
-    reviewStarsLabel: 'Voto:',
-    reviewSubmit: 'Pubblica recensione',
-    reviewEmpty: 'Ancora nessuna recensione. Sii il primo!',
-    staffLabel: 'Il Team',
-    staffTitle: 'Chi C\'è Dietro',
-    staffSub: 'Un piccolo team di appassionati di web development.',
-    staffRole1: 'Team Manager',
-    staffRole2: 'Lead Developer',
-    staffRole3: 'UI/UX Designer',
-    staffRole4: 'Frontend Developer',
-    staffDesc1: 'Coordina i progetti, gestisce il team e organizza le consegne ai clienti.',
-    staffDesc2: 'Scrive il codice, sviluppa le funzionalità e ottimizza le performance dei siti.',
-    staffDesc3: 'Cura il design, gli stili e le animazioni di ogni sito realizzato.',
-    staffDesc4: 'Sviluppa l\'interfaccia utente e si assicura che tutto funzioni su ogni dispositivo.',
-    staffContact: 'Contattami',
-    staffDisclaimerTitle: 'Progetto amatoriale',
-    staffDisclaimerText: 'nato dalla passione per il web development. Non emettiamo fatture.',
-    pricingLabel: 'Tariffe',
-    pricingTitle: 'Tariffe Indicative',
-    pricingSub: 'Prezzi indicativi. Su Discord si fa il preventivo in base al tuo progetto.',
-    pricingNoteTitle: 'Preventivo personalizzato:',
-    pricingNoteText: 'Scrivici su Discord per concordare il prezzo in base alle tue esigenze. I prezzi sopra sono solo indicativi e partono da un minimo di 5€.',
-    paymentLabel: 'Pagamenti',
-    paymentTitle: 'Metodi di Pagamento',
-    paymentSub: 'Questi sono i metodi accettati. Contattaci prima per concordare tutto.',
-    paypalDesc: 'Pagamento sicuro e veloce tramite PayPal.',
-    revolutDesc: 'Pagamento istantaneo tramite Revolut.',
-    paymentNoteTitle: 'Importante:',
-    paymentNoteText: 'Non effettuare pagamenti direttamente da questi link. Contattaci prima su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.',
-    faqLabel: 'Domande',
-    faqTitle: 'Hai delle domande?',
-    faqSub: 'Il nostro assistente virtuale risponde subito alle domande più comuni.',
-    faqPlaceholder: 'Scrivi la tua domanda...',
-    faqSend: 'Invia',
-    contactTitle: 'Iniziamo il tuo progetto',
-    contactDesc: 'Scrivici su Discord o via email per discutere del tuo sito. Siamo un progetto amatoriale: nessuna fretta, nessuna pressione, solo passione per il codice.',
-    loginWarning: 'Per aprire il Discord devi prima accedere con Google',
-    contactNote: 'Email: itu600396@gmail.com — Prezzi a partire da 5€',
-    footerNote: 'Progetto amatoriale senza partita IVA',
-    footerDisclaimer: 'Siti web realizzati per passione, non per business.',
-    q1: 'Quanto costa un sito?',
-    q2: 'Quanto tempo ci vuole?',
-    q3: 'Che tecnologie usate?',
-    q4: 'Posso avere un dominio mio?',
-    q5: 'Come vi contatto?',
-    q6: 'Cosa include il sito?',
-    faqWelcome: 'Ciao! Siamo l\'assistente di DuckStudio. Come possiamo aiutarti?',
-    faqHint: 'Clicca su una delle domande qui sotto o scrivici direttamente.',
-    paymentAlert: 'Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.',
-    contactText: 'Ci trovi su Discord (discord.gg/ThYvNjgV6) o via email a itu600396@gmail.com.',
-    loginError: 'Errore durante il login con Google. Riprova.',
-    reviewAdded: 'Recensione pubblicata! Grazie!',
-    reviewError: 'Errore durante l\'invio. Riprova.',
-    reviewMissing: 'Compila tutti i campi!'
+    heroBtn1: 'Guarda il Portfolio', heroBtn2: 'Scrivici su Discord',
+    skillsLabel: 'Competenze', skillsTitle: 'Cosa Sappiamo Fare', skillsSub: 'Le tecnologie che usiamo per creare siti web moderni.',
+    portfolioLabel: 'Portfolio', portfolioTitle: 'I Nostri Lavori', portfolioSub: 'Un esempio del nostro stile e della qualità che offriamo.',
+    reviewsLabel: 'Recensioni', reviewsTitle: 'Cosa Dicono di Noi', reviewsSub: 'Le recensioni dei nostri clienti. Se hai lavorato con noi, lascia la tua!',
+    reviewFormTitle: 'Lascia una recensione', reviewLoginRequired: 'Devi accedere con Google per lasciare una recensione', reviewNamePlaceholder: 'Il tuo nome', reviewTextPlaceholder: 'Scrivi la tua recensione...', reviewStarsLabel: 'Voto:', reviewSubmit: 'Pubblica recensione', reviewEmpty: 'Ancora nessuna recensione. Sii il primo!',
+    staffLabel: 'Il Team', staffTitle: 'Chi C\'è Dietro', staffSub: 'Un piccolo team di appassionati di web development.', staffRole1: 'Team Manager', staffRole2: 'Lead Developer', staffRole3: 'UI/UX Designer', staffRole4: 'Frontend Developer', staffDesc1: 'Coordina i progetti, gestisce il team e organizza le consegne ai clienti.', staffDesc2: 'Scrive il codice, sviluppa le funzionalità e ottimizza le performance dei siti.', staffDesc3: 'Cura il design, gli stili e le animazioni di ogni sito realizzato.', staffDesc4: 'Sviluppa l\'interfaccia utente e si assicura che tutto funzioni su ogni dispositivo.', staffContact: 'Contattami', staffDisclaimerTitle: 'Progetto amatoriale', staffDisclaimerText: 'nato dalla passione per il web development. Non emettiamo fatture.',
+    pricingLabel: 'Tariffe', pricingTitle: 'Tariffe Indicative', pricingSub: 'Prezzi indicativi. Su Discord si fa il preventivo in base al tuo progetto.', pricingNoteTitle: 'Preventivo personalizzato:', pricingNoteText: 'Scrivici su Discord per concordare il prezzo in base alle tue esigenze. I prezzi sopra sono solo indicativi e partono da un minimo di 5€.',
+    paymentLabel: 'Pagamenti', paymentTitle: 'Metodi di Pagamento', paymentSub: 'Questi sono i metodi accettati. Contattaci prima per concordare tutto.', paypalDesc: 'Pagamento sicuro e veloce tramite PayPal.', revolutDesc: 'Pagamento istantaneo tramite Revolut.', paymentNoteTitle: 'Importante:', paymentNoteText: 'Non effettuare pagamenti direttamente da questi link. Contattaci prima su Discord o via email per concordare il progetto, il prezzo e i tempi di consegna.',
+    faqLabel: 'Domande', faqTitle: 'Hai delle domande?', faqSub: 'Il nostro assistente virtuale risponde subito alle domande più comuni.', faqPlaceholder: 'Scrivi la tua domanda...', faqSend: 'Invia',
+    contactTitle: 'Iniziamo il tuo progetto', contactDesc: 'Scrivici su Discord o via email per discutere del tuo sito. Siamo un progetto amatoriale: nessuna fretta, nessuna pressione, solo passione per il codice.', loginWarning: 'Per aprire il Discord devi prima accedere con Google', contactNote: 'Email: itu600396@gmail.com — Prezzi a partire da 5€',
+    footerNote: 'Progetto amatoriale senza partita IVA', footerDisclaimer: 'Siti web realizzati per passione, non per business.',
+    q1: 'Quanto costa un sito?', q2: 'Quanto tempo ci vuole?', q3: 'Che tecnologie usate?', q4: 'Posso avere un dominio mio?', q5: 'Come vi contatto?', q6: 'Cosa include il sito?',
+    faqWelcome: 'Ciao! Siamo l\'assistente di DuckStudio. Come possiamo aiutarti?', faqHint: 'Clicca su una delle domande qui sotto o scrivici direttamente.',
+    paymentAlert: 'Prima di procedere col pagamento, contattaci su Discord per concordare il progetto.', contactText: 'Ci trovi su Discord (discord.gg/ThYvNjgV6) o via email a itu600396@gmail.com.', loginError: 'Errore durante il login con Google. Riprova.', reviewAdded: 'Recensione pubblicata! Grazie!', reviewError: 'Errore durante l\'invio. Riprova.', reviewMissing: 'Compila tutti i campi!'
   },
   en: {
-    navHome: 'Home',
-    navSkills: 'Skills',
-    navPortfolio: 'Portfolio',
-    navReviews: 'Reviews',
-    navStaff: 'Staff',
-    navPricing: 'Pricing',
-    navPayment: 'Payments',
-    navFaq: 'FAQ',
-    navContact: 'Contact',
-    loginBtn: 'Login',
-    greeting: 'DuckStudio',
-    heroTitle1: 'We build',
-    heroTitle2: 'websites',
-    heroTitle3: 'that work',
+    navHome: 'Home', navSkills: 'Skills', navPortfolio: 'Portfolio', navReviews: 'Reviews', navStaff: 'Staff', navPricing: 'Pricing', navPayment: 'Payments', navFaq: 'FAQ', navContact: 'Contact',
+    loginBtn: 'Login', greeting: 'DuckStudio', heroTitle1: 'We build', heroTitle2: 'websites', heroTitle3: 'that work',
     heroDesc: 'We are a small team of web development enthusiasts. We create modern and responsive websites using HTML, CSS and JavaScript. An amateur project, but done with care.',
-    heroBtn1: 'See Portfolio',
-    heroBtn2: 'Write us on Discord',
-    skillsLabel: 'Skills',
-    skillsTitle: 'What We Can Do',
-    skillsSub: 'The technologies we use to build modern websites.',
-    portfolioLabel: 'Portfolio',
-    portfolioTitle: 'Our Work',
-    portfolioSub: 'An example of our style and the quality we offer.',
-    reviewsLabel: 'Reviews',
-    reviewsTitle: 'What They Say About Us',
-    reviewsSub: 'Reviews from our clients. If you worked with us, leave yours!',
-    reviewFormTitle: 'Leave a review',
-    reviewLoginRequired: 'You must log in with Google to leave a review',
-    reviewNamePlaceholder: 'Your name',
-    reviewTextPlaceholder: 'Write your review...',
-    reviewStarsLabel: 'Rating:',
-    reviewSubmit: 'Publish review',
-    reviewEmpty: 'No reviews yet. Be the first!',
-    staffLabel: 'The Team',
-    staffTitle: 'Who\'s Behind',
-    staffSub: 'A small team of web development enthusiasts.',
-    staffRole1: 'Team Manager',
-    staffRole2: 'Lead Developer',
-    staffRole3: 'UI/UX Designer',
-    staffRole4: 'Frontend Developer',
-    staffDesc1: 'Coordinates projects, manages the team and organizes client deliveries.',
-    staffDesc2: 'Writes the code, develops features and optimizes website performance.',
-    staffDesc3: 'Takes care of the design, styles and animations of every website.',
-    staffDesc4: 'Develops the user interface and makes sure everything works on every device.',
-    staffContact: 'Contact me',
-    staffDisclaimerTitle: 'Amateur project',
-    staffDisclaimerText: 'born from a passion for web development. We don\'t issue invoices.',
-    pricingLabel: 'Pricing',
-    pricingTitle: 'Indicative Pricing',
-    pricingSub: 'Indicative prices. The quote is made on Discord based on your project.',
-    pricingNoteTitle: 'Custom quote:',
-    pricingNoteText: 'Write us on Discord to agree on the price based on your needs. The prices above are only indicative and start from a minimum of €5.',
-    paymentLabel: 'Payments',
-    paymentTitle: 'Payment Methods',
-    paymentSub: 'These are the accepted methods. Contact us first to agree on everything.',
-    paypalDesc: 'Fast and secure payment via PayPal.',
-    revolutDesc: 'Instant payment via Revolut.',
-    paymentNoteTitle: 'Important:',
-    paymentNoteText: 'Do not make payments directly from these links. Contact us first on Discord or via email to agree on the project, price and delivery times.',
-    faqLabel: 'FAQ',
-    faqTitle: 'Got questions?',
-    faqSub: 'Our virtual assistant answers the most common questions right away.',
-    faqPlaceholder: 'Write your question...',
-    faqSend: 'Send',
-    contactTitle: 'Let\'s start your project',
-    contactDesc: 'Write to us on Discord or via email to discuss your website. We are an amateur project: no rush, no pressure, just passion for code.',
-    loginWarning: 'To open Discord you must first log in with Google',
-    contactNote: 'Email: itu600396@gmail.com — Prices starting from €5',
-    footerNote: 'Amateur project without VAT number',
-    footerDisclaimer: 'Websites made for passion, not for business.',
-    q1: 'How much does a website cost?',
-    q2: 'How long does it take?',
-    q3: 'What technologies do you use?',
-    q4: 'Can I have my own domain?',
-    q5: 'How do I contact you?',
-    q6: 'What\'s included in the website?',
-    faqWelcome: 'Hi! We are the DuckStudio assistant. How can we help you?',
-    faqHint: 'Click on one of the questions below or write to us directly.',
-    paymentAlert: 'Before proceeding with the payment, contact us on Discord to agree on the project.',
-    contactText: 'Find us on Discord (discord.gg/ThYvNjgV6) or via email at itu600396@gmail.com.',
-    loginError: 'Error during Google login. Try again.',
-    reviewAdded: 'Review published! Thanks!',
-    reviewError: 'Error sending. Try again.',
-    reviewMissing: 'Fill in all fields!'
+    heroBtn1: 'See Portfolio', heroBtn2: 'Write us on Discord',
+    skillsLabel: 'Skills', skillsTitle: 'What We Can Do', skillsSub: 'The technologies we use to build modern websites.',
+    portfolioLabel: 'Portfolio', portfolioTitle: 'Our Work', portfolioSub: 'An example of our style and the quality we offer.',
+    reviewsLabel: 'Reviews', reviewsTitle: 'What They Say About Us', reviewsSub: 'Reviews from our clients. If you worked with us, leave yours!',
+    reviewFormTitle: 'Leave a review', reviewLoginRequired: 'You must log in with Google to leave a review', reviewNamePlaceholder: 'Your name', reviewTextPlaceholder: 'Write your review...', reviewStarsLabel: 'Rating:', reviewSubmit: 'Publish review', reviewEmpty: 'No reviews yet. Be the first!',
+    staffLabel: 'The Team', staffTitle: 'Who\'s Behind', staffSub: 'A small team of web development enthusiasts.', staffRole1: 'Team Manager', staffRole2: 'Lead Developer', staffRole3: 'UI/UX Designer', staffRole4: 'Frontend Developer', staffDesc1: 'Coordinates projects, manages the team and organizes client deliveries.', staffDesc2: 'Writes the code, develops features and optimizes website performance.', staffDesc3: 'Takes care of the design, styles and animations of every website.', staffDesc4: 'Develops the user interface and makes sure everything works on every device.', staffContact: 'Contact me', staffDisclaimerTitle: 'Amateur project', staffDisclaimerText: 'born from a passion for web development. We don\'t issue invoices.',
+    pricingLabel: 'Pricing', pricingTitle: 'Indicative Pricing', pricingSub: 'Indicative prices. The quote is made on Discord based on your project.', pricingNoteTitle: 'Custom quote:', pricingNoteText: 'Write us on Discord to agree on the price based on your needs. The prices above are only indicative and start from a minimum of €5.',
+    paymentLabel: 'Payments', paymentTitle: 'Payment Methods', paymentSub: 'These are the accepted methods. Contact us first to agree on everything.', paypalDesc: 'Fast and secure payment via PayPal.', revolutDesc: 'Instant payment via Revolut.', paymentNoteTitle: 'Important:', paymentNoteText: 'Do not make payments directly from these links. Contact us first on Discord or via email to agree on the project, price and delivery times.',
+    faqLabel: 'FAQ', faqTitle: 'Got questions?', faqSub: 'Our virtual assistant answers the most common questions right away.', faqPlaceholder: 'Write your question...', faqSend: 'Send',
+    contactTitle: 'Let\'s start your project', contactDesc: 'Write to us on Discord or via email to discuss your website. We are an amateur project: no rush, no pressure, just passion for code.', loginWarning: 'To open Discord you must first log in with Google', contactNote: 'Email: itu600396@gmail.com — Prices starting from €5',
+    footerNote: 'Amateur project without VAT number', footerDisclaimer: 'Websites made for passion, not for business.',
+    q1: 'How much does a website cost?', q2: 'How long does it take?', q3: 'What technologies do you use?', q4: 'Can I have my own domain?', q5: 'How do I contact you?', q6: 'What\'s included in the website?',
+    faqWelcome: 'Hi! We are the DuckStudio assistant. How can we help you?', faqHint: 'Click on one of the questions below or write to us directly.',
+    paymentAlert: 'Before proceeding with the payment, contact us on Discord to agree on the project.', contactText: 'Find us on Discord (discord.gg/ThYvNjgV6) or via email at itu600396@gmail.com.', loginError: 'Error during Google login. Try again.', reviewAdded: 'Review published! Thanks!', reviewError: 'Error sending. Try again.', reviewMissing: 'Fill in all fields!'
   }
 };
 
 let currentLang = localStorage.getItem('dv_lang') || 'it';
-
-function t(key) {
-  return translations[currentLang][key] || translations.it[key] || key;
-}
-
+function t(key) { return translations[currentLang][key] || translations.it[key] || key; }
 function setLang(lang, btn) {
-  currentLang = lang;
-  localStorage.setItem('dv_lang', lang);
+  currentLang = lang; localStorage.setItem('dv_lang', lang);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  applyTranslations();
-  renderReviews();
-  renderReviewForm();
+  applyTranslations(); renderReviews(); renderReviewForm();
 }
-
 function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[currentLang][key]) el.textContent = translations[currentLang][key];
   });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    const key = el.getAttribute('data-i18n-ph');
-    if (translations[currentLang][key]) el.placeholder = translations[currentLang][key];
-  });
-  renderSkills();
-  renderPortfolio();
-  renderPricing();
+  renderSkills(); renderPortfolio(); renderPricing();
 }
-
-function toggleMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-
+function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navLinks').classList.remove('open');
-  });
+  link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('open'); });
 });
 
+// --- CONFIGURAZIONE DEFAULT ---
 const defaultConfig = {
   skills: [
     { icon: 'fa-brands fa-html5', title: 'HTML5', desc: 'Struttura semantica, accessibile e ottimizzata per ogni tipo di sito web.' },
     { icon: 'fa-brands fa-css3-alt', title: 'CSS3', desc: 'Stili moderni, animazioni fluide, layout responsive e design accattivante.' },
     { icon: 'fa-brands fa-js', title: 'JavaScript', desc: 'Interattività, effetti dinamici e funzionalità avanzate per il tuo sito.' }
   ],
-  portfolio: [
-    {
-      name: 'Orbys MC',
-      desc: 'Sito ufficiale del server Orbys MC. Design moderno, responsive e ottimizzato per il web.',
-      link: 'https://alessiopioli8-debug.github.io/duckproject/',
-      icon: '<img src="https://i.imgur.com/cclMcy5.png" style="width: 100%; height: 100%; object-fit: contain; padding: 15px;">',
-      tags: ['HTML', 'CSS', 'JavaScript']
-    }
-  ],
-  pricing: [
-    {
-      title: 'Sito Base',
-      price: 5,
-      sub: 'A partire da',
-      featured: false,
-      features: ['Sito one-page', 'Design responsive', 'Sezioni base', 'Consegna rapida']
-    },
-    {
-      title: 'Sito Completo',
-      price: 15,
-      sub: 'Il più completo',
-      featured: true,
-      features: ['Sito multi-pagina', 'Design personalizzato', 'Animazioni ed effetti', 'Ottimizzazione mobile', 'Supporto post-consegna']
-    }
-  ],
-  discounts: [
-    { code: 'HALLOWEEN26', percent: 35 }
-  ],
+  portfolio: [ { name: 'Orbys MC', desc: 'Sito ufficiale del server Orbys MC. Design moderno, responsive e ottimizzato per il web.', link: 'https://alessiopioli8-debug.github.io/duckproject/', icon: '<img src="https://i.imgur.com/cclMcy5.png" style="width: 100%; height: 100%; object-fit: contain; padding: 15px;">', tags: ['HTML', 'CSS', 'JavaScript'] } ],
+  pricing: [ { title: 'Sito Base', price: 5, sub: 'A partire da', featured: false, features: ['Sito one-page', 'Design responsive', 'Sezioni base', 'Consegna rapida'] }, { title: 'Sito Completo', price: 15, sub: 'Il più completo', featured: true, features: ['Sito multi-pagina', 'Design personalizzato', 'Animazioni ed effetti', 'Ottimizzazione mobile', 'Supporto post-consegna'] } ],
+  discounts: [ { code: 'HALLOWEEN26', percent: 35 } ],
   sectionOrder: ['home', 'skills', 'portfolio', 'reviews', 'staff', 'pricing', 'payment', 'faq', 'contact']
 };
 
@@ -2029,243 +1967,160 @@ const faqAnswers = {
 let config = JSON.parse(JSON.stringify(defaultConfig));
 let adminLoggedIn = false;
 let reviews = [];
+let currentUserProfile = {};
 
+// --- DATABASE E CONFIG ---
 function loadConfigFromFirebase() {
   db.ref('duckstudio/config').on('value', snapshot => {
     const data = snapshot.val();
-    if (data) {
-      config = data;
-    } else {
-      db.ref('duckstudio/config').set(defaultConfig);
-    }
+    if (data) config = data;
+    else db.ref('duckstudio/config').set(defaultConfig);
     renderAll();
   });
 }
-
 function loadReviewsFromFirebase() {
   db.ref('duckstudio/reviews').on('value', snapshot => {
     const data = snapshot.val();
-    if (data) {
-      reviews = Object.values(data);
-      reviews.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-    } else {
-      reviews = [];
-    }
-    renderReviews();
-    renderReviewForm();
+    if (data) { reviews = Object.values(data); reviews.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); }
+    else reviews = [];
+    renderReviews(); renderReviewForm();
   });
 }
-
 function saveConfigToFirebase() {
   db.ref('duckstudio/config').set(config).then(() => {
     const status = document.getElementById('adminSavedStatus');
-    status.textContent = 'Modifiche salvate';
-    status.classList.add('show');
+    status.textContent = 'Modifiche salvate'; status.classList.add('show');
     setTimeout(() => status.classList.remove('show'), 1500);
-  }).catch(err => {
-    console.error('Errore salvataggio:', err);
-  });
+  }).catch(err => console.error('Errore salvataggio:', err));
 }
 
-function renderSkills() {
-  const grid = document.getElementById('skillsGrid');
-  if (!grid) return;
-  grid.innerHTML = config.skills.map(s => `
-    <div class="skill-card">
-      <div class="skill-icon"><i class="${s.icon}"></i></div>
-      <h3>${s.title}</h3>
-      <p>${s.desc}</p>
-    </div>
-  `).join('');
-}
+// --- RENDERIZZAZIONE ---
+function renderSkills() { const grid = document.getElementById('skillsGrid'); if (!grid) return; grid.innerHTML = config.skills.map(s => `<div class="skill-card"><div class="skill-icon"><i class="${s.icon}"></i></div><h3>${s.title}</h3><p>${s.desc}</p></div>`).join(''); }
+function renderPortfolio() { const grid = document.getElementById('portfolioGrid'); if (!grid) return; const linkText = currentLang === 'it' ? 'Visita il sito' : 'Visit the site'; grid.innerHTML = config.portfolio.map(p => `<a href="${p.link}" target="_blank" class="portfolio-card"><div class="portfolio-image">${p.icon}</div><div class="portfolio-content"><div class="portfolio-tags">${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div><h3>${p.name}</h3><p>${p.desc}</p><span class="portfolio-link">${linkText} <i class="fa-solid fa-arrow-right"></i></span></div></a>`).join(''); }
+function renderPricing() { const grid = document.getElementById('pricingGrid'); if (!grid) return; const btnText = currentLang === 'it' ? 'Contattaci' : 'Contact us'; grid.innerHTML = config.pricing.map(p => `<div class="price-card ${p.featured ? 'featured' : ''}"><h3>${p.title}</h3><div class="amount">${p.price}<small>€</small></div><div class="sub">${p.sub}</div><ul class="price-features">${p.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}</ul><button class="price-btn" onclick="openDiscord()"><i class="fa-brands fa-discord"></i> ${btnText}</button></div>`).join(''); }
+function renderReviews() { const grid = document.getElementById('reviewsGrid'); if (!grid) return; if (reviews.length === 0) { grid.innerHTML = `<div class="review-card" style="text-align: center; color: #888; font-style: italic;">${t('reviewEmpty')}</div>`; return; } grid.innerHTML = reviews.map(r => `<div class="review-card"><div class="review-header"><img class="review-avatar" src="${r.photo || 'https://via.placeholder.com/48/00b7ff/ffffff?text=' + (r.name ? r.name.charAt(0).toUpperCase() : 'U')}" alt="${r.name}"><div class="review-info"><div class="review-name">${r.name}</div><div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div></div></div><div class="review-text">"${r.text}"</div><div class="review-date">${new Date(r.timestamp).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-US')}</div></div>`).join(''); }
+function renderReviewForm() { const container = document.getElementById('reviewFormContent'); if (!container) return; const user = auth.currentUser; if (!user) { container.innerHTML = `<div class="login-required"><i class="fa-solid fa-lock" style="font-size: 24px; margin-bottom: 10px; display: block; color: #00b7ff;"></i>${t('reviewLoginRequired')}<br><br><button class="admin-btn" onclick="signInWithGoogle()"><i class="fa-solid fa-right-to-bracket"></i> ${t('loginBtn')}</button></div>`; return; } container.innerHTML = `<input type="text" id="reviewName" placeholder="${t('reviewNamePlaceholder')}" value="${user.displayName || ''}"><select id="reviewStars"><option value="5">★★★★★ - 5</option><option value="4">★★★★☆ - 4</option><option value="3">★★★☆☆ - 3</option><option value="2">★★☆☆☆ - 2</option><option value="1">★☆☆☆☆ - 1</option></select><textarea id="reviewText" placeholder="${t('reviewTextPlaceholder')}"></textarea><button onclick="submitReview()"><i class="fa-solid fa-paper-plane"></i> ${t('reviewSubmit')}</button>`; }
+function renderAll() { renderSkills(); renderPortfolio(); renderPricing(); if (adminLoggedIn) renderAdminLists(); }
 
-function renderPortfolio() {
-  const grid = document.getElementById('portfolioGrid');
-  if (!grid) return;
-  const linkText = currentLang === 'it' ? 'Visita il sito' : 'Visit the site';
-  grid.innerHTML = config.portfolio.map(p => `
-    <a href="${p.link}" target="_blank" class="portfolio-card">
-      <div class="portfolio-image">${p.icon}</div>
-      <div class="portfolio-content">
-        <div class="portfolio-tags">
-          ${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-        </div>
-        <h3>${p.name}</h3>
-        <p>${p.desc}</p>
-        <span class="portfolio-link">${linkText} <i class="fa-solid fa-arrow-right"></i></span>
-      </div>
-    </a>
-  `).join('');
-}
-
-function renderPricing() {
-  const grid = document.getElementById('pricingGrid');
-  if (!grid) return;
-  const btnText = currentLang === 'it' ? 'Contattaci' : 'Contact us';
-  grid.innerHTML = config.pricing.map(p => `
-    <div class="price-card ${p.featured ? 'featured' : ''}">
-      <h3>${p.title}</h3>
-      <div class="amount">${p.price}<small>€</small></div>
-      <div class="sub">${p.sub}</div>
-      <ul class="price-features">
-        ${p.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('')}
-      </ul>
-      <button class="price-btn" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> ${btnText}
-      </button>
-    </div>
-  `).join('');
-}
-
-function renderReviews() {
-  const grid = document.getElementById('reviewsGrid');
-  if (!grid) return;
-
-  if (reviews.length === 0) {
-    grid.innerHTML = `<div class="review-card" style="text-align: center; color: #888; font-style: italic;">${t('reviewEmpty')}</div>`;
-    return;
-  }
-
-  grid.innerHTML = reviews.map(r => `
-    <div class="review-card">
-      <div class="review-header">
-        <img class="review-avatar" src="${r.photo || 'https://via.placeholder.com/48/00b7ff/ffffff?text=' + (r.name ? r.name.charAt(0).toUpperCase() : 'U')}" alt="${r.name}">
-        <div class="review-info">
-          <div class="review-name">${r.name}</div>
-          <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
-        </div>
-      </div>
-      <div class="review-text">"${r.text}"</div>
-      <div class="review-date">${new Date(r.timestamp).toLocaleDateString(currentLang === 'it' ? 'it-IT' : 'en-US')}</div>
-    </div>
-  `).join('');
-}
-
-function renderReviewForm() {
-  const container = document.getElementById('reviewFormContent');
-  if (!container) return;
-
-  const user = auth.currentUser;
-
-  if (!user) {
-    container.innerHTML = `
-      <div class="login-required">
-        <i class="fa-solid fa-lock" style="font-size: 24px; margin-bottom: 10px; display: block; color: #00b7ff;"></i>
-        ${t('reviewLoginRequired')}
-        <br><br>
-        <button class="admin-btn" onclick="signInWithGoogle()">
-          <i class="fa-solid fa-right-to-bracket"></i> ${t('loginBtn')}
-        </button>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = `
-    <input type="text" id="reviewName" placeholder="${t('reviewNamePlaceholder')}" value="${user.displayName || ''}">
-    <select id="reviewStars">
-      <option value="5">★★★★★ - 5</option>
-      <option value="4">★★★★☆ - 4</option>
-      <option value="3">★★★☆☆ - 3</option>
-      <option value="2">★★☆☆☆ - 2</option>
-      <option value="1">★☆☆☆☆ - 1</option>
-    </select>
-    <textarea id="reviewText" placeholder="${t('reviewTextPlaceholder')}"></textarea>
-    <button onclick="submitReview()">
-      <i class="fa-solid fa-paper-plane"></i> ${t('reviewSubmit')}
-    </button>
-  `;
-}
-
+// --- AZIONI UTENTE ---
 function submitReview() {
-  const user = auth.currentUser;
-  if (!user) return;
-
+  const user = auth.currentUser; if (!user) return;
   const name = document.getElementById('reviewName').value.trim();
   const stars = parseInt(document.getElementById('reviewStars').value);
   const text = document.getElementById('reviewText').value.trim();
+  if (!name || !stars || !text) { alert(t('reviewMissing')); return; }
+  db.ref('duckstudio/reviews').push({ name, stars, text, photo: user.photoURL || '', uid: user.uid, timestamp: Date.now() }).then(() => { alert(t('reviewAdded')); document.getElementById('reviewText').value = ''; }).catch(err => { console.error(err); alert(t('reviewError')); });
+}
+function signInWithGoogle() { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) auth.signInWithRedirect(provider).catch(err => console.error(err)); else auth.signInWithPopup(provider).then(result => { const user = result.user; if (user && user.email) emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: user.email, to_name: user.displayName || user.email.split('@')[0] }).catch(err => console.error(err)); }).catch(err => { console.error(err); alert(t('loginError')); }); }
+function signOutUser() { auth.signOut(); closeProfileModal(); }
+function openDiscord() { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } window.open(DISCORD_LINK, '_blank'); }
+function openPayment(method) { const user = auth.currentUser; if (!user) { const warning = document.getElementById('loginWarning'); warning.classList.add('show'); setTimeout(() => warning.classList.remove('show'), 4000); signInWithGoogle(); return; } alert(t('paymentAlert')); window.open(DISCORD_LINK, '_blank'); }
 
-  if (!name || !stars || !text) {
-    alert(t('reviewMissing'));
-    return;
-  }
-
-  const review = {
-    name: name,
-    stars: stars,
-    text: text,
-    photo: user.photoURL || '',
-    uid: user.uid,
-    timestamp: Date.now()
-  };
-
-  db.ref('duckstudio/reviews').push(review).then(() => {
-    alert(t('reviewAdded'));
-    document.getElementById('reviewText').value = '';
-  }).catch(err => {
-    console.error('Errore recensione:', err);
-    alert(t('reviewError'));
+// --- GESTIONE PROFILO ---
+function loadUserProfile(uid) {
+  db.ref(`users/${uid}`).on('value', snapshot => {
+    const data = snapshot.val();
+    if (data) currentUserProfile = data;
   });
 }
 
-function renderAll() {
-  renderSkills();
-  renderPortfolio();
-  renderPricing();
-  if (adminLoggedIn) renderAdminLists();
+function openProfile() {
+  if (!auth.currentUser) { signInWithGoogle(); return; }
+  document.getElementById('profileModal').classList.add('open');
+  document.getElementById('editName').value = currentUserProfile.displayName || auth.currentUser.displayName || '';
+  document.getElementById('editBio').value = currentUserProfile.bio || '';
 }
 
-function signInWithGoogle() {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    auth.signInWithRedirect(provider).catch(err => {
-      console.error('Errore login redirect:', err);
-    });
-  } else {
-    auth.signInWithPopup(provider).then(result => {
-      const user = result.user;
-      if (user && user.email) {
-        emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-          to_email: user.email,
-          to_name: user.displayName || user.email.split('@')[0]
-        }).catch(err => console.error('Errore email:', err));
-      }
-    }).catch(err => {
-      console.error('Errore login popup:', err);
-      alert(t('loginError'));
-    });
-  }
+function closeProfileModal() {
+  document.getElementById('profileModal').classList.remove('open');
 }
 
-function signOutUser() {
-  auth.signOut();
+async function uploadImageToCloudinary(file, folder) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+  formData.append('folder', folder);
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: formData
+  });
+  const data = await res.json();
+  return data.secure_url;
 }
 
-function openDiscord() {
+async function saveProfile() {
   const user = auth.currentUser;
-  if (!user) {
-    const warning = document.getElementById('loginWarning');
-    warning.classList.add('show');
-    setTimeout(() => warning.classList.remove('show'), 4000);
-    signInWithGoogle();
-    return;
+  if (!user) return;
+
+  const name = document.getElementById('editName').value;
+  const bio = document.getElementById('editBio').value;
+  const avatarFile = document.getElementById('avatarInput').files[0];
+  const bannerFile = document.getElementById('bannerInput').files[0];
+
+  let avatarUrl = currentUserProfile.avatarUrl || user.photoURL || '';
+  let bannerUrl = currentUserProfile.bannerUrl || '';
+
+  try {
+    if (avatarFile) avatarUrl = await uploadImageToCloudinary(avatarFile, `profiles/${user.uid}/avatar`);
+    if (bannerFile) bannerUrl = await uploadImageToCloudinary(bannerFile, `profiles/${user.uid}/banner`);
+
+    await db.ref(`users/${user.uid}`).update({
+      displayName: name,
+      bio: bio,
+      avatarUrl: avatarUrl,
+      bannerUrl: bannerUrl
+    });
+
+    if (avatarFile) document.getElementById('userPfp').src = avatarUrl;
+
+    alert("Profilo salvato con successo!");
+    closeProfileModal();
+  } catch (error) {
+    console.error("Errore salvataggio profilo:", error);
+    alert("Errore durante il salvataggio del profilo.");
   }
-  window.open(DISCORD_LINK, '_blank');
 }
 
-function openPayment(method) {
+function connectDiscord() { alert("L'integrazione con Discord richiede un backend (Firebase Cloud Functions). Non ancora implementata."); }
+function connectSpotify() { alert("L'integrazione con Spotify richiede un backend (Firebase Cloud Functions). Non ancora implementata."); }
+
+// --- CHAT IN TEMPO REALE ---
+const chatMessages = document.getElementById('chatMessages');
+
+function initChat() {
+  db.ref('duckstudio/chat/messaggi').limitToLast(50).on('child_added', snapshot => {
+    const msg = snapshot.val();
+    const div = document.createElement('div');
+    const isMine = auth.currentUser && msg.uid === auth.currentUser.uid;
+    div.className = `chat-msg ${isMine ? 'mine' : 'other'}`;
+    
+    db.ref(`users/${msg.uid}/displayName`).once('value').then(nameSnap => {
+      const authorName = nameSnap.val() || msg.nome || 'Anonimo';
+      div.innerHTML = `<span class="msg-author">${authorName}</span>${msg.testo}`;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+  });
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const testo = input.value.trim();
   const user = auth.currentUser;
-  if (!user) {
-    const warning = document.getElementById('loginWarning');
-    warning.classList.add('show');
-    setTimeout(() => warning.classList.remove('show'), 4000);
-    signInWithGoogle();
-    return;
-  }
-  alert(t('paymentAlert'));
-  window.open(DISCORD_LINK, '_blank');
+
+  if (!user) { alert("Devi effettuare l'accesso per inviare messaggi."); return; }
+  if (!testo) return;
+
+  db.ref('duckstudio/chat/messaggi').push({
+    uid: user.uid,
+    nome: user.displayName || 'Anonimo',
+    testo: testo,
+    timestamp: Date.now()
+  }).then(() => { input.value = ''; }).catch(err => { console.error("Errore invio messaggio:", err); });
 }
 
+// --- AUTH STATE ---
 auth.onAuthStateChanged(user => {
   const loginBtn = document.getElementById('loginBtn');
   const userInfo = document.getElementById('userInfo');
@@ -2277,32 +2132,25 @@ auth.onAuthStateChanged(user => {
     userInfo.style.display = 'inline-flex';
     userPfp.src = user.photoURL || 'https://via.placeholder.com/34';
     userName.textContent = user.displayName || user.email;
+    loadUserProfile(user.uid);
   } else {
     loginBtn.style.display = 'inline-flex';
     userInfo.style.display = 'none';
+    closeProfileModal();
   }
-
   renderReviewForm();
 });
 
 auth.getRedirectResult().then(result => {
   if (result && result.user) {
     const user = result.user;
-    if (user.email) {
-      emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
-        to_email: user.email,
-        to_name: user.displayName || user.email.split('@')[0]
-      }).catch(err => console.error('Errore email:', err));
-    }
+    if (user.email) emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, { to_email: user.email, to_name: user.displayName || user.email.split('@')[0] }).catch(err => console.error(err));
   }
 }).catch(err => console.error('Errore redirect:', err));
-</script>
-<script>
+
+// --- ADMIN (Firebase Auth) ---
 document.addEventListener('keydown', e => {
-  if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) {
-    e.preventDefault();
-    openAdmin();
-  }
+  if (e.ctrlKey && e.altKey && (e.key === 'd' || e.key === 'D')) { e.preventDefault(); openAdmin(); }
 });
 
 function openAdmin() {
@@ -2317,9 +2165,7 @@ function openAdmin() {
   }
 }
 
-function closeAdmin() {
-  document.getElementById('adminPanel').classList.remove('open');
-}
+function closeAdmin() { document.getElementById('adminPanel').classList.remove('open'); }
 
 function adminLogin() {
   const email = document.getElementById('adminEmailInput').value.trim();
@@ -2345,53 +2191,13 @@ function adminLogin() {
 
 function renderAdminLists() {
   const portfolioList = document.getElementById('adminPortfolioList');
-  if (portfolioList) {
-    portfolioList.innerHTML = config.portfolio.map((p, i) => `
-      <div class="admin-item">
-        <span>${p.icon} ${p.name}</span>
-        <div class="actions">
-          <button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
+  if (portfolioList) portfolioList.innerHTML = config.portfolio.map((p, i) => `<div class="admin-item"><span>${p.icon} ${p.name}</span><div class="actions"><button class="mini-btn danger" onclick="removePortfolioItem(${i})">Rimuovi</button></div></div>`).join('');
   const discountList = document.getElementById('adminDiscountList');
-  if (discountList) {
-    discountList.innerHTML = config.discounts.map((d, i) => `
-      <div class="admin-item">
-        <span>${d.code} — ${d.percent}%</span>
-        <div class="actions">
-          <button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
+  if (discountList) discountList.innerHTML = config.discounts.map((d, i) => `<div class="admin-item"><span>${d.code} — ${d.percent}%</span><div class="actions"><button class="mini-btn danger" onclick="removeDiscountCode(${i})">Rimuovi</button></div></div>`).join('');
   const reviewList = document.getElementById('adminReviewList');
-  if (reviewList) {
-    reviewList.innerHTML = reviews.map((r, i) => `
-      <div class="admin-item">
-        <span>${'★'.repeat(r.stars)} ${r.name} — ${r.text.substring(0, 40)}${r.text.length > 40 ? '...' : ''}</span>
-        <div class="actions">
-          <button class="mini-btn danger" onclick="removeReview('${r.uid}_${r.timestamp}')">Rimuovi</button>
-        </div>
-      </div>
-    `).join('');
-  }
-
+  if (reviewList) reviewList.innerHTML = reviews.map((r, i) => `<div class="admin-item"><span>${'★'.repeat(r.stars)} ${r.name} — ${r.text.substring(0, 40)}${r.text.length > 40 ? '...' : ''}</span><div class="actions"><button class="mini-btn danger" onclick="removeReview('${r.uid}_${r.timestamp}')">Rimuovi</button></div></div>`).join('');
   const sectionOrder = document.getElementById('adminSectionOrder');
-  if (sectionOrder) {
-    sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `
-      <div class="admin-item">
-        <span>${s}</span>
-        <div class="actions">
-          <button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button>
-          <button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button>
-        </div>
-      </div>
-    `).join('');
-  }
+  if (sectionOrder) sectionOrder.innerHTML = config.sectionOrder.map((s, i) => `<div class="admin-item"><span>${s}</span><div class="actions"><button class="mini-btn" onclick="moveSection(${i}, -1)">Su</button><button class="mini-btn" onclick="moveSection(${i}, 1)">Giu</button></div></div>`).join('');
 }
 
 function addPortfolioItem() {
@@ -2400,151 +2206,99 @@ function addPortfolioItem() {
   const link = document.getElementById('newPortfolioLink').value.trim();
   const icon = document.getElementById('newPortfolioIcon').value.trim() || '💎';
   if (!name || !link) return;
-
-  config.portfolio.push({
-    name: name,
-    desc: desc,
-    link: link,
-    icon: icon,
-    tags: ['HTML', 'CSS', 'JavaScript']
-  });
-
+  config.portfolio.push({ name, desc, link, icon, tags: ['HTML', 'CSS', 'JavaScript'] });
   document.getElementById('newPortfolioName').value = '';
   document.getElementById('newPortfolioDesc').value = '';
   document.getElementById('newPortfolioLink').value = '';
-
-  saveConfigToFirebase();
-  renderPortfolio();
-  renderAdminLists();
+  saveConfigToFirebase(); renderPortfolio(); renderAdminLists();
 }
 
-function removePortfolioItem(index) {
-  config.portfolio.splice(index, 1);
-  saveConfigToFirebase();
-  renderPortfolio();
-  renderAdminLists();
-}
+function removePortfolioItem(index) { config.portfolio.splice(index, 1); saveConfigToFirebase(); renderPortfolio(); renderAdminLists(); }
 
 function addDiscountCode() {
   const code = document.getElementById('newDiscountCode').value.trim().toUpperCase();
   const percent = parseInt(document.getElementById('newDiscountPercent').value);
   if (!code || !percent) return;
-
-  config.discounts.push({ code: code, percent: percent });
-
+  config.discounts.push({ code, percent });
   document.getElementById('newDiscountCode').value = '';
   document.getElementById('newDiscountPercent').value = '';
-
-  saveConfigToFirebase();
-  renderAdminLists();
+  saveConfigToFirebase(); renderAdminLists();
 }
 
-function removeDiscountCode(index) {
-  config.discounts.splice(index, 1);
-  saveConfigToFirebase();
-  renderAdminLists();
-}
+function removeDiscountCode(index) { config.discounts.splice(index, 1); saveConfigToFirebase(); renderAdminLists(); }
 
 function addReviewFromAdmin() {
   const name = document.getElementById('newReviewName').value.trim();
   const stars = parseInt(document.getElementById('newReviewStars').value);
   const text = document.getElementById('newReviewText').value.trim();
   if (!name || !stars || !text) return;
-
-  const review = {
-    name: name,
-    stars: stars,
-    text: text,
-    photo: '',
-    uid: 'admin_' + Date.now(),
-    timestamp: Date.now()
-  };
-
-  db.ref('duckstudio/reviews').push(review).then(() => {
-    document.getElementById('newReviewName').value = '';
-    document.getElementById('newReviewText').value = '';
-  });
+  const review = { name, stars, text, photo: '', uid: 'admin_' + Date.now(), timestamp: Date.now() };
+  db.ref('duckstudio/reviews').push(review).then(() => { document.getElementById('newReviewName').value = ''; document.getElementById('newReviewText').value = ''; });
 }
 
 function removeReview(key) {
   let foundKey = null;
   db.ref('duckstudio/reviews').once('value', snapshot => {
     const data = snapshot.val();
-    if (data) {
-      for (const k in data) {
-        const r = data[k];
-        if ((r.uid + '_' + r.timestamp) === key) {
-          foundKey = k;
-          break;
-        }
-      }
-      if (foundKey) {
-        db.ref('duckstudio/reviews/' + foundKey).remove();
-      }
-    }
+    if (data) { for (const k in data) { const r = data[k]; if ((r.uid + '_' + r.timestamp) === key) { foundKey = k; break; } } if (foundKey) db.ref('duckstudio/reviews/' + foundKey).remove(); }
   });
 }
 
 function moveSection(index, direction) {
   const newIndex = index + direction;
   if (newIndex < 0 || newIndex >= config.sectionOrder.length) return;
-  const arr = config.sectionOrder;
-  const temp = arr[index];
-  arr[index] = arr[newIndex];
-  arr[newIndex] = temp;
-  saveConfigToFirebase();
-  renderAdminLists();
+  const arr = config.sectionOrder; const temp = arr[index]; arr[index] = arr[newIndex]; arr[newIndex] = temp;
+  saveConfigToFirebase(); renderAdminLists();
 }
 
 function exportConfig() {
-  const dataStr = JSON.stringify({ config: config, reviews: reviews }, null, 2);
+  const dataStr = JSON.stringify({ config, reviews }, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'duckstudio-config.json';
-  a.click();
-  URL.revokeObjectURL(url);
+  const a = document.createElement('a'); a.href = url; a.download = 'duckstudio-config.json'; a.click(); URL.revokeObjectURL(url);
 }
 
-function resetConfig() {
-  if (!confirm('Sei sicuro di voler resettare tutte le modifiche?')) return;
-  config = JSON.parse(JSON.stringify(defaultConfig));
-  saveConfigToFirebase();
-  renderAll();
-}
+function resetConfig() { if (!confirm('Sei sicuro di voler resettare tutte le modifiche?')) return; config = JSON.parse(JSON.stringify(defaultConfig)); saveConfigToFirebase(); renderAll(); }
 
+// --- FAQ ---
 const AI_PFP = 'https://i.pinimg.com/736x/9e/ea/ab/9eeaab9fe1deff8df678bbf5f60cc370.jpg';
 const DEFAULT_USER_PFP = 'https://via.placeholder.com/40/00b7ff/ffffff?text=U';
+const faqChat = document.getElementById('faqChat');
 
+function addMessage(text, isBot) {
+  const msg = document.createElement('div');
+  msg.className = 'msg ' + (isBot ? 'bot' : 'user');
+  const avatarImg = isBot ? AI_PFP : getUserPfp();
+  msg.innerHTML = '<div class="msg-avatar"><img src="' + avatarImg + '"></div><div class="msg-bubble">' + text + '</div>';
+  faqChat.appendChild(msg); faqChat.scrollTop = faqChat.scrollHeight;
+}
+function getUserPfp() { const user = auth.currentUser; if (user && user.photoURL) return user.photoURL; return DEFAULT_USER_PFP; }
+function showTyping() { const typing = document.createElement('div'); typing.className = 'msg bot'; typing.id = 'typingIndicator'; typing.innerHTML = '<div class="msg-avatar"><img src="' + AI_PFP + '"></div><div class="typing"><span></span><span></span><span></span></div>'; faqChat.appendChild(typing); faqChat.scrollTop = faqChat.scrollHeight; }
+function hideTyping() { const typing = document.getElementById('typingIndicator'); if (typing) typing.remove(); }
+function findAnswer(question) { const q = question.toLowerCase(); const answers = faqAnswers[currentLang] || faqAnswers.it; let best = null; let bestScore = 0; for (const faq of answers) { let score = 0; for (const kw of faq.keywords) { if (q.includes(kw)) score++; } if (score > bestScore) { bestScore = score; best = faq; } } if (best) return best.answer; return t('contactText'); }
+function askFaq(question) { addMessage(question, false); showTyping(); setTimeout(() => { hideTyping(); addMessage(findAnswer(question), true); }, 900); }
+function sendFaq() { const input = document.getElementById('faqInput'); const text = input.value.trim(); if (!text) return; askFaq(text); input.value = ''; }
+function initFaq() { addMessage(t('faqWelcome'), true); setTimeout(() => { addMessage(t('faqHint'), true); }, 700); }
+
+// --- SFONDO E AVVIO ---
 const bg = document.getElementById('cube-bg');
 const size = 60;
 const cols = Math.ceil(window.innerWidth / size);
 const rows = Math.ceil(window.innerHeight / size);
-
 bg.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
 bg.style.gridTemplateRows = 'repeat(' + rows + ', 1fr)';
-
-for (let i = 0; i < cols * rows; i++) {
-  const cube = document.createElement('div');
-  cube.className = 'cube';
-  bg.appendChild(cube);
-}
+for (let i = 0; i < cols * rows; i++) { const cube = document.createElement('div'); cube.className = 'cube'; bg.appendChild(cube); }
 
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     bg.innerHTML = '';
-    const cols = Math.ceil(window.innerWidth / size);
-    const rows = Math.ceil(window.innerHeight / size);
-    bg.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
-    bg.style.gridTemplateRows = 'repeat(' + rows + ', 1fr)';
-    for (let i = 0; i < cols * rows; i++) {
-      const cube = document.createElement('div');
-      cube.className = 'cube';
-      bg.appendChild(cube);
-    }
+    const c = Math.ceil(window.innerWidth / size);
+    const r = Math.ceil(window.innerHeight / size);
+    bg.style.gridTemplateColumns = 'repeat(' + c + ', 1fr)';
+    bg.style.gridTemplateRows = 'repeat(' + r + ', 1fr)';
+    for (let i = 0; i < c * r; i++) { const cube = document.createElement('div'); cube.className = 'cube'; bg.appendChild(cube); }
   }, 200);
 });
 
@@ -2555,92 +2309,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-const faqChat = document.getElementById('faqChat');
-
-function addMessage(text, isBot) {
-  const msg = document.createElement('div');
-  msg.className = 'msg ' + (isBot ? 'bot' : 'user');
-  const avatarImg = isBot ? AI_PFP : getUserPfp();
-  msg.innerHTML = '<div class="msg-avatar"><img src="' + avatarImg + '"></div><div class="msg-bubble">' + text + '</div>';
-  faqChat.appendChild(msg);
-  faqChat.scrollTop = faqChat.scrollHeight;
-}
-
-function getUserPfp() {
-  const user = auth.currentUser;
-  if (user && user.photoURL) return user.photoURL;
-  return DEFAULT_USER_PFP;
-}
-
-function showTyping() {
-  const typing = document.createElement('div');
-  typing.className = 'msg bot';
-  typing.id = 'typingIndicator';
-  typing.innerHTML = '<div class="msg-avatar"><img src="' + AI_PFP + '"></div><div class="typing"><span></span><span></span><span></span></div>';
-  faqChat.appendChild(typing);
-  faqChat.scrollTop = faqChat.scrollHeight;
-}
-
-function hideTyping() {
-  const typing = document.getElementById('typingIndicator');
-  if (typing) typing.remove();
-}
-
-function findAnswer(question) {
-  const q = question.toLowerCase();
-  const answers = faqAnswers[currentLang] || faqAnswers.it;
-  let best = null;
-  let bestScore = 0;
-  for (const faq of answers) {
-    let score = 0;
-    for (const kw of faq.keywords) {
-      if (q.includes(kw)) score++;
-    }
-    if (score > bestScore) { bestScore = score; best = faq; }
-  }
-  if (best) return best.answer;
-  return t('contactText');
-}
-
-function askFaq(question) {
-  addMessage(question, false);
-  showTyping();
-  setTimeout(() => {
-    hideTyping();
-    addMessage(findAnswer(question), true);
-  }, 900);
-}
-
-function sendFaq() {
-  const input = document.getElementById('faqInput');
-  const text = input.value.trim();
-  if (!text) return;
-  askFaq(text);
-  input.value = '';
-}
-
-function initFaq() {
-  addMessage(t('faqWelcome'), true);
-  setTimeout(() => {
-    addMessage(t('faqHint'), true);
-  }, 700);
-}
-
 document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('dv_lang') || 'it';
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if (btn.textContent.trim().toLowerCase() === savedLang) btn.classList.add('active');
-  });
-});
-
-loadConfigFromFirebase();
-loadReviewsFromFirebase();
-applyTranslations();
-initFaq();
+loadConfigFromFirebase(); loadReviewsFromFirebase(); applyTranslations(); initFaq(); initChat();
 </script>
-
 </body>
 </html>
